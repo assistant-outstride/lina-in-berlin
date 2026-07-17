@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sara in Berghain</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;700;800&display=swap');
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Manrope, sans-serif; background: #0d1020; color: #f6efe2; }
+    body::before { content: ''; position: fixed; inset: 0; background: radial-gradient(circle at 18% 16%, rgba(255,164,82,.18), transparent 26%), radial-gradient(circle at 84% 22%, rgba(111,166,255,.14), transparent 34%), linear-gradient(180deg, #171b33 0%, #0d1020 100%); z-index: -1; }
+    a { color: inherit; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 24px; }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+    .titleblock h1 { margin: 0; font-family: Fraunces, serif; font-size: clamp(2.1rem, 5vw, 3.5rem); }
+    .titleblock p { margin: 8px 0 0; color: #c7bfd6; max-width: 64ch; }
+    .eyebrow { display: inline-block; margin-bottom: 12px; color: #ffcf93; font-size: .83rem; letter-spacing: .16em; text-transform: uppercase; }
+    .nav, .library-link { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .library-link a { text-decoration: none; }
+    button, .home-chip { border: 0; border-radius: 999px; padding: 11px 16px; background: #f1b15e; color: #1c1424; font-weight: 800; cursor: pointer; text-decoration: none; }
+    button:disabled { opacity: .4; cursor: default; }
+    .toggle-chip { display: inline-flex; align-items: center; gap: 10px; border-radius: 999px; padding: 10px 14px; background: rgba(255,255,255,.08); color: #f6efe2; font-size: .92rem; font-weight: 700; }
+    .toggle-chip button { padding: 6px 11px; min-width: 56px; background: rgba(255,255,255,.12); color: #f6efe2; }
+    .toggle-chip button[data-state="on"] { background: #f1b15e; color: #1c1424; }
+    .dots { display: flex; gap: 8px; flex-wrap: wrap; margin: 18px 0 22px; }
+    .dot { width: 11px; height: 11px; border-radius: 50%; background: rgba(255,255,255,.2); cursor: pointer; }
+    .dot.active { background: #f1b15e; transform: scale(1.2); }
+    .page { display: none; }
+    .page.active { display: block; }
+    .cover-card, .page-card { overflow: hidden; border-radius: 32px; background: rgba(255,255,255,.08); backdrop-filter: blur(10px); box-shadow: 0 18px 60px rgba(0,0,0,.3); }
+    .cover-card { position: relative; min-height: 74vh; }
+    .cover-img, .page-img { width: 100%; display: block; object-fit: cover; }
+    .cover-img { height: 74vh; }
+    .cover-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: end; padding: 36px; background: linear-gradient(180deg, transparent 34%, rgba(0,0,0,.78)); }
+    .cover-overlay h1 { margin: 0; font-family: Fraunces, serif; font-size: clamp(2.6rem, 7vw, 5.2rem); }
+    .cover-overlay p { margin: 10px 0 0; font-size: 1.08rem; color: #f7e8d1; max-width: 58ch; }
+    .page-card { display: grid; grid-template-columns: 1fr 1fr; min-height: 68vh; }
+    .page-card.image-first .page-img { order: 0; }
+    .page-card.image-first .content { order: 1; }
+    .page-card.text-first .page-img { order: 1; }
+    .page-card.text-first .content { order: 0; }
+    .page-img { height: 100%; min-height: 460px; }
+    .content { padding: 34px; display: flex; flex-direction: column; justify-content: center; gap: 14px; background: rgba(15,18,30,.92); }
+    .page-copy { margin: 0; font-size: clamp(1.05rem, 2vw, 1.3rem); line-height: 1.8; }
+    .tap-word { background: none; border: 0; padding: 0; color: #ffd198; font: inherit; cursor: pointer; text-decoration: underline dotted; text-underline-offset: 3px; }
+    .tap-word.active { color: #fff; text-shadow: 0 0 12px rgba(241,177,94,.45); }
+    .glossary { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .vocab { display: inline-flex; gap: 6px; align-items: center; padding: 8px 10px; border-radius: 999px; background: rgba(255,255,255,.08); color: #f4ddbf; font-size: .92rem; cursor: pointer; border: 0; }
+    .vocab.active { background: rgba(241,177,94,.22); color: #fff; }
+    .glossary-hint { font-size: .9rem; color: #bdb3c8; margin-top: 4px; }
+    .translator { margin-top: 10px; border-radius: 18px; padding: 14px 16px; background: rgba(255,255,255,.06); color: #f7e8d1; min-height: 52px; }
+    .translator strong { color: #fff; }
+    .lemma-note { color: #c9c2d6; font-size: .92rem; }
+    audio { width: 100%; margin-top: 8px; }
+    .page-number { margin: 10px 8px 0; color: #b2a7bf; font-size: .9rem; text-align: right; }
+    .placeholder { min-height: 460px; display: grid; place-items: center; font-size: 4rem; background: linear-gradient(135deg, #2a2948, #111123); }
+    .full { height: 50vh; }
+    .end-content { text-align: center; padding: 34px; }
+    .fake-paywall { position: relative; margin-top: 22px; padding: 24px; border-radius: 28px; overflow: hidden; background: linear-gradient(145deg, rgba(255,255,255,.08), rgba(255,255,255,.03)); border: 1px solid rgba(255,255,255,.09); box-shadow: inset 0 1px 0 rgba(255,255,255,.06); }
+    .paywall-kicker { display: inline-block; color: #ffcf93; font-size: .78rem; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+    .fake-paywall h2 { margin: 12px 0 8px; font-family: Fraunces, serif; font-size: clamp(1.8rem, 4vw, 2.5rem); }
+    .fake-paywall p { margin: 0; color: #d7ccdd; }
+    .paywall-button { position: relative; margin-top: 18px; padding: 13px 20px; background: linear-gradient(135deg, #ffd28e, #f1b15e); color: #1c1424; box-shadow: 0 12px 24px rgba(241,177,94,.24); }
+    .paywall-links { margin-top: 14px; }
+    .paywall-link { display: inline-flex; align-items: center; justify-content: center; padding: 10px 16px; border-radius: 999px; background: rgba(255,255,255,.08); color: #f6efe2; text-decoration: none; font-weight: 700; }
+    .paywall-note { margin-top: 12px !important; font-size: .92rem; color: #bfb4cb !important; }
+    .sparkle-zone { pointer-events: none; position: absolute; inset: 0; overflow: hidden; }
+    .sparkle { position: absolute; width: 10px; height: 10px; border-radius: 50%; background: radial-gradient(circle, rgba(255,244,210,1) 0%, rgba(255,211,147,.95) 45%, rgba(255,211,147,0) 72%); opacity: 0; transform: translate(-50%, -50%) scale(.2); animation: sparkle-burst .9s ease-out forwards; }
+    @keyframes sparkle-burst {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(.2); }
+      20% { opacity: 1; }
+      100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.35); }
+    }
+    @media (max-width: 860px) {
+      .page-card { grid-template-columns: 1fr; }
+      .page-card .page-img { order: 0 !important; height: 36vh; min-height: 280px; }
+      .content { order: 1 !important; }
+      .cover-card, .cover-img { min-height: 62vh; height: 62vh; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="titleblock">
+        <span class="eyebrow">After Hours German</span>
+        <h1>Sara in Berghain</h1>
+        <p>An A2 German reader for adults — tense, nocturnal, and a little reckless.</p>
+      </div>
+      <div class="nav">
+        <div class="library-link"><a class="home-chip" href="../../index.html">Story Library</a></div>
+        <div class="toggle-chip">Autoplay <button id="autoplay-toggle" type="button" aria-pressed="true" data-state="on">On</button></div>
+        <button id="prev" onclick="go(-1)">← Back</button>
+        <button id="next" onclick="go(1)">Next →</button>
+      </div>
+    </div>
+
+    <div class="dots"><div class="dot active" onclick="show(1)"></div><div class="dot" onclick="show(2)"></div><div class="dot" onclick="show(3)"></div><div class="dot" onclick="show(4)"></div><div class="dot" onclick="show(5)"></div><div class="dot" onclick="show(6)"></div><div class="dot" onclick="show(7)"></div><div class="dot" onclick="show(8)"></div><div class="dot" onclick="show(9)"></div><div class="dot" onclick="show(10)"></div></div>
+
+    
+            <section class="page cover active" id="page-1">
+              <div class="cover-card">
+                <img src="images/sara-cover.png" alt="Cover" class="cover-img">
+                <div class="cover-overlay">
+                  <span class="eyebrow">A2 reader</span>
+                  <h1>Sara in Berghain</h1>
+                  <p>An A2 German reader for adults — tense, nocturnal, and a little reckless.</p>
+                </div>
+              </div>
+            </section>
+            
+        <section class="page" id="page-2">
+          <div class="page-card text-first">
+            <img src="images/sara-page1.png" alt="Illustration" class="page-img">
+            <div class="content">
+              <div class="page-copy">Sara sitzt <button class="tap-word" data-term="allein" data-translation="alone">allein</button> im Hotel.<br>Ihr <button class="tap-word" data-term="Laptop" data-translation="laptop">Laptop</button> ist zu.<br>Ihre Füße <button class="tap-word" data-term="tun weh" data-lemma="weh tun" data-translation="to hurt">tun weh</button> von der <button class="tap-word" data-term="Arbeit" data-translation="work">Arbeit</button>.<br>Sie will heute Nacht etwas <button class="tap-word" data-term="Verrücktes" data-lemma="verrückt" data-translation="crazy">Verrücktes</button> machen.</div>
+              <div class='glossary'><button class="vocab" type="button" data-term="allein" data-translation="alone"><strong>allein</strong> — alone</button><button class="vocab" type="button" data-term="Laptop" data-translation="laptop"><strong>Laptop</strong> — laptop</button><button class="vocab" type="button" data-term="weh tun" data-translation="to hurt"><strong>weh tun</strong> — to hurt</button><button class="vocab" type="button" data-term="Arbeit" data-translation="work"><strong>Arbeit</strong> — work</button><button class="vocab" type="button" data-term="verrückt" data-translation="crazy"><strong>verrückt</strong> — crazy</button></div>
+              <div class="glossary-hint">Tap any highlighted German word or vocab pill for an instant translation.</div><div class="translator" id="translator-2">Tap a highlighted word or vocab pill.</div>
+              <audio controls src="audio/page1.ogg"></audio>
+            </div>
+          </div>
+          <div class="page-number">1/8</div>
+        </section>
+        
+        <section class="page" id="page-3">
+          <div class="page-card image-first">
+            <img src="images/sara-page2.png" alt="Illustration" class="page-img">
+            <div class="content">
+              <div class="page-copy"><button class="tap-word" data-term="Morgen" data-translation="tomorrow">Morgen</button> <button class="tap-word" data-term="fliegt" data-lemma="fliegen" data-translation="to fly">fliegt</button> sie <button class="tap-word" data-term="nach Hause" data-lemma="zu Hause" data-translation="at home">nach Hause</button>.<br>Aber heute ist ihr <button class="tap-word" data-term="letzter" data-translation="last">letzter</button> Samstag in Europa.<br>Sie zieht <button class="tap-word" data-term="schwarze" data-lemma="schwarz" data-translation="black">schwarze</button> Kleidung an.<br>Dann fährt sie nach Berghain.</div>
+              <div class='glossary'><button class="vocab" type="button" data-term="morgen" data-translation="tomorrow"><strong>morgen</strong> — tomorrow</button><button class="vocab" type="button" data-term="fliegen" data-translation="to fly"><strong>fliegen</strong> — to fly</button><button class="vocab" type="button" data-term="zu Hause" data-translation="at home"><strong>zu Hause</strong> — at home</button><button class="vocab" type="button" data-term="letzter" data-translation="last"><strong>letzter</strong> — last</button><button class="vocab" type="button" data-term="schwarz" data-translation="black"><strong>schwarz</strong> — black</button></div>
+              <div class="glossary-hint">Tap any highlighted German word or vocab pill for an instant translation.</div><div class="translator" id="translator-3">Tap a highlighted word or vocab pill.</div>
+              <audio controls src="audio/page2.ogg"></audio>
+            </div>
+          </div>
+          <div class="page-number">2/8</div>
+        </section>
+        
+        <section class="page" id="page-4">
+          <div class="page-card text-first">
+            <img src="images/sara-page3.png" alt="Illustration" class="page-img">
+            <div class="content">
+              <div class="page-copy">Vor dem Club ist die <button class="tap-word" data-term="Schlange" data-translation="queue">Schlange</button> lang.<br>Niemand spricht <button class="tap-word" data-term="laut" data-translation="loudly">laut</button>.<br>Sara sieht <button class="tap-word" data-term="Leder" data-translation="leather">Leder</button>, dunkle Augen und kalte <button class="tap-word" data-term="Gesichter" data-lemma="Gesicht" data-translation="face">Gesichter</button>.<br>Sie fragt sich: "Passe ich hier <button class="tap-word" data-term="rein" data-lemma="reinpassen" data-translation="to fit in">rein</button>?"</div>
+              <div class='glossary'><button class="vocab" type="button" data-term="Schlange" data-translation="queue"><strong>Schlange</strong> — queue</button><button class="vocab" type="button" data-term="laut" data-translation="loudly"><strong>laut</strong> — loudly</button><button class="vocab" type="button" data-term="Leder" data-translation="leather"><strong>Leder</strong> — leather</button><button class="vocab" type="button" data-term="Gesicht" data-translation="face"><strong>Gesicht</strong> — face</button><button class="vocab" type="button" data-term="reinpassen" data-translation="to fit in"><strong>reinpassen</strong> — to fit in</button></div>
+              <div class="glossary-hint">Tap any highlighted German word or vocab pill for an instant translation.</div><div class="translator" id="translator-4">Tap a highlighted word or vocab pill.</div>
+              <audio controls src="audio/page3.ogg"></audio>
+            </div>
+          </div>
+          <div class="page-number">3/8</div>
+        </section>
+        
+        <section class="page" id="page-5">
+          <div class="page-card image-first">
+            <img src="images/sara-page4.png" alt="Illustration" class="page-img">
+            <div class="content">
+              <div class="page-copy">Die <button class="tap-word" data-term="Minuten" data-lemma="Minute" data-translation="minute">Minuten</button> gehen langsam vorbei.<br>Ein <button class="tap-word" data-term="Paar" data-translation="couple">Paar</button> vor ihr küsst sich <button class="tap-word" data-term="ohne Scham" data-translation="without shame">ohne Scham</button>.<br>Ein großer Mann hinter ihr <button class="tap-word" data-term="raucht" data-lemma="rauchen" data-translation="to smoke">raucht</button> still.<br>Sara wird nervös, aber sie <button class="tap-word" data-term="bleibt" data-lemma="bleiben" data-translation="to stay">bleibt</button>.</div>
+              <div class='glossary'><button class="vocab" type="button" data-term="Minute" data-translation="minute"><strong>Minute</strong> — minute</button><button class="vocab" type="button" data-term="Paar" data-translation="couple"><strong>Paar</strong> — couple</button><button class="vocab" type="button" data-term="ohne Scham" data-translation="without shame"><strong>ohne Scham</strong> — without shame</button><button class="vocab" type="button" data-term="rauchen" data-translation="to smoke"><strong>rauchen</strong> — to smoke</button><button class="vocab" type="button" data-term="bleiben" data-translation="to stay"><strong>bleiben</strong> — to stay</button></div>
+              <div class="glossary-hint">Tap any highlighted German word or vocab pill for an instant translation.</div><div class="translator" id="translator-5">Tap a highlighted word or vocab pill.</div>
+              <audio controls src="audio/page4.ogg"></audio>
+            </div>
+          </div>
+          <div class="page-number">4/8</div>
+        </section>
+        
+        <section class="page" id="page-6">
+          <div class="page-card text-first">
+            <img src="images/sara-page5.png" alt="Illustration" class="page-img">
+            <div class="content">
+              <div class="page-copy">Jetzt ist sie fast an der <button class="tap-word" data-term="Tür" data-translation="door">Tür</button>.<br>Ihr <button class="tap-word" data-term="Herz" data-translation="heart">Herz</button> schlägt schnell.<br>Sie denkt an ihr <button class="tap-word" data-term="langweiliges" data-lemma="langweilig" data-translation="boring">langweiliges</button> <button class="tap-word" data-term="Büro" data-translation="office">Büro</button> und an ihren frühen Flug.<br>Vielleicht ist das alles eine schlechte <button class="tap-word" data-term="Idee" data-translation="idea">Idee</button>.</div>
+              <div class='glossary'><button class="vocab" type="button" data-term="Tür" data-translation="door"><strong>Tür</strong> — door</button><button class="vocab" type="button" data-term="Herz" data-translation="heart"><strong>Herz</strong> — heart</button><button class="vocab" type="button" data-term="langweilig" data-translation="boring"><strong>langweilig</strong> — boring</button><button class="vocab" type="button" data-term="Büro" data-translation="office"><strong>Büro</strong> — office</button><button class="vocab" type="button" data-term="Idee" data-translation="idea"><strong>Idee</strong> — idea</button></div>
+              <div class="glossary-hint">Tap any highlighted German word or vocab pill for an instant translation.</div><div class="translator" id="translator-6">Tap a highlighted word or vocab pill.</div>
+              <audio controls src="audio/page5.ogg"></audio>
+            </div>
+          </div>
+          <div class="page-number">5/8</div>
+        </section>
+        
+        <section class="page" id="page-7">
+          <div class="page-card image-first">
+            <img src="images/sara-page6.png" alt="Illustration" class="page-img">
+            <div class="content">
+              <div class="page-copy">Der <button class="tap-word" data-term="Türsteher" data-translation="bouncer">Türsteher</button> sieht sie <button class="tap-word" data-term="kurz" data-translation="briefly">kurz</button> an.<br>Dann <button class="tap-word" data-term="nickt" data-lemma="nicken" data-translation="to nod">nickt</button> er.<br>Sara <button class="tap-word" data-term="atmet" data-lemma="ausatmen" data-translation="to breathe out">atmet</button> endlich <button class="tap-word" data-term="aus" data-lemma="ausatmen" data-translation="to breathe out">aus</button>.<br>Sie geht <button class="tap-word" data-term="hinein" data-lemma="hineingehen" data-translation="to go inside">hinein</button>.</div>
+              <div class='glossary'><button class="vocab" type="button" data-term="Türsteher" data-translation="bouncer"><strong>Türsteher</strong> — bouncer</button><button class="vocab" type="button" data-term="kurz" data-translation="briefly"><strong>kurz</strong> — briefly</button><button class="vocab" type="button" data-term="nicken" data-translation="to nod"><strong>nicken</strong> — to nod</button><button class="vocab" type="button" data-term="ausatmen" data-translation="to breathe out"><strong>ausatmen</strong> — to breathe out</button><button class="vocab" type="button" data-term="hineingehen" data-translation="to go inside"><strong>hineingehen</strong> — to go inside</button></div>
+              <div class="glossary-hint">Tap any highlighted German word or vocab pill for an instant translation.</div><div class="translator" id="translator-7">Tap a highlighted word or vocab pill.</div>
+              <audio controls src="audio/page6.ogg"></audio>
+            </div>
+          </div>
+          <div class="page-number">6/8</div>
+        </section>
+        
+        <section class="page" id="page-8">
+          <div class="page-card text-first">
+            <img src="images/sara-page7.png" alt="Illustration" class="page-img">
+            <div class="content">
+              <div class="page-copy">Drinnen ist alles <button class="tap-word" data-term="dunkel" data-translation="dark">dunkel</button> und schwer.<br><button class="tap-word" data-term="Licht" data-translation="light">Licht</button> blitzt über nackte <button class="tap-word" data-term="Schultern" data-lemma="Schulter" data-translation="shoulder">Schultern</button>, Lippen und Hände.<br>Menschen tanzen nah <button class="tap-word" data-term="zusammen" data-translation="together">zusammen</button>.<br>Sara fühlt Angst und Hunger <button class="tap-word" data-term="zugleich" data-translation="at the same time">zugleich</button>.</div>
+              <div class='glossary'><button class="vocab" type="button" data-term="dunkel" data-translation="dark"><strong>dunkel</strong> — dark</button><button class="vocab" type="button" data-term="Licht" data-translation="light"><strong>Licht</strong> — light</button><button class="vocab" type="button" data-term="Schulter" data-translation="shoulder"><strong>Schulter</strong> — shoulder</button><button class="vocab" type="button" data-term="zusammen" data-translation="together"><strong>zusammen</strong> — together</button><button class="vocab" type="button" data-term="zugleich" data-translation="at the same time"><strong>zugleich</strong> — at the same time</button></div>
+              <div class="glossary-hint">Tap any highlighted German word or vocab pill for an instant translation.</div><div class="translator" id="translator-8">Tap a highlighted word or vocab pill.</div>
+              <audio controls src="audio/page7.ogg"></audio>
+            </div>
+          </div>
+          <div class="page-number">7/8</div>
+        </section>
+        
+        <section class="page" id="page-9">
+          <div class="page-card image-first">
+            <img src="images/sara-page8.png" alt="Illustration" class="page-img">
+            <div class="content">
+              <div class="page-copy">Sie geht <button class="tap-word" data-term="tiefer" data-translation="deeper">tiefer</button> in den Raum.<br>Der <button class="tap-word" data-term="Bass" data-translation="bass">Bass</button> drückt gegen ihre <button class="tap-word" data-term="Brust" data-translation="chest">Brust</button>.<br>Dann nimmt <button class="tap-word" data-term="plötzlich" data-translation="suddenly">plötzlich</button> jemand ihre Hand.<br>Sara <button class="tap-word" data-term="dreht sich um" data-lemma="sich umdrehen" data-translation="to turn around">dreht sich um</button>.</div>
+              <div class='glossary'><button class="vocab" type="button" data-term="tiefer" data-translation="deeper"><strong>tiefer</strong> — deeper</button><button class="vocab" type="button" data-term="Bass" data-translation="bass"><strong>Bass</strong> — bass</button><button class="vocab" type="button" data-term="Brust" data-translation="chest"><strong>Brust</strong> — chest</button><button class="vocab" type="button" data-term="plötzlich" data-translation="suddenly"><strong>plötzlich</strong> — suddenly</button><button class="vocab" type="button" data-term="sich umdrehen" data-translation="to turn around"><strong>sich umdrehen</strong> — to turn around</button></div>
+              <div class="glossary-hint">Tap any highlighted German word or vocab pill for an instant translation.</div><div class="translator" id="translator-9">Tap a highlighted word or vocab pill.</div>
+              
+            </div>
+          </div>
+          <div class="page-number">8/8</div>
+        </section>
+        
+            <section class="page end" id="page-10">
+              <div class="page-card end-card">
+                <img src="images/end.png" alt="Ending illustration" class="page-img full">
+                <div class="content end-content">
+                  <div class="page-copy">✦ Ende von Akt I ✦<br><br>Sara ist endlich drin.<br>Und jetzt hält jemand ihre Hand.</div>
+                  
+                  
+                  <audio controls src="audio/end.ogg"></audio>
+                  <div class="fake-paywall">
+                    <span class="paywall-kicker">Continue The Night</span>
+                    <h2>Unlock the next chapter</h2>
+                    <p>More scenes, more tension, and worse decisions are waiting right after this.</p>
+                    <button class="paywall-button" type="button" data-paywall-button>Unlock for €4.99</button>
+                    <div class="paywall-links">
+                      <a class="paywall-link" href="../../index.html">Back to story library</a>
+                    </div>
+                    <p class="paywall-note">Not live yet. For now it only makes sparkles.</p>
+                    <div class="sparkle-zone" aria-hidden="true"></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            
+  </div>
+
+  <script>
+    let current = 1;
+    const total = 10;
+    const autoplayKey = 'afterHoursGerman.autoplay';
+    let autoplay = true;
+
+    function loadAutoplayPreference() {
+      const saved = window.localStorage.getItem(autoplayKey);
+      autoplay = saved === null ? true : saved === 'true';
+    }
+
+    function saveAutoplayPreference() {
+      window.localStorage.setItem(autoplayKey, autoplay ? 'true' : 'false');
+    }
+
+    function updateAutoplayUI() {
+      const toggle = document.getElementById('autoplay-toggle');
+      if (!toggle) return;
+      toggle.textContent = autoplay ? 'On' : 'Off';
+      toggle.dataset.state = autoplay ? 'on' : 'off';
+      toggle.setAttribute('aria-pressed', autoplay ? 'true' : 'false');
+    }
+
+    function activeAudio() {
+      return document.querySelector('.page.active audio');
+    }
+
+    function pauseInactiveAudio() {
+      document.querySelectorAll('audio').forEach((audio) => {
+        if (!audio.closest('.page.active')) {
+          audio.pause();
+        }
+      });
+    }
+
+    function syncAutoplay() {
+      pauseInactiveAudio();
+      const audio = activeAudio();
+      if (!audio) return;
+      if (!autoplay) {
+        audio.pause();
+        return;
+      }
+      audio.currentTime = 0;
+      const playAttempt = audio.play();
+      if (playAttempt && typeof playAttempt.catch === 'function') {
+        playAttempt.catch(() => {});
+      }
+    }
+
+    function burstSparkles(button) {
+      const card = button.closest('.fake-paywall');
+      const zone = card ? card.querySelector('.sparkle-zone') : null;
+      if (!zone) return;
+      const buttonBox = button.getBoundingClientRect();
+      const zoneBox = zone.getBoundingClientRect();
+      const centerX = buttonBox.left - zoneBox.left + buttonBox.width / 2;
+      const centerY = buttonBox.top - zoneBox.top + buttonBox.height / 2;
+      for (let i = 0; i < 16; i += 1) {
+        const sparkle = document.createElement('span');
+        const angle = (Math.PI * 2 * i) / 16;
+        const distance = 26 + Math.random() * 52;
+        sparkle.className = 'sparkle';
+        sparkle.style.left = centerX + 'px';
+        sparkle.style.top = centerY + 'px';
+        sparkle.style.setProperty('--dx', Math.cos(angle) * distance + 'px');
+        sparkle.style.setProperty('--dy', Math.sin(angle) * distance + 'px');
+        sparkle.style.animationDelay = (Math.random() * .08).toFixed(2) + 's';
+        zone.appendChild(sparkle);
+        sparkle.addEventListener('animationend', () => sparkle.remove(), { once: true });
+      }
+    }
+
+    function bind(el) {
+      el.addEventListener('click', () => {
+        document.querySelectorAll('.vocab, .tap-word').forEach((x) => x.classList.remove('active'));
+        el.classList.add('active');
+        const panel = document.getElementById('translator-' + current);
+        if (!panel) return;
+        panel.innerHTML = '';
+        const head = document.createElement('strong');
+        head.textContent = el.dataset.term;
+        panel.append(head);
+        panel.append(document.createTextNode(' — ' + el.dataset.translation));
+        if (el.dataset.lemma && el.dataset.lemma !== el.dataset.term) {
+          const note = document.createElement('span');
+          note.className = 'lemma-note';
+          note.textContent = ' Dictionary form: ' + el.dataset.lemma;
+          panel.append(note);
+        }
+      });
+    }
+
+    function initInteractions() {
+      document.querySelectorAll('[data-term]').forEach(bind);
+    }
+
+    function show(n) {
+      current = Math.max(1, Math.min(total, n));
+      document.querySelectorAll('.page').forEach((el, i) => el.classList.toggle('active', i === current - 1));
+      document.querySelectorAll('.dot').forEach((el, i) => el.classList.toggle('active', i === current - 1));
+      document.getElementById('prev').disabled = current === 1;
+      document.getElementById('next').disabled = current === total;
+      syncAutoplay();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function go(dir) {
+      show(current + dir);
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') go(1);
+      if (e.key === 'ArrowLeft') go(-1);
+    });
+
+    document.getElementById('autoplay-toggle').addEventListener('click', () => {
+      autoplay = !autoplay;
+      saveAutoplayPreference();
+      updateAutoplayUI();
+      syncAutoplay();
+    });
+
+    document.querySelectorAll('[data-paywall-button]').forEach((button) => {
+      button.addEventListener('click', () => {
+        burstSparkles(button);
+      });
+    });
+
+    loadAutoplayPreference();
+    updateAutoplayUI();
+    initInteractions();
+    show(1);
+  </script>
+</body>
+</html>

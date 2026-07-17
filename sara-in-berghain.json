@@ -25,6 +25,7 @@
       "type": "cover",
       "text": null,
       "audio_text": null,
+      "image_file": "sara-cover.png",
       "image_prompt": "Use case: illustration-story. Asset type: story cover. Primary request: the most provocative act one image for Sara in Berghain. Subject: Sara, an Asian woman with a slightly wide face, stands inside Berghain in black clubwear while shadowy figures dance and kiss behind her. Style/medium: more realistic cinematic digital illustration, sensual but not explicit. Lighting/mood: red and silver club light, smoky air, dangerous excitement. Constraints: no text, no page labels."
     },
     {
@@ -32,12 +33,13 @@
       "type": "page",
       "text": "Sara sitzt allein im Hotel.\nIhr Laptop ist zu.\nIhre Füße tun weh von der Arbeit.\nSie will heute Nacht etwas Verrücktes machen.",
       "audio_text": "Sara sitzt allein im Hotel. Ihr Laptop ist zu. Ihre Füße tun weh von der Arbeit. Sie will heute Nacht etwas Verrücktes machen.",
+      "image_file": "sara-page1.png",
       "glossary": [
         ["allein", "alone"],
         ["Laptop", "laptop"],
-        ["weh tun", "to hurt"],
+        {"term": "weh tun", "translation": "to hurt", "matches": ["tun weh"]},
         ["Arbeit", "work"],
-        ["verrückt", "crazy"]
+        {"term": "verrückt", "translation": "crazy", "matches": ["Verrücktes"]}
       ],
       "image_prompt": "Use case: illustration-story. Asset type: interior story page. Subject: Sara alone in a sleek Berlin hotel room after a business trip, laptop closed, heels off, looking tired and tempted by the night. Style/medium: more realistic cinematic illustration. Mood: exhaustion turning into reckless curiosity."
     },
@@ -46,12 +48,13 @@
       "type": "page",
       "text": "Morgen fliegt sie nach Hause.\nAber heute ist ihr letzter Samstag in Europa.\nSie zieht schwarze Kleidung an.\nDann fährt sie nach Berghain.",
       "audio_text": "Morgen fliegt sie nach Hause. Aber heute ist ihr letzter Samstag in Europa. Sie zieht schwarze Kleidung an. Dann fährt sie nach Berghain.",
+      "image_file": "sara-page2.png",
       "glossary": [
         ["morgen", "tomorrow"],
-        ["fliegen", "to fly"],
-        ["zu Hause", "at home"],
+        {"term": "fliegen", "translation": "to fly", "matches": ["fliegt"]},
+        {"term": "zu Hause", "translation": "at home", "matches": ["nach Hause"]},
         ["letzter", "last"],
-        ["schwarz", "black"]
+        {"term": "schwarz", "translation": "black", "matches": ["schwarze"]}
       ],
       "image_prompt": "Use case: illustration-story. Asset type: getting-ready scene. Subject: Sara in front of a mirror changing from business traveler into understated black nightlife clothes, determined expression. Style/medium: realistic, polished, sensual Berlin-night tone."
     },
@@ -60,12 +63,13 @@
       "type": "page",
       "text": "Vor dem Club ist die Schlange lang.\nNiemand spricht laut.\nSara sieht Leder, dunkle Augen und kalte Gesichter.\nSie fragt sich: \"Passe ich hier rein?\"",
       "audio_text": "Vor dem Club ist die Schlange lang. Niemand spricht laut. Sara sieht Leder, dunkle Augen und kalte Gesichter. Sie fragt sich: Passe ich hier rein?",
+      "image_file": "sara-page3.png",
       "glossary": [
         ["Schlange", "queue"],
         ["laut", "loudly"],
         ["Leder", "leather"],
-        ["Gesicht", "face"],
-        ["reinpassen", "to fit in"]
+        {"term": "Gesicht", "translation": "face", "matches": ["Gesichter"]},
+        {"term": "reinpassen", "translation": "to fit in", "matches": ["rein"]}
       ],
       "image_prompt": "Use case: illustration-story. Asset type: exterior queue scene. Subject: long night queue outside Berghain, concrete walls, intimidating stylish people in black, Sara standing among them, unsure but fascinated. Style: realistic with dramatic faces and cold night light."
     },
@@ -74,12 +78,13 @@
       "type": "page",
       "text": "Die Minuten gehen langsam vorbei.\nEin Paar vor ihr küsst sich ohne Scham.\nEin großer Mann hinter ihr raucht still.\nSara wird nervös, aber sie bleibt.",
       "audio_text": "Die Minuten gehen langsam vorbei. Ein Paar vor ihr küsst sich ohne Scham. Ein großer Mann hinter ihr raucht still. Sara wird nervös, aber sie bleibt.",
+      "image_file": "sara-page4.png",
       "glossary": [
-        ["Minute", "minute"],
+        {"term": "Minute", "translation": "minute", "matches": ["Minuten"]},
         ["Paar", "couple"],
         ["ohne Scham", "without shame"],
-        ["rauchen", "to smoke"],
-        ["bleiben", "to stay"]
+        {"term": "rauchen", "translation": "to smoke", "matches": ["raucht"]},
+        {"term": "bleiben", "translation": "to stay", "matches": ["bleibt"]}
       ],
       "image_prompt": "Use case: illustration-story. Asset type: queue tension scene. Subject: Sara waiting in line while a couple kisses in front of her and a tall smoker stands behind her, all in moody Berlin club darkness. Keep it sensual, shadowy, and realistic."
     },
@@ -88,10 +93,11 @@
       "type": "page",
       "text": "Jetzt ist sie fast an der Tür.\nIhr Herz schlägt schnell.\nSie denkt an ihr langweiliges Büro und an ihren frühen Flug.\nVielleicht ist das alles eine schlechte Idee.",
       "audio_text": "Jetzt ist sie fast an der Tür. Ihr Herz schlägt schnell. Sie denkt an ihr langweiliges Büro und an ihren frühen Flug. Vielleicht ist das alles eine schlechte Idee.",
+      "image_file": "sara-page5.png",
       "glossary": [
         ["Tür", "door"],
         ["Herz", "heart"],
-        ["langweilig", "boring"],
+        {"term": "langweilig", "translation": "boring", "matches": ["langweiliges"]},
         ["Büro", "office"],
         ["Idee", "idea"]
       ],
@@ -102,12 +108,13 @@
       "type": "page",
       "text": "Der Türsteher sieht sie kurz an.\nDann nickt er.\nSara atmet endlich aus.\nSie geht hinein.",
       "audio_text": "Der Türsteher sieht sie kurz an. Dann nickt er. Sara atmet endlich aus. Sie geht hinein.",
+      "image_file": "sara-page6.png",
       "glossary": [
         ["Türsteher", "bouncer"],
         ["kurz", "briefly"],
-        ["nicken", "to nod"],
-        ["ausatmen", "to breathe out"],
-        ["hineingehen", "to go inside"]
+        {"term": "nicken", "translation": "to nod", "matches": ["nickt"]},
+        {"term": "ausatmen", "translation": "to breathe out", "matches": ["atmet", "aus"]},
+        {"term": "hineingehen", "translation": "to go inside", "matches": ["hinein"]}
       ],
       "image_prompt": "Use case: illustration-story. Asset type: threshold moment. Subject: the bouncer lets Sara in, and she steps through the door with relief and disbelief. Stark contrast between cold exterior and warm interior darkness."
     },
@@ -116,10 +123,11 @@
       "type": "page",
       "text": "Drinnen ist alles dunkel und schwer.\nLicht blitzt über nackte Schultern, Lippen und Hände.\nMenschen tanzen nah zusammen.\nSara fühlt Angst und Hunger zugleich.",
       "audio_text": "Drinnen ist alles dunkel und schwer. Licht blitzt über nackte Schultern, Lippen und Hände. Menschen tanzen nah zusammen. Sara fühlt Angst und Hunger zugleich.",
+      "image_file": "sara-page7.png",
       "glossary": [
         ["dunkel", "dark"],
         ["Licht", "light"],
-        ["Schulter", "shoulder"],
+        {"term": "Schulter", "translation": "shoulder", "matches": ["Schultern"]},
         ["zusammen", "together"],
         ["zugleich", "at the same time"]
       ],
@@ -130,12 +138,13 @@
       "type": "page",
       "text": "Sie geht tiefer in den Raum.\nDer Bass drückt gegen ihre Brust.\nDann nimmt plötzlich jemand ihre Hand.\nSara dreht sich um.",
       "audio_text": "Sie geht tiefer in den Raum. Der Bass drückt gegen ihre Brust. Dann nimmt plötzlich jemand ihre Hand. Sara dreht sich um.",
+      "image_file": "sara-page8.png",
       "glossary": [
         ["tiefer", "deeper"],
         ["Bass", "bass"],
         ["Brust", "chest"],
         ["plötzlich", "suddenly"],
-        ["sich umdrehen", "to turn around"]
+        {"term": "sich umdrehen", "translation": "to turn around", "matches": ["dreht sich um"]}
       ],
       "image_prompt": "Use case: illustration-story. Asset type: act one cliffhanger. Subject: inside the club, a hand reaches for Sara in the dark as she turns in surprise, with bodies dancing and kissing behind her. This should feel provocative, dangerous, and magnetic."
     },

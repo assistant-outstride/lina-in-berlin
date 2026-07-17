@@ -20,20 +20,16 @@
     {
       "slug": "sara-in-berghain",
       "title": "Sara in Berghain",
-      "subtitle": "Act I draft",
+      "subtitle": "An A2 German reader for adults — one reckless night, one impossible queue, one hand in the dark.",
       "level": "A2",
       "language": "German",
       "tone": "club suspense",
-      "status": "coming_soon",
+      "status": "published",
       "blurb": "After her last business trip meeting in Berlin, Sara decides that one final weekend in Europe cannot be polite. She joins the Berghain queue, worries she will be rejected, and steps into a darker world than she expected.",
+      "cover_image": "sara-cover.png",
       "accent": "crimson",
       "tags": ["A2", "German", "Adult", "Nightlife", "Suspense"],
-      "data_file": "sara-in-berghain.json",
-      "tease": [
-        "Act I ends the moment someone takes Sara's hand inside the club",
-        "More realistic image direction with shadowy figures, kissing, and dancing",
-        "Provocative covers by default, with Sara shown as an Asian woman with a slightly wide face"
-      ]
+      "data_file": "sara-in-berghain.json"
     }
   ]
 }
