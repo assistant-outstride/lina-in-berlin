@@ -24,10 +24,16 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
+
+      - name: Link Vercel Project
+        working-directory: site
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: npx --yes vercel link --yes --project site --scope outstride-hq --token "$VERCEL_TOKEN"
 
       - name: Deploy to Vercel
         working-directory: site
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        run: npx --yes vercel deploy --prod --yes --token "$VERCEL_TOKEN"
+        run: npx --yes vercel deploy --prod --yes --scope outstride-hq --token "$VERCEL_TOKEN"
