@@ -1,21 +1,21 @@
 {
-  "title": "Tristan at Karaoke",
+  "title": "Camille at Karaoke",
   "subtitle": "An A2 German reader for adults — neon lights, shaky notes, and one beautiful distraction.",
   "status": "draft_act_1",
   "reading_level": "A2",
   "language": "German",
-  "summary": "Tristan is a French man living in Berlin. One lonely night he goes to a karaoke bar and notices another man near the stage. The first act follows the heat, the singing, the eye contact, and the first conversation, ending when they slip out of the bar together.",
+  "summary": "Camille is a French woman living in Berlin. One lonely night she goes to a karaoke bar and notices another woman near the stage. The first act follows the singing, the eye contact, and the first conversation, ending when they slip out of the bar together.",
   "visual_direction": {
     "style": "Cinematic, slightly realistic digital illustration with expressive faces and nightlife lighting.",
     "character_notes": [
-      "Tristan is a French man in his late twenties or early thirties.",
-      "He has curly hair, a full beard, pale skin, and a slightly soft face based on the karaoke reference photos.",
-      "He should feel warm, a little self-conscious, and immediately more alive when the crush appears."
+      "Camille is a French woman in her late twenties or early thirties.",
+      "She has curly dark-blonde or brown hair, soft features, pale skin, and an open but nervous expression.",
+      "She should feel warm, self-conscious, and instantly more alive when the crush appears."
     ],
     "cover_rule": "Choose the image with the strongest romantic tension as the cover.",
     "scene_notes": [
       "Use red and pink karaoke lighting, cheap bar glow, reflections, and close faces.",
-      "The crush should feel magnetic and masculine, but the tone should stay flirtatious rather than explicit.",
+      "The crush should feel magnetic and feminine, but the tone should stay flirtatious rather than explicit.",
       "Keep the world intimate: microphones, lyric screens, drinks, laughter, and shoulders brushing."
     ]
   },
@@ -26,13 +26,13 @@
       "text": null,
       "audio_text": null,
       "image_file": "tristan-cover.png",
-      "image_prompt": "Use case: illustration-story. Asset type: story cover. Primary request: Tristan, a bearded French man in a Berlin karaoke bar, stands very close to another man under red neon light, with one microphone between them and obvious romantic tension. Style/medium: cinematic digital illustration, slightly realistic, sensual but not explicit. Lighting/mood: hot pink and red karaoke glow, late-night intimacy, nervous attraction. Constraints: no text, no watermark, no page labels."
+      "image_prompt": "Use case: illustration-story. Asset type: story cover. Primary request: Camille, a French woman in a Berlin karaoke bar, stands very close to another woman under red neon light, with one microphone between them and obvious romantic tension. Style/medium: cinematic digital illustration, slightly realistic, sensual but not explicit. Lighting/mood: hot pink and red karaoke glow, late-night intimacy, nervous attraction. Constraints: no text, no watermark, no page labels."
     },
     {
       "id": "tristan-page1",
       "type": "page",
-      "text": "Tristan wohnt in Berlin,\naber er kommt aus Frankreich.\nWenn er einsam ist,\ngeht er gern in eine Karaoke-Bar.",
-      "audio_text": "Tristan wohnt in Berlin, aber er kommt aus Frankreich. Wenn er einsam ist, geht er gern in eine Karaoke-Bar.",
+      "text": "Camille wohnt in Berlin,\naber sie kommt aus Frankreich.\nWenn sie einsam ist,\ngeht sie gern in eine Karaoke-Bar.",
+      "audio_text": "Camille wohnt in Berlin, aber sie kommt aus Frankreich. Wenn sie einsam ist, geht sie gern in eine Karaoke-Bar.",
       "image_file": "tristan-page1.png",
       "glossary": [
         {"term": "wohnen", "translation": "to live", "matches": ["wohnt"]},
@@ -41,13 +41,13 @@
         ["gern", "gladly"],
         ["Karaoke-Bar", "karaoke bar"]
       ],
-      "image_prompt": "Use case: illustration-story. Asset type: opening character scene. Subject: Tristan, a curly-haired bearded French man, enters a Berlin karaoke bar alone at night, looking hopeful and a little lonely. Style/medium: cinematic digital illustration, slightly realistic. Mood: warm red neon, intimate bar atmosphere."
+      "image_prompt": "Use case: illustration-story. Asset type: opening character scene. Subject: Camille, a curly-haired French woman, enters a Berlin karaoke bar alone at night, looking hopeful and a little lonely. Style/medium: cinematic digital illustration, slightly realistic. Mood: warm red neon, intimate bar atmosphere."
     },
     {
       "id": "tristan-page2",
       "type": "page",
-      "text": "Heute ist die Bar voll.\nDas Licht ist rot.\nTristan nimmt das Mikrofon\nund singt ein altes Lied auf Französisch.",
-      "audio_text": "Heute ist die Bar voll. Das Licht ist rot. Tristan nimmt das Mikrofon und singt ein altes Lied auf Französisch.",
+      "text": "Heute ist die Bar voll.\nDas Licht ist rot.\nCamille nimmt das Mikrofon\nund singt ein altes Lied auf Französisch.",
+      "audio_text": "Heute ist die Bar voll. Das Licht ist rot. Camille nimmt das Mikrofon und singt ein altes Lied auf Französisch.",
       "image_file": "tristan-page2.png",
       "glossary": [
         ["voll", "full"],
@@ -56,13 +56,13 @@
         {"term": "singen", "translation": "to sing", "matches": ["singt"]},
         {"term": "alt", "translation": "old", "matches": ["altes"]}
       ],
-      "image_prompt": "Use case: illustration-story. Asset type: karaoke performance scene. Subject: Tristan singing into a microphone in a packed Berlin karaoke bar, red LED lights above him, half nervous and half committed. Style/medium: cinematic digital illustration, slightly realistic, based on the reference man's beard and curls."
+      "image_prompt": "Use case: illustration-story. Asset type: karaoke performance scene. Subject: Camille singing into a microphone in a packed Berlin karaoke bar, red LED lights above her, half nervous and half committed. Style/medium: cinematic digital illustration, slightly realistic."
     },
     {
       "id": "tristan-page3",
       "type": "page",
-      "text": "Neben der kleinen Bühne\nsteht ein Mann mit dunklen Haaren.\nEr lächelt nicht.\nAber er sieht Tristan die ganze Zeit an.",
-      "audio_text": "Neben der kleinen Bühne steht ein Mann mit dunklen Haaren. Er lächelt nicht. Aber er sieht Tristan die ganze Zeit an.",
+      "text": "Neben der kleinen Bühne\nsteht eine Frau mit dunklen Haaren.\nSie lächelt nicht.\nAber sie sieht Camille die ganze Zeit an.",
+      "audio_text": "Neben der kleinen Bühne steht eine Frau mit dunklen Haaren. Sie lächelt nicht. Aber sie sieht Camille die ganze Zeit an.",
       "image_file": "tristan-page3.png",
       "glossary": [
         ["Bühne", "stage"],
@@ -71,13 +71,13 @@
         {"term": "lächeln", "translation": "to smile", "matches": ["lächelt"]},
         ["die ganze Zeit", "the whole time"]
       ],
-      "image_prompt": "Use case: illustration-story. Asset type: first sight scene. Subject: Tristan on stage notices a handsome dark-haired man near the small karaoke stage watching him closely, expression serious and interested. Style/medium: cinematic digital illustration with nightlife realism and romantic tension."
+      "image_prompt": "Use case: illustration-story. Asset type: first sight scene. Subject: Camille on stage notices a beautiful dark-haired woman near the small karaoke stage watching her closely, expression serious and interested. Style/medium: cinematic digital illustration with nightlife realism and romantic tension."
     },
     {
       "id": "tristan-page4",
       "type": "page",
-      "text": "Tristan vergisst fast den Text.\nSein Herz wird plötzlich schnell.\nEr singt weiter,\naber jetzt nur für diesen Mann.",
-      "audio_text": "Tristan vergisst fast den Text. Sein Herz wird plötzlich schnell. Er singt weiter, aber jetzt nur für diesen Mann.",
+      "text": "Camille vergisst fast den Text.\nIhr Herz wird plötzlich schnell.\nSie singt weiter,\naber jetzt nur für diese Frau.",
+      "audio_text": "Camille vergisst fast den Text. Ihr Herz wird plötzlich schnell. Sie singt weiter, aber jetzt nur für diese Frau.",
       "image_file": "tristan-page4.png",
       "glossary": [
         {"term": "vergessen", "translation": "to forget", "matches": ["vergisst"]},
@@ -86,13 +86,13 @@
         ["plötzlich", "suddenly"],
         ["weiter", "on"]
       ],
-      "image_prompt": "Use case: illustration-story. Asset type: emotional close-up. Subject: close view of Tristan singing while losing his focus because of the man watching him, with flushed face and red neon light. Style/medium: cinematic digital illustration, slightly realistic, emotionally charged."
+      "image_prompt": "Use case: illustration-story. Asset type: emotional close-up. Subject: close view of Camille singing while losing her focus because of the woman watching her, with flushed face and red neon light. Style/medium: cinematic digital illustration, slightly realistic, emotionally charged."
     },
     {
       "id": "tristan-page5",
       "type": "page",
-      "text": "Nach dem Lied klatscht die Bar.\nDer fremde Mann kommt näher.\nEr sagt: \"Du hast eine schöne Stimme.\"\nTristan lacht zu laut.",
-      "audio_text": "Nach dem Lied klatscht die Bar. Der fremde Mann kommt näher. Er sagt: Du hast eine schöne Stimme. Tristan lacht zu laut.",
+      "text": "Nach dem Lied klatscht die Bar.\nDie fremde Frau kommt näher.\nSie sagt: \"Du hast eine schöne Stimme.\"\nCamille lacht zu laut.",
+      "audio_text": "Nach dem Lied klatscht die Bar. Die fremde Frau kommt näher. Sie sagt: Du hast eine schöne Stimme. Camille lacht zu laut.",
       "image_file": "tristan-page5.png",
       "glossary": [
         {"term": "klatschen", "translation": "to clap", "matches": ["klatscht"]},
@@ -101,13 +101,13 @@
         ["Stimme", "voice"],
         ["laut", "loud"]
       ],
-      "image_prompt": "Use case: illustration-story. Asset type: first conversation scene. Subject: after the song, the dark-haired man steps up close to Tristan near the stage and compliments him, while Tristan laughs, embarrassed and charmed. Style/medium: cinematic digital illustration with warm gay-romance tension."
+      "image_prompt": "Use case: illustration-story. Asset type: first conversation scene. Subject: after the song, a dark-haired woman steps up close to Camille near the stage and compliments her, while Camille laughs, embarrassed and charmed. Style/medium: cinematic digital illustration with warm queer-romance tension."
     },
     {
       "id": "tristan-page6",
       "type": "page",
-      "text": "\"Ich heiße Nico,\" sagt der Mann.\n\"Und du?\"\nTristan spürt Hitze in seinem Gesicht.\nEr sagt seinen Namen fast zu leise.",
-      "audio_text": "Ich heiße Nico, sagt der Mann. Und du? Tristan spürt Hitze in seinem Gesicht. Er sagt seinen Namen fast zu leise.",
+      "text": "\"Ich heiße Lea,\" sagt die Frau.\n\"Und du?\"\nCamille spürt Hitze in ihrem Gesicht.\nSie sagt ihren Namen fast zu leise.",
+      "audio_text": "Ich heiße Lea, sagt die Frau. Und du? Camille spürt Hitze in ihrem Gesicht. Sie sagt ihren Namen fast zu leise.",
       "image_file": "tristan-page6.png",
       "glossary": [
         {"term": "heißen", "translation": "to be called", "matches": ["heiße"]},
@@ -116,13 +116,13 @@
         ["leise", "quietly"],
         ["Hitze", "heat"]
       ],
-      "image_prompt": "Use case: illustration-story. Asset type: intimate introduction scene. Subject: Nico and Tristan speaking close to each other by the karaoke booth, Tristan blushing as he says his name. Style/medium: cinematic digital illustration, slightly realistic, soft red bar light."
+      "image_prompt": "Use case: illustration-story. Asset type: intimate introduction scene. Subject: Lea and Camille speaking close to each other by the karaoke booth, Camille blushing as she says her name. Style/medium: cinematic digital illustration, slightly realistic, soft red bar light."
     },
     {
       "id": "tristan-page7",
       "type": "page",
-      "text": "Sie wählen ein Duett.\nNico steht direkt neben ihm.\nIhre Schultern berühren sich kurz.\nTristan kann plötzlich wieder atmen.",
-      "audio_text": "Sie wählen ein Duett. Nico steht direkt neben ihm. Ihre Schultern berühren sich kurz. Tristan kann plötzlich wieder atmen.",
+      "text": "Sie wählen ein Duett.\nLea steht direkt neben ihr.\nIhre Schultern berühren sich kurz.\nCamille kann plötzlich wieder atmen.",
+      "audio_text": "Sie wählen ein Duett. Lea steht direkt neben ihr. Ihre Schultern berühren sich kurz. Camille kann plötzlich wieder atmen.",
       "image_file": "tristan-page7.png",
       "glossary": [
         ["Duett", "duet"],
@@ -131,13 +131,13 @@
         ["berühren", "to touch"],
         ["atmen", "to breathe"]
       ],
-      "image_prompt": "Use case: illustration-story. Asset type: duet scene. Subject: Tristan and Nico sharing one karaoke screen and singing close together, shoulders brushing, both smiling a little under red and blue lights. Style/medium: cinematic digital illustration with romantic chemistry."
+      "image_prompt": "Use case: illustration-story. Asset type: duet scene. Subject: Camille and Lea sharing one karaoke screen and singing close together, shoulders brushing, both smiling a little under red and blue lights. Style/medium: cinematic digital illustration with romantic chemistry."
     },
     {
       "id": "tristan-page8",
       "type": "page",
-      "text": "Nach dem letzten Refrain\nbeugt Nico sich zu ihm.\n\"Willst du kurz raus?\" fragt er.\nTristan nickt sofort.",
-      "audio_text": "Nach dem letzten Refrain beugt Nico sich zu ihm. Willst du kurz raus? fragt er. Tristan nickt sofort.",
+      "text": "Nach dem letzten Refrain\nbeugt Lea sich zu ihr.\n\"Willst du kurz raus?\" fragt sie.\nCamille nickt sofort.",
+      "audio_text": "Nach dem letzten Refrain beugt Lea sich zu ihr. Willst du kurz raus? fragt sie. Camille nickt sofort.",
       "image_file": "tristan-page8.png",
       "glossary": [
         ["Refrain", "chorus"],
@@ -146,14 +146,14 @@
         {"term": "fragen", "translation": "to ask", "matches": ["fragt"]},
         ["sofort", "immediately"]
       ],
-      "image_prompt": "Use case: illustration-story. Asset type: act one cliffhanger. Subject: after their duet, Nico leans close to Tristan in the noisy karaoke bar and asks him to step outside, both men very close, tension obvious but tender. Style/medium: cinematic digital illustration, slightly realistic, red neon intimacy."
+      "image_prompt": "Use case: illustration-story. Asset type: act one cliffhanger. Subject: after their duet, Lea leans close to Camille in the noisy karaoke bar and asks her to step outside, both women close, tension obvious but tender. Style/medium: cinematic digital illustration, slightly realistic, red neon intimacy."
     },
     {
       "id": "tristan-end",
       "type": "end",
       "image_file": "tristan-page8.png",
-      "text": "✦ Ende von Akt I ✦\n\nTristan folgt Nico zur Tür.\nUnd draußen ist es plötzlich still.",
-      "audio_text": "Ende von Akt eins. Tristan folgt Nico zur Tür. Und draußen ist es plötzlich still."
+      "text": "✦ Ende von Akt I ✦\n\nCamille folgt Lea zur Tür.\nUnd draußen ist es plötzlich still.",
+      "audio_text": "Ende von Akt eins. Camille folgt Lea zur Tür. Und draußen ist es plötzlich still."
     }
   ]
 }
