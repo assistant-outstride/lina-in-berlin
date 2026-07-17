@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Generate illustrations for Lina in Berlin."""
 
+import argparse
 import base64
 import json
 import os
@@ -17,7 +18,8 @@ story = json.loads((BASE / "story.json").read_text())
 STYLE = (
     "Tasteful romantic illustrated novel art, soft cinematic lighting, warm Berlin evening palette, "
     "clean composition, expressive faces, contemporary adult readers aesthetic, painterly but crisp, "
-    "not photorealistic, not explicit, elegant and sensual"
+    "not photorealistic, not explicit, elegant and sensual, single full-frame illustration of one story beat, "
+    "no collage, no comic panels, no diptych, no triptych, no text, no page labels, no captions"
 )
 
 CHARACTERS = (
@@ -34,7 +36,7 @@ PAGES = {
         "romantic and atmospheric."
     ),
     "page1": (
-        f"{STYLE}. {CHARACTERS} Split-screen feeling: Lina on a laptop video call smiling at Max on screen. "
+        f"{STYLE}. {CHARACTERS} Single-scene composition: Lina beside an open laptop, smiling at Max on the call screen. "
         "Apartment interior, soft lamp light, close intimate framing, gentle anticipation."
     ),
     "page2": (
@@ -68,9 +70,21 @@ PAGES = {
 }
 
 
-def generate_image(page_id: str, prompt: str):
-    out = OUT_DIR / f"{page_id}.png"
-    if out.exists():
+def parse_args():
+    parser = argparse.ArgumentParser(description="Generate story illustrations.")
+    parser.add_argument("page_ids", nargs="*", help="Specific page ids to generate, like page4 or cover.")
+    parser.add_argument("--force", action="store_true", help="Regenerate images even when the file already exists.")
+    return parser.parse_args()
+
+
+def output_path(page):
+    return OUT_DIR / page.get("image_file", f'{page["id"]}.png')
+
+
+def generate_image(page, prompt: str, force: bool = False):
+    page_id = page["id"]
+    out = output_path(page)
+    if out.exists() and not force:
         print(f"[skip] {page_id}")
         return out
     print(f"[gen] {page_id}")
@@ -87,8 +101,12 @@ def generate_image(page_id: str, prompt: str):
 
 
 if __name__ == "__main__":
+    args = parse_args()
+    selected = set(args.page_ids)
     for page in story["pages"]:
         pid = page["id"]
+        if selected and pid not in selected:
+            continue
         prompt = PAGES.get(pid)
         if prompt:
-            generate_image(pid, prompt)
+            generate_image(page, prompt, force=args.force)

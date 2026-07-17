@@ -14,8 +14,16 @@
       "text": "Lina spricht mit Max.\nMax lebt in Berlin.\nLina ist nervös und sehr glücklich.\nSie lächelt am Bildschirm.",
       "audio_text": "Lina spricht mit Max. Max lebt in Berlin. Lina ist nervös und sehr glücklich. Sie lächelt am Bildschirm.",
       "glossary": [
-        ["sprechen", "to speak"],
-        ["leben", "to live"],
+        {
+          "term": "sprechen",
+          "translation": "to speak",
+          "matches": ["spricht"]
+        },
+        {
+          "term": "leben",
+          "translation": "to live",
+          "matches": ["lebt"]
+        },
         ["nervös", "nervous"],
         ["glücklich", "happy"],
         ["Bildschirm", "screen"]
@@ -24,10 +32,15 @@
     {
       "id": "page2",
       "type": "page",
+      "image_file": "page2-single.png",
       "text": "Lina packt ihren Koffer.\nIhre Freundin sagt: \"Das ist verrückt.\"\nLina sagt: \"Nein. Es ist mein Abenteuer.\"\nSie nimmt ihr rotes Kleid mit.",
       "audio_text": "Lina packt ihren Koffer. Ihre Freundin sagt: Das ist verrückt. Lina sagt: Nein. Es ist mein Abenteuer. Sie nimmt ihr rotes Kleid mit.",
       "glossary": [
-        ["packen", "to pack"],
+        {
+          "term": "packen",
+          "translation": "to pack",
+          "matches": ["packt"]
+        },
         ["Koffer", "suitcase"],
         ["verrückt", "crazy"],
         ["Abenteuer", "adventure"],
@@ -37,6 +50,7 @@
     {
       "id": "page3",
       "type": "page",
+      "image_file": "page3-single.png",
       "text": "Im Flugzeug sitzt Lina am Fenster.\nIhr Herz klopft schnell.\nSie schaut auf die Wolken.\nBald ist sie in Berlin.",
       "audio_text": "Im Flugzeug sitzt Lina am Fenster. Ihr Herz klopft schnell. Sie schaut auf die Wolken. Bald ist sie in Berlin.",
       "glossary": [
@@ -50,19 +64,29 @@
     {
       "id": "page4",
       "type": "page",
+      "image_file": "page4-single.png",
       "text": "Max wartet am Flughafen mit Blumen.\nEr ist groß und schön.\nLina lächelt.\nSie umarmt ihn.",
       "audio_text": "Max wartet am Flughafen mit Blumen. Er ist groß und schön. Lina lächelt. Sie umarmt ihn.",
       "glossary": [
-        ["warten", "to wait"],
+        {
+          "term": "warten",
+          "translation": "to wait",
+          "matches": ["wartet"]
+        },
         ["Flughafen", "airport"],
         ["Blumen", "flowers"],
         ["groß", "tall"],
-        ["umarmen", "to hug"]
+        {
+          "term": "umarmen",
+          "translation": "to hug",
+          "matches": ["umarmt"]
+        }
       ]
     },
     {
       "id": "page5",
       "type": "page",
+      "image_file": "page5-single.png",
       "text": "Zu Hause ist es still.\nLina und Max küssen sich.\nIhre Hände zittern.\nDie Nacht wird lang.",
       "audio_text": "Zu Hause ist es still. Lina und Max küssen sich. Ihre Hände zittern. Die Nacht wird lang.",
       "glossary": [
@@ -76,11 +100,16 @@
     {
       "id": "page6",
       "type": "page",
+      "image_file": "page6-single.png",
       "text": "Am Morgen wacht Lina auf.\nSie lächelt zuerst. Dann sieht sie etwas.\nEin kleiner Biss ist an ihrem Schlüsselbein.\nMax sagt: \"Im Sommer gibt es komische Käfer hier.\"",
       "audio_text": "Am Morgen wacht Lina auf. Sie lächelt zuerst. Dann sieht sie etwas. Ein kleiner Biss ist an ihrem Schlüsselbein. Max sagt: Im Sommer gibt es komische Käfer hier.",
       "glossary": [
         ["Morgen", "morning"],
-        ["wachen auf", "to wake up"],
+        {
+          "term": "wachen auf",
+          "translation": "to wake up",
+          "matches": ["wacht"]
+        },
         ["Biss", "bite"],
         ["Schlüsselbein", "collarbone"],
         ["Käfer", "bugs"]
@@ -89,13 +118,22 @@
     {
       "id": "page7",
       "type": "page",
+      "image_file": "page7-single.png",
       "text": "Lina schaut ihn an.\nDas klingt nicht normal.\nSie nimmt ihr Handy.\nDas Abenteuer beginnt jetzt.",
       "audio_text": "Lina schaut ihn an. Das klingt nicht normal. Sie nimmt ihr Handy. Das Abenteuer beginnt jetzt.",
       "glossary": [
-        ["klingen", "to sound"],
+        {
+          "term": "klingen",
+          "translation": "to sound",
+          "matches": ["klingt"]
+        },
         ["normal", "normal"],
         ["Handy", "phone"],
-        ["beginnen", "to begin"],
+        {
+          "term": "beginnen",
+          "translation": "to begin",
+          "matches": ["beginnt"]
+        },
         ["jetzt", "now"]
       ]
     },
