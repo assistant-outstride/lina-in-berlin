@@ -3,241 +3,132 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lina in Berlin</title>
+  <title>After Hours German</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;700;800&display=swap');
     * { box-sizing: border-box; }
-    body { margin: 0; font-family: Inter, system-ui, sans-serif; background: #0f1020; color: #f7f1e8; }
-    body::before { content: ''; position: fixed; inset: 0; background: radial-gradient(circle at 20% 10%, rgba(255,183,77,.18), transparent 25%), radial-gradient(circle at 80% 20%, rgba(100,200,255,.15), transparent 30%), linear-gradient(180deg, #18192f 0%, #0f1020 100%); z-index: -1; }
-    .wrap { max-width: 1080px; margin: 0 auto; padding: 20px; }
-    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
-    .titleblock h1 { margin: 0; font-size: clamp(2rem, 5vw, 3.25rem); }
-    .titleblock p { margin: 6px 0 0; color: #c9c2d6; max-width: 62ch; }
-    .nav { display: flex; gap: 10px; align-items: center; }
-    button { border: 0; border-radius: 999px; padding: 10px 16px; background: #f0a94b; color: #1c1424; font-weight: 800; cursor: pointer; }
-    button:disabled { opacity: .4; cursor: default; }
-    .dots { display: flex; gap: 8px; flex-wrap: wrap; margin: 18px 0 22px; }
-    .dot { width: 11px; height: 11px; border-radius: 50%; background: rgba(255,255,255,.2); cursor: pointer; }
-    .dot.active { background: #f0a94b; transform: scale(1.2); }
-    .page { display: none; }
-    .page.active { display: block; }
-    .cover-card, .page-card { overflow: hidden; border-radius: 28px; background: rgba(255,255,255,.08); backdrop-filter: blur(10px); box-shadow: 0 18px 60px rgba(0,0,0,.3); }
-    .cover-card { position: relative; min-height: 74vh; }
-    .cover-img, .page-img { width: 100%; display: block; object-fit: cover; }
-    .cover-img { height: 74vh; }
-    .cover-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: end; padding: 32px; background: linear-gradient(180deg, transparent 35%, rgba(0,0,0,.74)); }
-    .cover-overlay h1 { margin: 0; font-size: clamp(2.4rem, 7vw, 5rem); }
-    .cover-overlay p { margin: 10px 0 0; font-size: 1.1rem; color: #f7e8d1; max-width: 58ch; }
-    .page-card { display: grid; grid-template-columns: 1fr 1fr; min-height: 68vh; }
-    .page-card.image-first .page-img { order: 0; }
-    .page-card.image-first .content { order: 1; }
-    .page-card.text-first .page-img { order: 1; }
-    .page-card.text-first .content { order: 0; }
-    .page-img { height: 100%; min-height: 460px; }
-    .content { padding: 34px; display: flex; flex-direction: column; justify-content: center; gap: 14px; background: rgba(16,16,30,.92); }
-    .page-copy { margin: 0; font-size: clamp(1.05rem, 2vw, 1.3rem); line-height: 1.8; }
-    .tap-word { background: none; border: 0; padding: 0; color: #ffcf8f; font: inherit; cursor: pointer; text-decoration: underline dotted; text-underline-offset: 3px; }
-    .tap-word.active { color: #fff; text-shadow: 0 0 12px rgba(240,169,75,.45); }
-    .glossary { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-    .vocab { display: inline-flex; gap: 6px; align-items: center; padding: 8px 10px; border-radius: 999px; background: rgba(255,255,255,.08); color: #f4ddbf; font-size: .92rem; cursor: pointer; border: 0; }
-    .vocab.active { background: rgba(240,169,75,.22); color: #fff; }
-    .glossary-hint { font-size: .9rem; color: #bdb3c8; margin-top: 4px; }
-    .translator { margin-top: 10px; border-radius: 18px; padding: 14px 16px; background: rgba(255,255,255,.06); color: #f7e8d1; min-height: 52px; }
-    .translator strong { color: #fff; }
-    .lemma-note { color: #c9c2d6; font-size: .92rem; }
-    audio { width: 100%; margin-top: 8px; }
-    .page-number { margin: 10px 8px 0; color: #b2a7bf; font-size: .9rem; text-align: right; }
-    .placeholder { min-height: 460px; display: grid; place-items: center; font-size: 4rem; background: linear-gradient(135deg, #2a2948, #111123); }
-    .full { height: 50vh; }
-    .end-content { text-align: center; padding: 34px; }
-    .end-content p:first-child { font-weight: 800; letter-spacing: .02em; }
-    @media (max-width: 860px) {
-      .page-card { grid-template-columns: 1fr; }
-      .page-card .page-img { order: 0 !important; height: 36vh; min-height: 280px; }
-      .content { order: 1 !important; }
-      .cover-card, .cover-img { min-height: 62vh; height: 62vh; }
+    body { margin: 0; font-family: Manrope, sans-serif; background: #0b1020; color: #f7efe2; }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 12% 16%, rgba(244,167,78,.18), transparent 25%),
+        radial-gradient(circle at 86% 18%, rgba(112,162,255,.16), transparent 32%),
+        linear-gradient(180deg, #171b35 0%, #0b1020 100%);
+      z-index: -2;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,.4), transparent 88%);
+      z-index: -1;
+      pointer-events: none;
+    }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 28px 24px 64px; }
+    .hero { display: grid; grid-template-columns: 1.15fr .85fr; gap: 22px; align-items: stretch; margin-bottom: 28px; }
+    .hero-main, .hero-side { border-radius: 32px; background: rgba(255,255,255,.06); backdrop-filter: blur(10px); box-shadow: 0 22px 60px rgba(0,0,0,.28); overflow: hidden; }
+    .hero-main { padding: 34px; position: relative; }
+    .eyebrow { display: inline-block; color: #ffcf94; letter-spacing: .18em; text-transform: uppercase; font-size: .8rem; margin-bottom: 14px; }
+    .hero h1 { margin: 0; font-family: Fraunces, serif; font-size: clamp(2.8rem, 6vw, 5rem); line-height: .98; max-width: 10ch; }
+    .hero p { max-width: 60ch; color: #d4cbde; font-size: 1.03rem; line-height: 1.7; }
+    .hero-side { padding: 28px; display: flex; flex-direction: column; justify-content: end; background:
+      linear-gradient(180deg, rgba(0,0,0,.1), rgba(0,0,0,.48)),
+      url("stories/lina-in-berlin/images/page6-single.png") center/cover; min-height: 340px; }
+    .hero-side h2 { margin: 0; font-family: Fraunces, serif; font-size: 2rem; }
+    .hero-side p { margin: 12px 0 0; color: #f7e8d6; }
+    .hero-callout { display: inline-flex; gap: 10px; align-items: center; margin-top: 20px; padding: 12px 16px; border-radius: 999px; background: rgba(255,255,255,.1); width: fit-content; color: #fff2de; text-decoration: none; font-weight: 700; }
+    .section-head { display: flex; justify-content: space-between; gap: 18px; align-items: end; margin: 12px 0 18px; flex-wrap: wrap; }
+    .section-head h2 { margin: 0; font-family: Fraunces, serif; font-size: clamp(1.8rem, 3vw, 2.6rem); }
+    .section-head p { margin: 0; max-width: 52ch; color: #c3b8d2; }
+    .stories { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+    .story-card { border-radius: 30px; background: rgba(255,255,255,.06); box-shadow: 0 24px 60px rgba(0,0,0,.25); overflow: hidden; border: 1px solid rgba(255,255,255,.08); position: relative; }
+    .story-card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 14% 14%, var(--card-glow), transparent 32%), var(--card-wash); pointer-events: none; }
+    .story-frame { position: relative; height: 340px; overflow: hidden; }
+    .story-art { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .placeholder-art { display: grid; place-items: center; font-family: Fraunces, serif; font-size: 2rem; color: #ffd7de; background:
+      radial-gradient(circle at 20% 20%, rgba(255,145,167,.18), transparent 28%),
+      linear-gradient(135deg, #2e1723, #120e19); }
+    .story-copy { position: relative; padding: 28px; }
+    .story-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+    .badge { display: inline-flex; align-items: center; padding: 7px 11px; border-radius: 999px; background: rgba(255,255,255,.08); color: var(--card-chip); font-size: .8rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+    .story-copy h2 { margin: 0; font-family: Fraunces, serif; font-size: 2rem; }
+    .story-subtitle { margin: 10px 0 0; color: #f3dcc0; font-weight: 700; }
+    .story-blurb { margin: 14px 0 0; color: #cec2d8; line-height: 1.7; }
+    .tease-list { margin: 16px 0 0; padding-left: 18px; color: #f0dde3; line-height: 1.6; }
+    .story-action { margin-top: 20px; }
+    .story-link { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; padding: 12px 16px; border-radius: 999px; background: var(--card-chip); color: #1a1320; font-weight: 800; }
+    .story-link.disabled { background: rgba(255,255,255,.08); color: #ead6dc; }
+    .footer-note { margin-top: 26px; color: #bfb4cb; font-size: .94rem; }
+    @media (max-width: 920px) {
+      .hero { grid-template-columns: 1fr; }
+      .stories { grid-template-columns: 1fr; }
+      .hero h1 { max-width: none; }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="topbar">
-      <div class="titleblock">
-        <h1>Lina in Berlin</h1>
-        <p>An A1 German reader for adults — romantic, simple, and a little bit mysterious.</p>
+    <section class="hero">
+      <div class="hero-main">
+        <span class="eyebrow">Adult German Readers</span>
+        <h1>After Hours German</h1>
+        <p>Short, illustrated German stories for adults: romantic, suspenseful, and easy to read.</p>
+        <p>Pick a story, tap difficult words, and move through each scene like a visual novella built for language learners.</p>
       </div>
-      <div class="nav">
-        <button id="prev" onclick="go(-1)">← Back</button>
-        <button id="next" onclick="go(1)">Next →</button>
+      <aside class="hero-side">
+        <span class="eyebrow">Now Reading</span>
+        <h2>Lina in Berlin</h2>
+        <p>One plane ticket, one irresistible welcome, and one very suspicious morning after.</p>
+        <a class="hero-callout" href="stories/lina-in-berlin/index.html">Open the story</a>
+      </aside>
+    </section>
+
+    <div class="section-head">
+      <div>
+        <h2>Choose a Story</h2>
+        <p>Every title is designed for fast reading, repeated vocabulary, and a little emotional danger.</p>
       </div>
     </div>
 
-    <div class="dots"><div class="dot active" onclick="show(1)"></div><div class="dot" onclick="show(2)"></div><div class="dot" onclick="show(3)"></div><div class="dot" onclick="show(4)"></div><div class="dot" onclick="show(5)"></div><div class="dot" onclick="show(6)"></div><div class="dot" onclick="show(7)"></div><div class="dot" onclick="show(8)"></div><div class="dot" onclick="show(9)"></div></div>
+    <section class="stories">
+      
+    <article class="story-card " style="--card-glow:rgba(255, 193, 109, .20); --card-chip:#f2bf6d; --card-wash:linear-gradient(180deg, rgba(96,56,0,.07), rgba(0,0,0,.2));">
+      <div class="story-frame">
+        <img src="stories/lina-in-berlin/images/page6-single.png" alt="Lina in Berlin cover" class="story-art">
+      </div>
+      <div class="story-copy">
+        <div class="story-pills"><span class="badge">A1</span><span class="badge">German</span><span class="badge">Adult</span><span class="badge">Romance</span><span class="badge">Mystery</span></div>
+        <h2>Lina in Berlin</h2>
+        <p class="story-subtitle">An A1 German reader for adults — romantic, simple, and a little bit mysterious.</p>
+        <p class="story-blurb">Lina flies to Berlin to meet Max after weeks of flirty late-night calls. The chemistry is instant, but by morning something feels off.</p>
+        
+        <div class="story-action"><a class="story-link" href="stories/lina-in-berlin/index.html">Read Story</a></div>
+      </div>
+    </article>
+    
+    <article class="story-card locked" style="--card-glow:rgba(255, 109, 133, .22); --card-chip:#ff8d9f; --card-wash:linear-gradient(180deg, rgba(70,10,26,.08), rgba(0,0,0,.22));">
+      <div class="story-frame">
+        <div class="story-art placeholder-art"><span>Coming Soon</span></div>
+      </div>
+      <div class="story-copy">
+        <div class="story-pills"><span class="badge">A2</span><span class="badge">German</span><span class="badge">Adult</span><span class="badge">Nightlife</span><span class="badge">Suspense</span></div>
+        <h2>Sara in Berghain</h2>
+        <p class="story-subtitle">Act I draft</p>
+        <p class="story-blurb">After her last business trip meeting in Berlin, Sara decides that one final weekend in Europe cannot be polite. She joins the Berghain queue, worries she will be rejected, and steps into a darker world than she expected.</p>
+        <ul class='tease-list'><li>Act I ends the moment someone takes Sara's hand inside the club</li><li>More realistic image direction with shadowy figures, kissing, and dancing</li><li>Provocative covers by default, with Sara shown as an Asian woman with a slightly wide face</li></ul>
+        <div class="story-action"><span class="story-link disabled">In Development</span></div>
+      </div>
+    </article>
+    
+    </section>
 
-    
-        <section class="page cover active" id="page-1">
-          <div class="cover-card">
-            <img src="images/cover.png" alt="Cover" class="cover-img">
-            <div class="cover-overlay">
-              <h1>Lina in Berlin</h1>
-              <p>An A1 German reader for adults — romantic, simple, and a little bit mysterious.</p>
-            </div>
-          </div>
-        </section>
-        
-    <section class="page" id="page-2">
-      <div class="page-card text-first">
-        <img src="images/page1.png" alt="Illustration" class="page-img">
-        <div class="content">
-          <div class="page-copy">Lina <button class="tap-word" data-term="spricht" data-lemma="sprechen" data-translation="to speak">spricht</button> mit Max.<br>Max <button class="tap-word" data-term="lebt" data-lemma="leben" data-translation="to live">lebt</button> in Berlin.<br>Lina ist <button class="tap-word" data-term="nervös" data-translation="nervous">nervös</button> und sehr <button class="tap-word" data-term="glücklich" data-translation="happy">glücklich</button>.<br>Sie lächelt am <button class="tap-word" data-term="Bildschirm" data-translation="screen">Bildschirm</button>.</div>
-          <div class='glossary'><button class="vocab" type="button" data-term="sprechen" data-translation="to speak"><strong>sprechen</strong> — to speak</button><button class="vocab" type="button" data-term="leben" data-translation="to live"><strong>leben</strong> — to live</button><button class="vocab" type="button" data-term="nervös" data-translation="nervous"><strong>nervös</strong> — nervous</button><button class="vocab" type="button" data-term="glücklich" data-translation="happy"><strong>glücklich</strong> — happy</button><button class="vocab" type="button" data-term="Bildschirm" data-translation="screen"><strong>Bildschirm</strong> — screen</button></div>
-          <div class="glossary-hint">Tap any highlighted German word or vocab pill for an instant translation.</div><div class="translator" id="translator-2">Tap a highlighted word or vocab pill.</div>
-          <audio controls src="audio/page1.ogg"></audio>
-        </div>
-      </div>
-      <div class="page-number">1/7</div>
-    </section>
-    
-    <section class="page" id="page-3">
-      <div class="page-card image-first">
-        <img src="images/page2-single.png" alt="Illustration" class="page-img">
-        <div class="content">
-          <div class="page-copy">Lina <button class="tap-word" data-term="packt" data-lemma="packen" data-translation="to pack">packt</button> ihren <button class="tap-word" data-term="Koffer" data-translation="suitcase">Koffer</button>.<br>Ihre Freundin sagt: "Das ist <button class="tap-word" data-term="verrückt" data-translation="crazy">verrückt</button>."<br>Lina sagt: "Nein. Es ist mein <button class="tap-word" data-term="Abenteuer" data-translation="adventure">Abenteuer</button>."<br>Sie nimmt ihr rotes <button class="tap-word" data-term="Kleid" data-translation="dress">Kleid</button> mit.</div>
-          <div class='glossary'><button class="vocab" type="button" data-term="packen" data-translation="to pack"><strong>packen</strong> — to pack</button><button class="vocab" type="button" data-term="Koffer" data-translation="suitcase"><strong>Koffer</strong> — suitcase</button><button class="vocab" type="button" data-term="verrückt" data-translation="crazy"><strong>verrückt</strong> — crazy</button><button class="vocab" type="button" data-term="Abenteuer" data-translation="adventure"><strong>Abenteuer</strong> — adventure</button><button class="vocab" type="button" data-term="Kleid" data-translation="dress"><strong>Kleid</strong> — dress</button></div>
-          <div class="glossary-hint">Tap any highlighted German word or vocab pill for an instant translation.</div><div class="translator" id="translator-3">Tap a highlighted word or vocab pill.</div>
-          <audio controls src="audio/page2.ogg"></audio>
-        </div>
-      </div>
-      <div class="page-number">2/7</div>
-    </section>
-    
-    <section class="page" id="page-4">
-      <div class="page-card text-first">
-        <img src="images/page3-single.png" alt="Illustration" class="page-img">
-        <div class="content">
-          <div class="page-copy">Im <button class="tap-word" data-term="Flugzeug" data-translation="plane">Flugzeug</button> sitzt Lina am <button class="tap-word" data-term="Fenster" data-translation="window">Fenster</button>.<br>Ihr <button class="tap-word" data-term="Herz" data-translation="heart">Herz</button> klopft schnell.<br>Sie schaut auf die <button class="tap-word" data-term="Wolken" data-translation="clouds">Wolken</button>.<br><button class="tap-word" data-term="Bald" data-translation="soon">Bald</button> ist sie in Berlin.</div>
-          <div class='glossary'><button class="vocab" type="button" data-term="Flugzeug" data-translation="plane"><strong>Flugzeug</strong> — plane</button><button class="vocab" type="button" data-term="Fenster" data-translation="window"><strong>Fenster</strong> — window</button><button class="vocab" type="button" data-term="Herz" data-translation="heart"><strong>Herz</strong> — heart</button><button class="vocab" type="button" data-term="Wolken" data-translation="clouds"><strong>Wolken</strong> — clouds</button><button class="vocab" type="button" data-term="bald" data-translation="soon"><strong>bald</strong> — soon</button></div>
-          <div class="glossary-hint">Tap any highlighted German word or vocab pill for an instant translation.</div><div class="translator" id="translator-4">Tap a highlighted word or vocab pill.</div>
-          <audio controls src="audio/page3.ogg"></audio>
-        </div>
-      </div>
-      <div class="page-number">3/7</div>
-    </section>
-    
-    <section class="page" id="page-5">
-      <div class="page-card image-first">
-        <img src="images/page4-single.png" alt="Illustration" class="page-img">
-        <div class="content">
-          <div class="page-copy">Max <button class="tap-word" data-term="wartet" data-lemma="warten" data-translation="to wait">wartet</button> am <button class="tap-word" data-term="Flughafen" data-translation="airport">Flughafen</button> mit <button class="tap-word" data-term="Blumen" data-translation="flowers">Blumen</button>.<br>Er ist <button class="tap-word" data-term="groß" data-translation="tall">groß</button> und schön.<br>Lina lächelt.<br>Sie <button class="tap-word" data-term="umarmt" data-lemma="umarmen" data-translation="to hug">umarmt</button> ihn.</div>
-          <div class='glossary'><button class="vocab" type="button" data-term="warten" data-translation="to wait"><strong>warten</strong> — to wait</button><button class="vocab" type="button" data-term="Flughafen" data-translation="airport"><strong>Flughafen</strong> — airport</button><button class="vocab" type="button" data-term="Blumen" data-translation="flowers"><strong>Blumen</strong> — flowers</button><button class="vocab" type="button" data-term="groß" data-translation="tall"><strong>groß</strong> — tall</button><button class="vocab" type="button" data-term="umarmen" data-translation="to hug"><strong>umarmen</strong> — to hug</button></div>
-          <div class="glossary-hint">Tap any highlighted German word or vocab pill for an instant translation.</div><div class="translator" id="translator-5">Tap a highlighted word or vocab pill.</div>
-          <audio controls src="audio/page4.ogg"></audio>
-        </div>
-      </div>
-      <div class="page-number">4/7</div>
-    </section>
-    
-    <section class="page" id="page-6">
-      <div class="page-card text-first">
-        <img src="images/page5-single.png" alt="Illustration" class="page-img">
-        <div class="content">
-          <div class="page-copy"><button class="tap-word" data-term="Zu Hause" data-translation="at home">Zu Hause</button> ist es <button class="tap-word" data-term="still" data-translation="quiet">still</button>.<br>Lina und Max <button class="tap-word" data-term="küssen" data-translation="to kiss">küssen</button> sich.<br>Ihre Hände <button class="tap-word" data-term="zittern" data-translation="to tremble">zittern</button>.<br>Die <button class="tap-word" data-term="Nacht" data-translation="night">Nacht</button> wird lang.</div>
-          <div class='glossary'><button class="vocab" type="button" data-term="zu Hause" data-translation="at home"><strong>zu Hause</strong> — at home</button><button class="vocab" type="button" data-term="still" data-translation="quiet"><strong>still</strong> — quiet</button><button class="vocab" type="button" data-term="küssen" data-translation="to kiss"><strong>küssen</strong> — to kiss</button><button class="vocab" type="button" data-term="zittern" data-translation="to tremble"><strong>zittern</strong> — to tremble</button><button class="vocab" type="button" data-term="Nacht" data-translation="night"><strong>Nacht</strong> — night</button></div>
-          <div class="glossary-hint">Tap any highlighted German word or vocab pill for an instant translation.</div><div class="translator" id="translator-6">Tap a highlighted word or vocab pill.</div>
-          <audio controls src="audio/page5.ogg"></audio>
-        </div>
-      </div>
-      <div class="page-number">5/7</div>
-    </section>
-    
-    <section class="page" id="page-7">
-      <div class="page-card image-first">
-        <img src="images/page6-single.png" alt="Illustration" class="page-img">
-        <div class="content">
-          <div class="page-copy">Am <button class="tap-word" data-term="Morgen" data-translation="morning">Morgen</button> <button class="tap-word" data-term="wacht" data-lemma="wachen auf" data-translation="to wake up">wacht</button> Lina auf.<br>Sie lächelt zuerst. Dann sieht sie etwas.<br>Ein kleiner <button class="tap-word" data-term="Biss" data-translation="bite">Biss</button> ist an ihrem <button class="tap-word" data-term="Schlüsselbein" data-translation="collarbone">Schlüsselbein</button>.<br>Max sagt: "Im Sommer gibt es komische <button class="tap-word" data-term="Käfer" data-translation="bugs">Käfer</button> hier."</div>
-          <div class='glossary'><button class="vocab" type="button" data-term="Morgen" data-translation="morning"><strong>Morgen</strong> — morning</button><button class="vocab" type="button" data-term="wachen auf" data-translation="to wake up"><strong>wachen auf</strong> — to wake up</button><button class="vocab" type="button" data-term="Biss" data-translation="bite"><strong>Biss</strong> — bite</button><button class="vocab" type="button" data-term="Schlüsselbein" data-translation="collarbone"><strong>Schlüsselbein</strong> — collarbone</button><button class="vocab" type="button" data-term="Käfer" data-translation="bugs"><strong>Käfer</strong> — bugs</button></div>
-          <div class="glossary-hint">Tap any highlighted German word or vocab pill for an instant translation.</div><div class="translator" id="translator-7">Tap a highlighted word or vocab pill.</div>
-          <audio controls src="audio/page6.ogg"></audio>
-        </div>
-      </div>
-      <div class="page-number">6/7</div>
-    </section>
-    
-    <section class="page" id="page-8">
-      <div class="page-card text-first">
-        <img src="images/page7-single.png" alt="Illustration" class="page-img">
-        <div class="content">
-          <div class="page-copy">Lina schaut ihn an.<br>Das <button class="tap-word" data-term="klingt" data-lemma="klingen" data-translation="to sound">klingt</button> nicht <button class="tap-word" data-term="normal" data-translation="normal">normal</button>.<br>Sie nimmt ihr <button class="tap-word" data-term="Handy" data-translation="phone">Handy</button>.<br>Das Abenteuer <button class="tap-word" data-term="beginnt" data-lemma="beginnen" data-translation="to begin">beginnt</button> <button class="tap-word" data-term="jetzt" data-translation="now">jetzt</button>.</div>
-          <div class='glossary'><button class="vocab" type="button" data-term="klingen" data-translation="to sound"><strong>klingen</strong> — to sound</button><button class="vocab" type="button" data-term="normal" data-translation="normal"><strong>normal</strong> — normal</button><button class="vocab" type="button" data-term="Handy" data-translation="phone"><strong>Handy</strong> — phone</button><button class="vocab" type="button" data-term="beginnen" data-translation="to begin"><strong>beginnen</strong> — to begin</button><button class="vocab" type="button" data-term="jetzt" data-translation="now"><strong>jetzt</strong> — now</button></div>
-          <div class="glossary-hint">Tap any highlighted German word or vocab pill for an instant translation.</div><div class="translator" id="translator-8">Tap a highlighted word or vocab pill.</div>
-          <audio controls src="audio/page7.ogg"></audio>
-        </div>
-      </div>
-      <div class="page-number">7/7</div>
-    </section>
-    
-        <section class="page end" id="page-9">
-          <div class="page-card end-card">
-            <img src="images/end.png" alt="Ending illustration" class="page-img full">
-            <div class="content end-content">
-              <div class="page-copy">✦ The End ✦<br><br>Willkommen in Berlin.<br>Und ja — something strange is definitely going on.</div>
-              
-              
-              <audio controls src="audio/end.ogg"></audio>
-            </div>
-          </div>
-        </section>
-        
+    <p class="footer-note">Next step: once we pick the second story, we can give it its own `story.json`, art prompts, and audio pass with the same reader system.</p>
   </div>
-
-  <script>
-    let current = 1;
-    const total = 9;
-
-    function bind(el) {
-      el.addEventListener('click', () => {
-        document.querySelectorAll('.vocab, .tap-word').forEach((x) => x.classList.remove('active'));
-        el.classList.add('active');
-        const panel = document.getElementById('translator-' + current);
-        if (!panel) return;
-        panel.innerHTML = '';
-        const head = document.createElement('strong');
-        head.textContent = el.dataset.term;
-        panel.append(head);
-        panel.append(document.createTextNode(' — ' + el.dataset.translation));
-        if (el.dataset.lemma && el.dataset.lemma !== el.dataset.term) {
-          const note = document.createElement('span');
-          note.className = 'lemma-note';
-          note.textContent = ' Dictionary form: ' + el.dataset.lemma;
-          panel.append(note);
-        }
-      });
-    }
-
-    function initInteractions() {
-      document.querySelectorAll('[data-term]').forEach(bind);
-    }
-
-    function show(n) {
-      current = Math.max(1, Math.min(total, n));
-      document.querySelectorAll('.page').forEach((el, i) => el.classList.toggle('active', i === current - 1));
-      document.querySelectorAll('.dot').forEach((el, i) => el.classList.toggle('active', i === current - 1));
-      document.getElementById('prev').disabled = current === 1;
-      document.getElementById('next').disabled = current === total;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function go(dir) {
-      show(current + dir);
-    }
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') go(1);
-      if (e.key === 'ArrowLeft') go(-1);
-    });
-
-    initInteractions();
-    show(1);
-  </script>
 </body>
 </html>
