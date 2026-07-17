@@ -183,10 +183,6 @@ def build_story_reader(story_meta):
               <div class="page-card end-card">
                 {f'<img src="{img}" alt="Ending illustration" class="page-img full">' if img else '<div class="placeholder full">✦</div>'}
                 <div class="content end-content">
-                  <div class="page-copy">{text_html}</div>
-                  {gloss}
-                  {interaction}
-                  {f'<audio controls src="{audio}"></audio>' if audio else ''}
                   <div class="fake-paywall">
                     <span class="paywall-kicker">Continue The Night</span>
                     <h2>Unlock the next chapter</h2>
@@ -198,6 +194,10 @@ def build_story_reader(story_meta):
                     <p class="paywall-note">Not live yet. For now it only makes sparkles.</p>
                     <div class="sparkle-zone" aria-hidden="true"></div>
                   </div>
+                  <div class="page-copy">{text_html}</div>
+                  {gloss}
+                  {interaction}
+                  {f'<audio controls src="{audio}"></audio>' if audio else ''}
                 </div>
               </div>
             </section>
@@ -512,8 +512,6 @@ def story_card_html(entry):
 
 def build_homepage():
     ensure_dir(SITE_DIR)
-    featured_story = next(entry for entry in LIBRARY["stories"] if entry["status"] == "published")
-    featured_image = escape(featured_story["cover_image"])
     cards = "".join(story_card_html(entry) for entry in LIBRARY["stories"])
     html_doc = f'''<!DOCTYPE html>
 <html lang="en">
@@ -548,19 +546,11 @@ def build_homepage():
       pointer-events: none;
     }}
     .wrap {{ max-width: 1180px; margin: 0 auto; padding: 28px 24px 64px; }}
-    .hero {{ display: grid; grid-template-columns: 1.15fr .85fr; gap: 22px; align-items: stretch; margin-bottom: 28px; }}
-    .hero-main, .hero-side {{ border-radius: 32px; background: rgba(255,255,255,.06); backdrop-filter: blur(10px); box-shadow: 0 22px 60px rgba(0,0,0,.28); overflow: hidden; }}
-    .hero-main {{ padding: 34px; position: relative; }}
+    .hero {{ margin-bottom: 22px; padding: 28px 0 6px; }}
     .eyebrow {{ display: inline-block; color: #ffcf94; letter-spacing: .18em; text-transform: uppercase; font-size: .8rem; margin-bottom: 14px; }}
     .hero h1 {{ margin: 0; font-family: Fraunces, serif; font-size: clamp(2.8rem, 6vw, 5rem); line-height: .98; max-width: 10ch; }}
-    .hero p {{ max-width: 60ch; color: #d4cbde; font-size: 1.03rem; line-height: 1.7; }}
-    .hero-side {{ padding: 28px; display: flex; flex-direction: column; justify-content: end; background:
-      linear-gradient(180deg, rgba(0,0,0,.1), rgba(0,0,0,.48)),
-      url("stories/{escape(featured_story["slug"])}/images/{featured_image}") center/cover; min-height: 340px; }}
-    .hero-side h2 {{ margin: 0; font-family: Fraunces, serif; font-size: 2rem; }}
-    .hero-side p {{ margin: 12px 0 0; color: #f7e8d6; }}
-    .hero-callout {{ display: inline-flex; gap: 10px; align-items: center; margin-top: 20px; padding: 12px 16px; border-radius: 999px; background: rgba(255,255,255,.1); width: fit-content; color: #fff2de; text-decoration: none; font-weight: 700; }}
-    .section-head {{ display: flex; justify-content: space-between; gap: 18px; align-items: end; margin: 12px 0 18px; flex-wrap: wrap; }}
+    .hero p {{ max-width: 56ch; color: #d4cbde; font-size: 1.03rem; line-height: 1.7; margin: 12px 0 0; }}
+    .section-head {{ display: flex; justify-content: space-between; gap: 18px; align-items: end; margin: 0 0 18px; flex-wrap: wrap; }}
     .section-head h2 {{ margin: 0; font-family: Fraunces, serif; font-size: clamp(1.8rem, 3vw, 2.6rem); }}
     .section-head p {{ margin: 0; max-width: 52ch; color: #c3b8d2; }}
     .stories {{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }}
@@ -581,9 +571,7 @@ def build_homepage():
     .story-action {{ margin-top: 20px; }}
     .story-link {{ display: inline-flex; align-items: center; gap: 8px; text-decoration: none; padding: 12px 16px; border-radius: 999px; background: var(--card-chip); color: #1a1320; font-weight: 800; }}
     .story-link.disabled {{ background: rgba(255,255,255,.08); color: #ead6dc; }}
-    .footer-note {{ margin-top: 26px; color: #bfb4cb; font-size: .94rem; }}
     @media (max-width: 920px) {{
-      .hero {{ grid-template-columns: 1fr; }}
       .stories {{ grid-template-columns: 1fr; }}
       .hero h1 {{ max-width: none; }}
     }}
@@ -592,32 +580,21 @@ def build_homepage():
 <body>
   <div class="wrap">
     <section class="hero">
-      <div class="hero-main">
-        <span class="eyebrow">Adult German Readers</span>
-        <h1>{escape(LIBRARY["title"])}</h1>
-        <p>{escape(LIBRARY["subtitle"])}</p>
-        <p>{escape(LIBRARY["description"])}</p>
-      </div>
-      <aside class="hero-side">
-        <span class="eyebrow">Now Reading</span>
-        <h2>{escape(featured_story["title"])}</h2>
-        <p>One plane ticket, one irresistible welcome, and one very suspicious morning after.</p>
-        <a class="hero-callout" href="stories/{escape(featured_story["slug"])}/index.html">Open the story</a>
-      </aside>
+      <span class="eyebrow">Adult German Readers</span>
+      <h1>{escape(LIBRARY["title"])}</h1>
+      <p>{escape(LIBRARY["subtitle"])}</p>
     </section>
 
     <div class="section-head">
       <div>
         <h2>Choose a Story</h2>
-        <p>Every title is designed for fast reading, repeated vocabulary, and a little emotional danger.</p>
+        <p>{escape(LIBRARY["description"])}</p>
       </div>
     </div>
 
     <section class="stories">
       {cards}
     </section>
-
-    <p class="footer-note">Next step: once we pick the second story, we can give it its own `story.json`, art prompts, and audio pass with the same reader system.</p>
   </div>
 </body>
 </html>
