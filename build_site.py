@@ -296,7 +296,9 @@ def build_story_reader(story_meta):
     }}
     @media (max-width: 860px) {{
       .page-card {{ grid-template-columns: 1fr; }}
-      .page-card .page-img {{ order: 0 !important; height: 36vh; min-height: 280px; }}
+      .page-card {{ min-height: auto; }}
+      .page-card .page-img {{ order: 0 !important; height: auto; min-height: 0; object-fit: contain; background: rgba(8, 10, 20, .72); }}
+      .placeholder {{ min-height: 280px; }}
       .content {{ order: 1 !important; }}
       .cover-card, .cover-img {{ min-height: 62vh; height: 62vh; }}
     }}
