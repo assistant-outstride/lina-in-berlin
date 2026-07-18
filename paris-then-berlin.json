@@ -59,7 +59,7 @@
       "glossary": [
         ["allein", "alone"],
         ["spät", "late"],
-        ["klein", "small"],
+        {"term": "klein", "translation": "small", "matches": ["kleinen"]},
         {"term": "sehen", "translation": "to see", "matches": ["sehe"]},
         {"term": "heißen", "translation": "to be called", "matches": ["heißt"]}
       ],
@@ -74,7 +74,7 @@
       "glossary": [
         {"term": "reden", "translation": "to talk", "matches": ["reden"]},
         ["lange", "for a long time"],
-        ["leben", "to live"],
+        {"term": "leben", "translation": "to live", "matches": ["lebt"]},
         {"term": "küssen", "translation": "to kiss", "matches": ["küssen"]},
         ["Tür", "door"]
       ],
@@ -87,7 +87,7 @@
       "audio_text": "Es ist nur ein kurzer Moment. Tristan muss zum Flughafen. Sein Taxi wartet schon. Ich stehe noch lange auf der Straße.",
       "image_file": "paris-berlin-page3.png",
       "glossary": [
-        ["kurz", "short"],
+        {"term": "kurz", "translation": "short", "matches": ["kurzer"]},
         ["Moment", "moment"],
         ["Flughafen", "airport"],
         {"term": "warten", "translation": "to wait", "matches": ["wartet"]},

@@ -66,9 +66,10 @@ def generate_audio(story, page, force=False):
     if not text:
         return None
     out = output_path(page["id"])
-    if out.exists() and not force:
+    fallback_wav = AUDIO_DIR / f"{page['id']}.wav"
+    if not force and (out.exists() or fallback_wav.exists()):
         print(f"[skip] {page['id']}")
-        return out
+        return out if out.exists() else fallback_wav
     if not LEGACY_TTS.exists():
         for stale in (
             AUDIO_DIR / f"{page['id']}.ogg",
@@ -83,7 +84,11 @@ def generate_audio(story, page, force=False):
         generate_with_legacy_tts(text, out)
     else:
         generate_with_macos_tts(text, out)
-    return out
+    if out.exists():
+        return out
+    if fallback_wav.exists():
+        return fallback_wav
+    raise FileNotFoundError(f"No audio output found for {page['id']}")
 
 
 def main():
