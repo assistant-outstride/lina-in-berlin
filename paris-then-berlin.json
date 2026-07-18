@@ -1,0 +1,181 @@
+{
+  "title": "Paris, dann Berlin",
+  "subtitle": "An A2 German reader for adults — one night in Paris, one plane, and a weekend that gets out of hand.",
+  "status": "draft_act_1",
+  "reading_level": "A2",
+  "language": "German",
+  "summary": "A woman meets Tristan in Paris and cannot stop thinking about him after he leaves for Berlin. She visits him there, follows him into the night, and ends the evening with him at the Berlin Wall, both of them too charged to behave normally.",
+  "visual_direction": {
+    "style": "Cinematic, slightly realistic digital illustration with expressive faces, nightlife lighting, and readable body language.",
+    "character_notes": [
+      "The narrator is a stylish adult woman in her late twenties or early thirties.",
+      "She should feel observant, impulsive, and a little surprised by her own decisions.",
+      "Tristan is based on the provided reference photos: white man in his late twenties or thirties, beard, strong nose, messy hair, playful energy, visually consistent across all scenes."
+    ],
+    "cover_rule": "Choose the image with the strongest romantic tension as the cover.",
+    "scene_notes": [
+      "Paris scenes should feel warm, golden, and a little cinematic.",
+      "Berlin scenes should feel faster and darker: train platforms, apartment hallways, club lights, and the East Side Gallery at night.",
+      "Keep the tone sensual, impulsive, and emotionally charged, but not explicit."
+    ]
+  },
+  "characters": {
+    "narrator": {
+      "name": "Ich",
+      "identity_lock": "Keep the female narrator visually consistent across every image in this story.",
+      "appearance": [
+        "Adult woman in her late twenties or early thirties.",
+        "Attractive, confident but sometimes visibly nervous.",
+        "Modern city style that works in both Paris and Berlin nightlife scenes."
+      ],
+      "vibe": "Curious, bold, and easy to read emotionally."
+    },
+    "tristan": {
+      "name": "Tristan",
+      "identity_lock": "Keep Tristan visually consistent across every image in this story and base him on the supplied reference photos.",
+      "appearance": [
+        "Adult white man in his late twenties or thirties.",
+        "Full beard, messy brown hair, strong nose, playful face.",
+        "In some scenes he wears dark sunglasses; in nightlife scenes he can hold a microphone and look loud and reckless."
+      ],
+      "vibe": "Charming, slightly chaotic, flirtatious, and hard to ignore."
+    }
+  },
+  "pages": [
+    {
+      "id": "paris-berlin-cover",
+      "type": "cover",
+      "text": null,
+      "audio_text": null,
+      "image_file": "paris-berlin-cover.png",
+      "image_prompt": "Use case: illustration-story. Asset type: story cover. Primary request: a woman and Tristan stand very close at night between Paris and Berlin moods, with strong romantic tension and the feeling of a fast international weekend. Input images: Photo 1 reference for Tristan's daytime face and beard; Photo 2 and Photo 3 references for Tristan's nightlife energy and microphone posture. Style/medium: cinematic digital illustration, slightly realistic, sensual but not explicit. Lighting/mood: red and gold city light, impulsive romance, train-and-club energy. Constraints: no text, no watermark, no page labels."
+    },
+    {
+      "id": "paris-berlin-page1",
+      "type": "page",
+      "text": "Ich bin allein in Paris.\nEs ist schon spät.\nIn einer kleinen Bar sehe ich einen Mann.\nEr heißt Tristan.",
+      "audio_text": "Ich bin allein in Paris. Es ist schon spät. In einer kleinen Bar sehe ich einen Mann. Er heißt Tristan.",
+      "image_file": "paris-berlin-page1.png",
+      "glossary": [
+        ["allein", "alone"],
+        ["spät", "late"],
+        ["klein", "small"],
+        {"term": "sehen", "translation": "to see", "matches": ["sehe"]},
+        {"term": "heißen", "translation": "to be called", "matches": ["heißt"]}
+      ],
+      "image_prompt": "Use case: illustration-story. Asset type: opening encounter scene. Subject: first-person female narrator notices Tristan in a small Paris bar late at night; he looks like the man in the reference photos, with beard and messy hair, and she is instantly curious. Style/medium: cinematic digital illustration, slightly realistic. Mood: warm Paris bar light, first attraction."
+    },
+    {
+      "id": "paris-berlin-page2",
+      "type": "page",
+      "text": "Wir reden lange.\nEr kommt aus Frankreich,\naber er lebt in Berlin.\nDann küssen wir uns vor der Tür.",
+      "audio_text": "Wir reden lange. Er kommt aus Frankreich, aber er lebt in Berlin. Dann küssen wir uns vor der Tür.",
+      "image_file": "paris-berlin-page2.png",
+      "glossary": [
+        {"term": "reden", "translation": "to talk", "matches": ["reden"]},
+        ["lange", "for a long time"],
+        ["leben", "to live"],
+        {"term": "küssen", "translation": "to kiss", "matches": ["küssen"]},
+        ["Tür", "door"]
+      ],
+      "image_prompt": "Use case: illustration-story. Asset type: first kiss scene. Subject: outside a Paris bar at night, the female narrator and Tristan kiss by the door under streetlight, close and excited. Tristan should match the reference photos. Style/medium: cinematic digital illustration with romantic realism."
+    },
+    {
+      "id": "paris-berlin-page3",
+      "type": "page",
+      "text": "Es ist nur ein kurzer Moment.\nTristan muss zum Flughafen.\nSein Taxi wartet schon.\nIch stehe noch lange auf der Straße.",
+      "audio_text": "Es ist nur ein kurzer Moment. Tristan muss zum Flughafen. Sein Taxi wartet schon. Ich stehe noch lange auf der Straße.",
+      "image_file": "paris-berlin-page3.png",
+      "glossary": [
+        ["kurz", "short"],
+        ["Moment", "moment"],
+        ["Flughafen", "airport"],
+        {"term": "warten", "translation": "to wait", "matches": ["wartet"]},
+        {"term": "Straße", "translation": "street", "matches": ["Straße"]}
+      ],
+      "image_prompt": "Use case: illustration-story. Asset type: goodbye scene. Subject: Tristan leaving for the airport in a waiting taxi while the female narrator stays on a Paris street, charged and disappointed. Style/medium: cinematic digital illustration, slightly realistic, bittersweet."
+    },
+    {
+      "id": "paris-berlin-page4",
+      "type": "page",
+      "text": "Zwei Wochen später\nfahre ich nach Berlin.\nTristan holt mich am Bahnhof ab.\nAls er lächelt, bin ich sofort wieder nervös.",
+      "audio_text": "Zwei Wochen später fahre ich nach Berlin. Tristan holt mich am Bahnhof ab. Als er lächelt, bin ich sofort wieder nervös.",
+      "image_file": "paris-berlin-page4.png",
+      "glossary": [
+        ["später", "later"],
+        {"term": "fahren", "translation": "to travel", "matches": ["fahre"]},
+        {"term": "abholen", "translation": "to pick up", "matches": ["holt", "ab"]},
+        ["Bahnhof", "train station"],
+        ["nervös", "nervous"]
+      ],
+      "image_prompt": "Use case: illustration-story. Asset type: reunion scene. Subject: Berlin station reunion, Tristan meets the female narrator and smiles at her; she feels nervous again at once. Tristan should match the reference photos closely. Style/medium: cinematic digital illustration with train-station atmosphere."
+    },
+    {
+      "id": "paris-berlin-page5",
+      "type": "page",
+      "text": "Am Abend gehen wir zusammen aus.\nIn einem Club singt Tristan laut in ein Mikrofon.\nIch lache und sehe ihn an.\nEr sieht zurück, als ob sonst niemand da ist.",
+      "audio_text": "Am Abend gehen wir zusammen aus. In einem Club singt Tristan laut in ein Mikrofon. Ich lache und sehe ihn an. Er sieht zurück, als ob sonst niemand da ist.",
+      "image_file": "paris-berlin-page5.png",
+      "glossary": [
+        ["zusammen", "together"],
+        ["Club", "club"],
+        {"term": "singen", "translation": "to sing", "matches": ["singt"]},
+        ["laut", "loudly"],
+        ["niemand", "nobody"]
+      ],
+      "image_prompt": "Use case: illustration-story. Asset type: nightlife performance scene. Subject: Tristan in a Berlin club sings loudly into a microphone with red LED light, matching the nightlife reference photos, while the female narrator watches and laughs. Style/medium: cinematic digital illustration, slightly realistic, chaotic flirt energy."
+    },
+    {
+      "id": "paris-berlin-page6",
+      "type": "page",
+      "text": "Später tanzen wir ganz nah.\nDann küssen wir uns wieder.\nSeine Hand liegt warm auf meinem Rücken.\nWir wollen beide nur noch nach Hause.",
+      "audio_text": "Später tanzen wir ganz nah. Dann küssen wir uns wieder. Seine Hand liegt warm auf meinem Rücken. Wir wollen beide nur noch nach Hause.",
+      "image_file": "paris-berlin-page6.png",
+      "glossary": [
+        {"term": "tanzen", "translation": "to dance", "matches": ["tanzen"]},
+        ["nah", "close"],
+        {"term": "liegen", "translation": "to lie / rest", "matches": ["liegt"]},
+        ["Rücken", "back"],
+        ["nach Hause", "home"]
+      ],
+      "image_prompt": "Use case: illustration-story. Asset type: club intimacy scene. Subject: in a dark Berlin club, the female narrator and Tristan dance close and kiss, with his hand warm on her back. Keep it sensual and urgent, not explicit. Style/medium: cinematic digital illustration with red and blue nightlife light."
+    },
+    {
+      "id": "paris-berlin-page7",
+      "type": "page",
+      "text": "Auf dem Weg stoppen wir bei der Berliner Mauer.\nDort ist Licht und Farbe auf dem Beton.\nWir küssen uns noch einmal, sehr langsam.\nEin paar Leute sehen kurz zu, aber es ist uns egal.",
+      "audio_text": "Auf dem Weg stoppen wir bei der Berliner Mauer. Dort ist Licht und Farbe auf dem Beton. Wir küssen uns noch einmal, sehr langsam. Ein paar Leute sehen kurz zu, aber es ist uns egal.",
+      "image_file": "paris-berlin-page7.png",
+      "glossary": [
+        ["Weg", "way"],
+        ["Mauer", "wall"],
+        ["Beton", "concrete"],
+        {"term": "zusehen", "translation": "to watch", "matches": ["sehen", "zu"]},
+        ["egal", "it does not matter"]
+      ],
+      "image_prompt": "Use case: illustration-story. Asset type: Berlin Wall scene. Subject: at the East Side Gallery at night, the female narrator and Tristan kiss slowly against colorful painted concrete while a few distant people notice them. Sensual public tension, but not explicit. Style/medium: cinematic digital illustration, slightly realistic."
+    },
+    {
+      "id": "paris-berlin-page8",
+      "type": "page",
+      "text": "\"Komm,\" sagt Tristan leise.\nJetzt laufen wir fast durch die Nacht.\nIn meinem Kopf ist nur noch sein Gesicht.\nUnd gleich seine Wohnungstür.",
+      "audio_text": "Komm, sagt Tristan leise. Jetzt laufen wir fast durch die Nacht. In meinem Kopf ist nur noch sein Gesicht. Und gleich seine Wohnungstür.",
+      "image_file": "paris-berlin-page8.png",
+      "glossary": [
+        ["leise", "quietly"],
+        {"term": "laufen", "translation": "to run", "matches": ["laufen"]},
+        ["Nacht", "night"],
+        ["Kopf", "head"],
+        ["Wohnungstür", "apartment door"]
+      ],
+      "image_prompt": "Use case: illustration-story. Asset type: act one cliffhanger. Subject: the female narrator and Tristan hurry together through Berlin night streets toward his apartment, breathless after kissing by the Wall. Style/medium: cinematic digital illustration, slightly realistic, urgent and romantic."
+    },
+    {
+      "id": "paris-berlin-end",
+      "type": "end",
+      "image_file": "paris-berlin-page8.png",
+      "text": "✦ Ende von Akt I ✦\n\nIch bin endlich in Berlin.\nUnd Tristan öffnet schon die Tür.",
+      "audio_text": "Ende von Akt eins. Ich bin endlich in Berlin. Und Tristan öffnet schon die Tür."
+    }
+  ]
+}

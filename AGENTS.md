@@ -9,6 +9,7 @@
 - Vocabulary should stay concrete and reusable for learners: dating, texting, apartments, bars, bodies, feelings, jealousy, consent, mornings-after, and social awkwardness.
 - Syntax should remain simple even when the premise is bold. Short sentences, repeated structures, and clear scene beats matter more than literary density.
 - The idea vault lives in `ideas.json`; the lightweight browser CMS is generated at `site/admin/index.html`.
+- When creating a new story or act, default to producing the full package in the same pass: text, images, audio, rebuilt site, commit, and push, unless the user explicitly asks to skip one of those.
 - For `Camille at Karaoke`, treat character identity as locked: Camille and Lea must keep the same race presentation, skin tone, facial features, and hair across all pages.
 - When regenerating Camille story art, generate the full image set in one run from the same character definitions rather than page-by-page prompt edits.
 - Use `camille-at-karaoke` naming for the slug, story file, ids, and image assets; do not introduce new `tristan-*` references.

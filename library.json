@@ -54,9 +54,24 @@
       "tone": "risque nightlife drama",
       "status": "published",
       "blurb": "Nora wants one interesting Berlin night and meets a couple who make simple German feel much more dangerous. Act I ends at the taxi.",
+      "cover_image": "nora-cover.png",
       "accent": "crimson",
       "tags": ["A2", "German", "Adult", "Nightlife", "Threesome"],
       "data_file": "nora-on-the-rooftop.json"
+    },
+    {
+      "slug": "paris-then-berlin",
+      "title": "Paris, dann Berlin",
+      "subtitle": "An A2 German reader for adults — one night in Paris, one plane, and a weekend that gets out of hand.",
+      "level": "A2",
+      "language": "German",
+      "tone": "romantic travel nightlife",
+      "status": "published",
+      "blurb": "A short Paris kiss becomes a Berlin weekend when she decides she cannot stop thinking about Tristan. The reunion moves from station platform to club lights to a final stop at the Wall.",
+      "cover_image": "paris-berlin-cover.png",
+      "accent": "crimson",
+      "tags": ["A2", "German", "Adult", "Paris", "Berlin", "Romance"],
+      "data_file": "paris-then-berlin.json"
     }
   ]
 }

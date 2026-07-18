@@ -44,6 +44,22 @@ def copy_asset(src_dir, filename, dest_dir):
     return None
 
 
+def resolve_audio_filename(page_id, page):
+    explicit = page.get("audio_file")
+    if explicit:
+        return explicit
+    for candidate in (
+        f"{page_id}.ogg",
+        f"{page_id}.m4a",
+        f"{page_id}.mp3",
+        f"{page_id}.wav",
+        f"{page_id}.aiff",
+    ):
+        if (AUDIO_DIR / candidate).exists():
+            return candidate
+    return f"{page_id}.ogg"
+
+
 def normalize_glossary(items):
     glossary = []
     for item in items or []:
@@ -163,7 +179,7 @@ def build_story_reader(story_meta):
         pid = page["id"]
         image_name = page.get("image_file", f"{pid}.png")
         img = copy_asset(IMAGES_DIR, image_name, story_dir)
-        audio = copy_asset(AUDIO_DIR, f"{pid}.ogg", story_dir)
+        audio = copy_asset(AUDIO_DIR, resolve_audio_filename(pid, page), story_dir)
         glossary = normalize_glossary(page.get("glossary", []))
         text_html, matched_terms = wrap_terms(page.get("text"), glossary)
         gloss = glossary_html(glossary)

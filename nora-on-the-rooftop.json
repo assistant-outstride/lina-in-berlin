@@ -33,7 +33,8 @@
       "type": "cover",
       "text": null,
       "audio_text": null,
-      "image_file": "nora-cover.png"
+      "image_file": "nora-cover.png",
+      "image_prompt": "Use case: illustration-story. Asset type: story cover. Primary request: Nora on a Berlin rooftop at night standing close to an attractive couple, the woman touching Nora's arm and the man watching with calm confidence. Style/medium: cinematic digital illustration, sensual but not explicit, elegant nightlife fashion. Lighting/mood: warm summer air, skyline lights, pink and amber glow, dangerous attraction. Constraints: no text, no page labels, no watermark."
     },
     {
       "id": "nora-page1",
@@ -47,7 +48,8 @@
         ["langweilig", "boring"],
         ["allein", "alone"],
         ["Rooftop-Bar", "rooftop bar"]
-      ]
+      ],
+      "image_prompt": "Use case: illustration-story. Asset type: opening scene. Subject: Nora arrives alone at a stylish Berlin rooftop bar at night, curious but a little restless, city lights behind her. Style: cinematic digital illustration, elegant and sensual, not explicit."
     },
     {
       "id": "nora-page2",
@@ -61,7 +63,8 @@
         {"term": "bestellen", "translation": "to order", "matches": ["bestellt"]},
         {"term": "Dach", "translation": "roof", "matches": ["Dächer"]},
         {"term": "leise", "translation": "quietly", "matches": ["leises"]}
-      ]
+      ],
+      "image_prompt": "Use case: illustration-story. Asset type: rooftop atmosphere scene. Subject: Nora at the bar with a drink, warm summer air, sparkling city skyline, turning toward a soft laugh beside her. Mood: anticipation and loneliness about to change."
     },
     {
       "id": "nora-page3",
@@ -75,7 +78,8 @@
         {"term": "tragen", "translation": "to wear", "matches": ["trägt"]},
         ["beide", "both"],
         {"term": "kennen", "translation": "to know", "matches": ["kennen"]}
-      ]
+      ],
+      "image_prompt": "Use case: illustration-story. Asset type: first sight scene. Subject: Nora notices a stylish couple next to her on the rooftop, the woman with red lips and calm eyes, the man dressed in black, both studying Nora with quiet interest."
     },
     {
       "id": "nora-page4",
@@ -89,7 +93,8 @@
         {"term": "trinken", "translation": "to drink", "matches": ["trinken"]},
         ["mit dir", "with you"],
         ["allein", "alone"]
-      ]
+      ],
+      "image_prompt": "Use case: illustration-story. Asset type: first conversation scene. Subject: the woman in the couple leans toward Nora and asks a question while Nora nods, the man beside them smiling as he offers to drink with her."
     },
     {
       "id": "nora-page5",
@@ -103,7 +108,8 @@
         ["sicher", "confident"],
         {"term": "lachen", "translation": "to laugh", "matches": ["lachen"]},
         {"term": "berühren", "translation": "to touch", "matches": ["berührt"]}
-      ]
+      ],
+      "image_prompt": "Use case: illustration-story. Asset type: flirty table scene. Subject: Nora laughing with Mara and Felix over drinks on the rooftop, Mara briefly touching Nora's arm while Felix watches with relaxed confidence."
     },
     {
       "id": "nora-page6",
@@ -117,7 +123,8 @@
         ["mutig", "brave"],
         {"term": "spüren", "translation": "to feel", "matches": ["spürt"]},
         ["Bauch", "stomach"]
-      ]
+      ],
+      "image_prompt": "Use case: illustration-story. Asset type: intimate close-up scene. Subject: after a second drink, Nora sits between attraction and nerves while Mara asks if she is brave, with warm lights and blurred skyline behind them."
     },
     {
       "id": "nora-page7",
@@ -131,7 +138,8 @@
         {"term": "sich beugen", "translation": "to lean", "matches": ["beugt sich"]},
         {"term": "mögen", "translation": "to like", "matches": ["mögen"]},
         ["weit weg", "far away"]
-      ]
+      ],
+      "image_prompt": "Use case: illustration-story. Asset type: triangle tension scene. Subject: the city feels far away as Mara leans close to Nora and quietly tells her they like her, while Felix stays near enough to make the invitation feel shared."
     },
     {
       "id": "nora-page8",
@@ -145,14 +153,16 @@
         {"term": "warten", "translation": "to wait", "matches": ["wartet"]},
         ["Taxi", "taxi"],
         {"term": "mitkommen", "translation": "to come along", "matches": ["mit zu uns kommen"]}
-      ]
+      ],
+      "image_prompt": "Use case: illustration-story. Asset type: act one cliffhanger scene. Subject: Felix has paid, a taxi waits below, and Mara holds Nora's hand while asking if she wants to come home with them. The image should feel magnetic, elegant, and risky, not explicit."
     },
     {
       "id": "nora-end",
       "type": "end",
       "image_file": "nora-end.png",
       "text": "✦ Ende von Akt I ✦\n\nNora steht am Rand der Nacht.\nEin Taxi wartet.\nUnd jetzt muss sie antworten.",
-      "audio_text": "Ende von Akt eins. Nora steht am Rand der Nacht. Ein Taxi wartet. Und jetzt muss sie antworten."
+      "audio_text": "Ende von Akt eins. Nora steht am Rand der Nacht. Ein Taxi wartet. Und jetzt muss sie antworten.",
+      "image_prompt": "Use case: illustration-story. Asset type: ending card scene. Subject: Nora paused between the rooftop exit and the waiting taxi, looking back with desire and uncertainty, Berlin lights glowing behind her."
     }
   ]
 }

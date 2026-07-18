@@ -40,3 +40,19 @@ The admin page is intentionally lightweight:
 - it lets you edit ideas in the browser
 - it autosaves drafts to `localStorage`
 - it can export the current state as JSON for copying back into the repo
+
+## Default Story Workflow
+
+For a new story or act, the default expectation is:
+
+```bash
+python3 generate_story_assets.py --story-file <story.json>
+python3 build_site.py
+```
+
+That workflow should produce:
+
+- story text source
+- illustration assets
+- narration audio
+- rebuilt static pages
