@@ -10,6 +10,11 @@
 - Syntax should remain simple even when the premise is bold. Short sentences, repeated structures, and clear scene beats matter more than literary density.
 - The idea vault lives in `ideas.json`; the lightweight browser CMS is generated at `site/admin/index.html`.
 - When creating a new story or act, default to producing the full package in the same pass: text, images, audio, rebuilt site, commit, and push, unless the user explicitly asks to skip one of those.
+- Best-practice asset path: prefer ChatGPT's built-in image generation tool for story art when possible, then copy the generated files into `images/` and rebuild the site.
+- Do not assume the repo's `generate.py` image route is always usable. It sends prompts from the workspace to an external API and may be blocked by policy or environment.
+- Use the repo image script only when that external API route is explicitly available and appropriate. Otherwise, use the built-in image tool and keep visual consistency by referencing the strongest approved prior image.
+- For narration, prefer local/offline generation when available on the machine. The default local fallback should be treated as the safest baseline.
+- When a story needs to ship quickly, it is acceptable to reuse a small number of strong generated scene images across adjacent pages rather than leave placeholder art live.
 - For `Camille at Karaoke`, treat character identity as locked: Camille and Lea must keep the same race presentation, skin tone, facial features, and hair across all pages.
 - When regenerating Camille story art, generate the full image set in one run from the same character definitions rather than page-by-page prompt edits.
 - Use `camille-at-karaoke` naming for the slug, story file, ids, and image assets; do not introduce new `tristan-*` references.
