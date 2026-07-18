@@ -32,7 +32,7 @@
       "data_file": "sara-in-berghain.json"
     },
     {
-      "slug": "tristan-at-karaoke",
+      "slug": "camille-at-karaoke",
       "title": "Camille at Karaoke",
       "subtitle": "An A2 German reader for adults — neon lights, shaky notes, and one beautiful distraction.",
       "level": "A2",
@@ -40,10 +40,23 @@
       "tone": "romantic nightlife",
       "status": "published",
       "blurb": "Camille is a French woman living in Berlin. One lonely karaoke night turns electric when a dark-haired woman keeps watching her from the side of the stage.",
-      "cover_image": "tristan-cover.png",
+      "cover_image": "camille-cover.png",
       "accent": "crimson",
       "tags": ["A2", "German", "Adult", "Queer", "Romance"],
-      "data_file": "tristan-at-karaoke.json"
+      "data_file": "camille-at-karaoke.json"
+    },
+    {
+      "slug": "nora-on-the-rooftop",
+      "title": "Nora on the Rooftop",
+      "subtitle": "An A2 German reader for adults — a rooftop drink, a beautiful couple, and one risky question.",
+      "level": "A2",
+      "language": "German",
+      "tone": "risque nightlife drama",
+      "status": "published",
+      "blurb": "Nora wants one interesting Berlin night and meets a couple who make simple German feel much more dangerous. Act I ends at the taxi.",
+      "accent": "crimson",
+      "tags": ["A2", "German", "Adult", "Nightlife", "Threesome"],
+      "data_file": "nora-on-the-rooftop.json"
     }
   ]
 }

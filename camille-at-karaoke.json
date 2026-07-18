@@ -19,21 +19,44 @@
       "Keep the world intimate: microphones, lyric screens, drinks, laughter, and shoulders brushing."
     ]
   },
+  "characters": {
+    "camille": {
+      "name": "Camille",
+      "identity_lock": "Keep Camille visually consistent across every image in this story.",
+      "appearance": [
+        "French woman in her late twenties or early thirties.",
+        "White / light-skinned with pale skin.",
+        "Curly dark-blonde to light-brown hair that stays recognizably the same across scenes.",
+        "Soft facial features, warm but nervous eyes, open expression."
+      ],
+      "vibe": "Warm, self-conscious, and more alive the moment she is noticed."
+    },
+    "lea": {
+      "name": "Lea",
+      "identity_lock": "Keep Lea visually consistent across every image in this story.",
+      "appearance": [
+        "Feminine woman in her late twenties or early thirties.",
+        "Dark hair that stays recognizably the same across scenes.",
+        "Magnetic, serious expression with strong romantic presence."
+      ],
+      "vibe": "Confident, focused, and quietly intense rather than flashy."
+    }
+  },
   "pages": [
     {
-      "id": "tristan-cover",
+      "id": "camille-cover",
       "type": "cover",
       "text": null,
       "audio_text": null,
-      "image_file": "tristan-cover.png",
+      "image_file": "camille-cover.png",
       "image_prompt": "Use case: illustration-story. Asset type: story cover. Primary request: Camille, a French woman in a Berlin karaoke bar, stands very close to another woman under red neon light, with one microphone between them and obvious romantic tension. Style/medium: cinematic digital illustration, slightly realistic, sensual but not explicit. Lighting/mood: hot pink and red karaoke glow, late-night intimacy, nervous attraction. Constraints: no text, no watermark, no page labels."
     },
     {
-      "id": "tristan-page1",
+      "id": "camille-page1",
       "type": "page",
       "text": "Camille wohnt in Berlin,\naber sie kommt aus Frankreich.\nWenn sie einsam ist,\ngeht sie gern in eine Karaoke-Bar.",
       "audio_text": "Camille wohnt in Berlin, aber sie kommt aus Frankreich. Wenn sie einsam ist, geht sie gern in eine Karaoke-Bar.",
-      "image_file": "tristan-page1.png",
+      "image_file": "camille-page1.png",
       "glossary": [
         {"term": "wohnen", "translation": "to live", "matches": ["wohnt"]},
         ["kommt aus", "to come from"],
@@ -44,11 +67,11 @@
       "image_prompt": "Use case: illustration-story. Asset type: opening character scene. Subject: Camille, a curly-haired French woman, enters a Berlin karaoke bar alone at night, looking hopeful and a little lonely. Style/medium: cinematic digital illustration, slightly realistic. Mood: warm red neon, intimate bar atmosphere."
     },
     {
-      "id": "tristan-page2",
+      "id": "camille-page2",
       "type": "page",
       "text": "Heute ist die Bar voll.\nDas Licht ist rot.\nCamille nimmt das Mikrofon\nund singt ein altes Lied auf Französisch.",
       "audio_text": "Heute ist die Bar voll. Das Licht ist rot. Camille nimmt das Mikrofon und singt ein altes Lied auf Französisch.",
-      "image_file": "tristan-page2.png",
+      "image_file": "camille-page2.png",
       "glossary": [
         ["voll", "full"],
         ["Licht", "light"],
@@ -59,11 +82,11 @@
       "image_prompt": "Use case: illustration-story. Asset type: karaoke performance scene. Subject: Camille singing into a microphone in a packed Berlin karaoke bar, red LED lights above her, half nervous and half committed. Style/medium: cinematic digital illustration, slightly realistic."
     },
     {
-      "id": "tristan-page3",
+      "id": "camille-page3",
       "type": "page",
       "text": "Neben der kleinen Bühne\nsteht eine Frau mit dunklen Haaren.\nSie lächelt nicht.\nAber sie sieht Camille die ganze Zeit an.",
       "audio_text": "Neben der kleinen Bühne steht eine Frau mit dunklen Haaren. Sie lächelt nicht. Aber sie sieht Camille die ganze Zeit an.",
-      "image_file": "tristan-page3.png",
+      "image_file": "camille-page3.png",
       "glossary": [
         ["Bühne", "stage"],
         {"term": "stehen", "translation": "to stand", "matches": ["steht"]},
@@ -74,11 +97,11 @@
       "image_prompt": "Use case: illustration-story. Asset type: first sight scene. Subject: Camille on stage notices a beautiful dark-haired woman near the small karaoke stage watching her closely, expression serious and interested. Style/medium: cinematic digital illustration with nightlife realism and romantic tension."
     },
     {
-      "id": "tristan-page4",
+      "id": "camille-page4",
       "type": "page",
       "text": "Camille vergisst fast den Text.\nIhr Herz wird plötzlich schnell.\nSie singt weiter,\naber jetzt nur für diese Frau.",
       "audio_text": "Camille vergisst fast den Text. Ihr Herz wird plötzlich schnell. Sie singt weiter, aber jetzt nur für diese Frau.",
-      "image_file": "tristan-page4.png",
+      "image_file": "camille-page4.png",
       "glossary": [
         {"term": "vergessen", "translation": "to forget", "matches": ["vergisst"]},
         ["Text", "lyrics"],
@@ -89,11 +112,11 @@
       "image_prompt": "Use case: illustration-story. Asset type: emotional close-up. Subject: close view of Camille singing while losing her focus because of the woman watching her, with flushed face and red neon light. Style/medium: cinematic digital illustration, slightly realistic, emotionally charged."
     },
     {
-      "id": "tristan-page5",
+      "id": "camille-page5",
       "type": "page",
       "text": "Nach dem Lied klatscht die Bar.\nDie fremde Frau kommt näher.\nSie sagt: \"Du hast eine schöne Stimme.\"\nCamille lacht zu laut.",
       "audio_text": "Nach dem Lied klatscht die Bar. Die fremde Frau kommt näher. Sie sagt: Du hast eine schöne Stimme. Camille lacht zu laut.",
-      "image_file": "tristan-page5.png",
+      "image_file": "camille-page5.png",
       "glossary": [
         {"term": "klatschen", "translation": "to clap", "matches": ["klatscht"]},
         {"term": "fremd", "translation": "strange", "matches": ["fremde"]},
@@ -104,11 +127,11 @@
       "image_prompt": "Use case: illustration-story. Asset type: first conversation scene. Subject: after the song, a dark-haired woman steps up close to Camille near the stage and compliments her, while Camille laughs, embarrassed and charmed. Style/medium: cinematic digital illustration with warm queer-romance tension."
     },
     {
-      "id": "tristan-page6",
+      "id": "camille-page6",
       "type": "page",
       "text": "\"Ich heiße Lea,\" sagt die Frau.\n\"Und du?\"\nCamille spürt Hitze in ihrem Gesicht.\nSie sagt ihren Namen fast zu leise.",
       "audio_text": "Ich heiße Lea, sagt die Frau. Und du? Camille spürt Hitze in ihrem Gesicht. Sie sagt ihren Namen fast zu leise.",
-      "image_file": "tristan-page6.png",
+      "image_file": "camille-page6.png",
       "glossary": [
         {"term": "heißen", "translation": "to be called", "matches": ["heiße"]},
         ["Gesicht", "face"],
@@ -119,11 +142,11 @@
       "image_prompt": "Use case: illustration-story. Asset type: intimate introduction scene. Subject: Lea and Camille speaking close to each other by the karaoke booth, Camille blushing as she says her name. Style/medium: cinematic digital illustration, slightly realistic, soft red bar light."
     },
     {
-      "id": "tristan-page7",
+      "id": "camille-page7",
       "type": "page",
       "text": "Sie wählen ein Duett.\nLea steht direkt neben ihr.\nIhre Schultern berühren sich kurz.\nCamille kann plötzlich wieder atmen.",
       "audio_text": "Sie wählen ein Duett. Lea steht direkt neben ihr. Ihre Schultern berühren sich kurz. Camille kann plötzlich wieder atmen.",
-      "image_file": "tristan-page7.png",
+      "image_file": "camille-page7.png",
       "glossary": [
         ["Duett", "duet"],
         ["direkt", "directly"],
@@ -134,11 +157,11 @@
       "image_prompt": "Use case: illustration-story. Asset type: duet scene. Subject: Camille and Lea sharing one karaoke screen and singing close together, shoulders brushing, both smiling a little under red and blue lights. Style/medium: cinematic digital illustration with romantic chemistry."
     },
     {
-      "id": "tristan-page8",
+      "id": "camille-page8",
       "type": "page",
       "text": "Nach dem letzten Refrain\nbeugt Lea sich zu ihr.\n\"Willst du kurz raus?\" fragt sie.\nCamille nickt sofort.",
       "audio_text": "Nach dem letzten Refrain beugt Lea sich zu ihr. Willst du kurz raus? fragt sie. Camille nickt sofort.",
-      "image_file": "tristan-page8.png",
+      "image_file": "camille-page8.png",
       "glossary": [
         ["Refrain", "chorus"],
         {"term": "sich beugen", "translation": "to lean", "matches": ["beugt"]},
@@ -149,9 +172,9 @@
       "image_prompt": "Use case: illustration-story. Asset type: act one cliffhanger. Subject: after their duet, Lea leans close to Camille in the noisy karaoke bar and asks her to step outside, both women close, tension obvious but tender. Style/medium: cinematic digital illustration, slightly realistic, red neon intimacy."
     },
     {
-      "id": "tristan-end",
+      "id": "camille-end",
       "type": "end",
-      "image_file": "tristan-page8.png",
+      "image_file": "camille-page8.png",
       "text": "✦ Ende von Akt I ✦\n\nCamille folgt Lea zur Tür.\nUnd draußen ist es plötzlich still.",
       "audio_text": "Ende von Akt eins. Camille folgt Lea zur Tür. Und draußen ist es plötzlich still."
     }

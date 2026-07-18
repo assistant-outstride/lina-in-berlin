@@ -35,6 +35,10 @@
     .eyebrow { display: inline-block; color: #ffcf94; letter-spacing: .18em; text-transform: uppercase; font-size: .8rem; margin-bottom: 14px; }
     .hero h1 { margin: 0; font-family: Fraunces, serif; font-size: clamp(2.8rem, 6vw, 5rem); line-height: .98; max-width: 10ch; }
     .hero p { max-width: 56ch; color: #d4cbde; font-size: 1.03rem; line-height: 1.7; margin: 12px 0 0; }
+    .hero-head { display: flex; justify-content: space-between; gap: 18px; align-items: start; flex-wrap: wrap; }
+    .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .hero-actions a { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; padding: 12px 16px; border-radius: 999px; background: rgba(255,255,255,.08); color: #f7efe2; font-weight: 800; }
+    .hero-actions a.primary { background: linear-gradient(135deg, #ffd291, #f2a85f); color: #1a1320; }
     .section-head { display: flex; justify-content: space-between; gap: 18px; align-items: end; margin: 0 0 18px; flex-wrap: wrap; }
     .section-head h2 { margin: 0; font-family: Fraunces, serif; font-size: clamp(1.8rem, 3vw, 2.6rem); }
     .section-head p { margin: 0; max-width: 52ch; color: #c3b8d2; }
@@ -65,9 +69,17 @@
 <body>
   <div class="wrap">
     <section class="hero">
-      <span class="eyebrow">Adult German Readers</span>
-      <h1>After Hours German</h1>
-      <p>Short, illustrated German stories for adults: romantic, suspenseful, and easy to read.</p>
+      <div class="hero-head">
+        <div>
+          <span class="eyebrow">Adult German Readers</span>
+          <h1>After Hours German</h1>
+          <p>Short, illustrated German stories for adults: romantic, suspenseful, and easy to read.</p>
+        </div>
+        <div class="hero-actions">
+          <a href="admin/index.html">Idea Vault</a>
+          <a class="primary" href="admin/ideas.seed.json">Seed JSON</a>
+        </div>
+      </div>
     </section>
 
     <div class="section-head">
@@ -109,7 +121,7 @@
     
     <article class="story-card " style="--card-glow:rgba(255, 109, 133, .22); --card-chip:#ff8d9f; --card-wash:linear-gradient(180deg, rgba(70,10,26,.08), rgba(0,0,0,.22));">
       <div class="story-frame">
-        <img src="stories/tristan-at-karaoke/images/tristan-cover.png" alt="Camille at Karaoke cover" class="story-art">
+        <img src="stories/camille-at-karaoke/images/camille-cover.png" alt="Camille at Karaoke cover" class="story-art">
       </div>
       <div class="story-copy">
         <div class="story-pills"><span class="badge">A2</span><span class="badge">German</span><span class="badge">Adult</span><span class="badge">Queer</span><span class="badge">Romance</span></div>
@@ -117,7 +129,21 @@
         <p class="story-subtitle">An A2 German reader for adults — neon lights, shaky notes, and one beautiful distraction.</p>
         <p class="story-blurb">Camille is a French woman living in Berlin. One lonely karaoke night turns electric when a dark-haired woman keeps watching her from the side of the stage.</p>
         
-        <div class="story-action"><a class="story-link" href="stories/tristan-at-karaoke/index.html">Read Story</a></div>
+        <div class="story-action"><a class="story-link" href="stories/camille-at-karaoke/index.html">Read Story</a></div>
+      </div>
+    </article>
+    
+    <article class="story-card " style="--card-glow:rgba(255, 109, 133, .22); --card-chip:#ff8d9f; --card-wash:linear-gradient(180deg, rgba(70,10,26,.08), rgba(0,0,0,.22));">
+      <div class="story-frame">
+        <div class="story-art placeholder-art"><span>Act I Live</span></div>
+      </div>
+      <div class="story-copy">
+        <div class="story-pills"><span class="badge">A2</span><span class="badge">German</span><span class="badge">Adult</span><span class="badge">Nightlife</span><span class="badge">Threesome</span></div>
+        <h2>Nora on the Rooftop</h2>
+        <p class="story-subtitle">An A2 German reader for adults — a rooftop drink, a beautiful couple, and one risky question.</p>
+        <p class="story-blurb">Nora wants one interesting Berlin night and meets a couple who make simple German feel much more dangerous. Act I ends at the taxi.</p>
+        
+        <div class="story-action"><a class="story-link" href="stories/nora-on-the-rooftop/index.html">Read Story</a></div>
       </div>
     </article>
     

@@ -12,6 +12,7 @@ IMAGES_DIR = BASE / "images"
 AUDIO_DIR = BASE / "audio"
 SITE_DIR = BASE / "site"
 LIBRARY = json.loads((BASE / "library.json").read_text())
+IDEAS = json.loads((BASE / "ideas.json").read_text())
 
 
 def ensure_dir(path):
@@ -147,6 +148,13 @@ def warn_unmatched_terms(page_id, glossary, matched_terms):
 def build_story_reader(story_meta):
     story = json.loads((BASE / story_meta["data_file"]).read_text())
     story_dir = reset_story_dir(story_meta["slug"])
+    paywall = story.get("paywall") or {}
+    paywall_kicker = paywall.get("kicker", "Continue The Night")
+    paywall_title = paywall.get("title", "Unlock the next chapter")
+    paywall_body = paywall.get("body", "More scenes, more tension, and worse decisions are waiting right after this.")
+    paywall_button = paywall.get("button", "Unlock for €4.99")
+    paywall_link = paywall.get("link_text", "Back to story library")
+    paywall_note = paywall.get("note", "Not live yet. For now it only makes sparkles.")
     story_page_total = sum(1 for page in story["pages"] if page["type"] == "page")
     story_page_number = 0
     pages_html = []
@@ -184,14 +192,14 @@ def build_story_reader(story_meta):
                 {f'<img src="{img}" alt="Ending illustration" class="page-img full">' if img else '<div class="placeholder full">✦</div>'}
                 <div class="content end-content">
                   <div class="fake-paywall">
-                    <span class="paywall-kicker">Continue The Night</span>
-                    <h2>Unlock the next chapter</h2>
-                    <p>More scenes, more tension, and worse decisions are waiting right after this.</p>
-                    <button class="paywall-button" type="button" data-paywall-button>Unlock for €4.99</button>
+                    <span class="paywall-kicker">{escape(paywall_kicker)}</span>
+                    <h2>{escape(paywall_title)}</h2>
+                    <p>{escape(paywall_body)}</p>
+                    <button class="paywall-button" type="button" data-paywall-button>{escape(paywall_button)}</button>
                     <div class="paywall-links">
-                      <a class="paywall-link" href="../../index.html">Back to story library</a>
+                      <a class="paywall-link" href="../../index.html">{escape(paywall_link)}</a>
                     </div>
-                    <p class="paywall-note">Not live yet. For now it only makes sparkles.</p>
+                    <p class="paywall-note">{escape(paywall_note)}</p>
                     <div class="sparkle-zone" aria-hidden="true"></div>
                   </div>
                   <div class="page-copy">{text_html}</div>
@@ -487,7 +495,11 @@ def story_card_html(entry):
     pill = "".join(f'<span class="badge">{escape(tag)}</span>' for tag in tags)
     if entry["status"] == "published":
         href = f'stories/{entry["slug"]}/index.html'
-        art = f'<img src="{href.rsplit("/", 1)[0]}/images/{escape(entry["cover_image"])}" alt="{escape(entry["title"])} cover" class="story-art">'
+        cover_image = entry.get("cover_image")
+        if cover_image:
+            art = f'<img src="{href.rsplit("/", 1)[0]}/images/{escape(cover_image)}" alt="{escape(entry["title"])} cover" class="story-art">'
+        else:
+            art = '<div class="story-art placeholder-art"><span>Act I Live</span></div>'
         action = f'<a class="story-link" href="{href}">Read Story</a>'
         extras = ""
     else:
@@ -510,6 +522,528 @@ def story_card_html(entry):
       </div>
     </article>
     '''
+
+
+def build_admin_page():
+    admin_dir = ensure_dir(SITE_DIR / "admin")
+    (admin_dir / "ideas.seed.json").write_text(json.dumps(IDEAS, indent=2))
+    seed = json.dumps(IDEAS)
+    html_doc = f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>After Hours German Admin</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;700;800&display=swap');
+    * {{ box-sizing: border-box; }}
+    body {{ margin: 0; font-family: Manrope, sans-serif; color: #f5ebde; background: #0a0d18; }}
+    body::before {{
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 14% 15%, rgba(255, 164, 90, .18), transparent 24%),
+        radial-gradient(circle at 84% 18%, rgba(255, 111, 146, .16), transparent 32%),
+        linear-gradient(180deg, #171221 0%, #0a0d18 100%);
+      z-index: -2;
+    }}
+    body::after {{
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.028) 1px, transparent 1px);
+      background-size: 38px 38px;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,.55), transparent 90%);
+      pointer-events: none;
+      z-index: -1;
+    }}
+    button, input, select, textarea {{ font: inherit; }}
+    a {{ color: inherit; }}
+    .wrap {{ max-width: 1380px; margin: 0 auto; padding: 24px; }}
+    .topbar {{ display: flex; justify-content: space-between; gap: 18px; align-items: start; flex-wrap: wrap; margin-bottom: 20px; }}
+    .eyebrow {{ display: inline-block; margin-bottom: 12px; color: #ffc98d; font-size: .8rem; letter-spacing: .18em; text-transform: uppercase; }}
+    h1, h2, h3 {{ font-family: Fraunces, serif; }}
+    h1 {{ margin: 0; font-size: clamp(2.6rem, 5vw, 4.6rem); line-height: .96; }}
+    .topbar p {{ margin: 10px 0 0; max-width: 60ch; color: #d8c9d6; line-height: 1.7; }}
+    .top-actions {{ display: flex; gap: 10px; flex-wrap: wrap; }}
+    .top-actions a,
+    .top-actions button {{
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 16px;
+      background: rgba(255,255,255,.08);
+      color: #f5ebde;
+      text-decoration: none;
+      font-weight: 800;
+      cursor: pointer;
+    }}
+    .top-actions .primary {{ background: linear-gradient(135deg, #ffd291, #f2a85f); color: #1f1522; }}
+    .status-line {{ margin-bottom: 18px; color: #cdbdd0; font-size: .95rem; }}
+    .layout {{ display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 20px; align-items: start; }}
+    .panel {{
+      border-radius: 28px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: 0 18px 60px rgba(0,0,0,.24);
+      overflow: hidden;
+    }}
+    .panel-head {{ padding: 22px 22px 0; }}
+    .panel-head h2 {{ margin: 0; font-size: 1.7rem; }}
+    .panel-head p {{ margin: 10px 0 0; color: #cdbfd1; line-height: 1.6; }}
+    .stack {{ padding: 18px 18px 22px; display: grid; gap: 12px; }}
+    .idea-list {{ max-height: 72vh; overflow: auto; padding-right: 4px; }}
+    .idea-card {{
+      width: 100%;
+      text-align: left;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 22px;
+      background: rgba(255,255,255,.04);
+      color: #f5ebde;
+      padding: 16px;
+      cursor: pointer;
+    }}
+    .idea-card.active {{
+      background: linear-gradient(145deg, rgba(255,154,118,.18), rgba(255,255,255,.06));
+      border-color: rgba(255,206,148,.35);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+    }}
+    .idea-card strong {{ display: block; font-size: 1rem; }}
+    .idea-card p {{ margin: 8px 0 0; color: #d2c3d4; line-height: 1.45; font-size: .92rem; }}
+    .meta-row, .field-grid {{
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }}
+    .pill-row {{ display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }}
+    .pill {{
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      color: #ffcf99;
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }}
+    .editor {{ padding: 22px; display: grid; gap: 18px; }}
+    .brief {{
+      border-radius: 24px;
+      padding: 18px;
+      background: linear-gradient(145deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,.08);
+    }}
+    .brief h3 {{ margin: 0 0 10px; font-size: 1.25rem; }}
+    .brief p {{ margin: 0; color: #d4c8d7; line-height: 1.65; }}
+    .brief ul {{ margin: 14px 0 0; padding-left: 18px; color: #f1dfd1; line-height: 1.65; }}
+    .toolbar {{ display: flex; gap: 10px; flex-wrap: wrap; }}
+    .toolbar button {{
+      border: 0;
+      border-radius: 999px;
+      padding: 11px 14px;
+      background: rgba(255,255,255,.08);
+      color: #f5ebde;
+      font-weight: 700;
+      cursor: pointer;
+    }}
+    .toolbar .danger {{ background: rgba(255, 113, 146, .18); color: #ffd5df; }}
+    .toolbar .warm {{ background: rgba(255, 204, 140, .18); color: #ffdcae; }}
+    label {{ display: grid; gap: 8px; font-weight: 700; color: #f8efdf; }}
+    input, select, textarea {{
+      width: 100%;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 16px;
+      background: rgba(9,11,20,.72);
+      color: #f5ebde;
+      padding: 13px 14px;
+    }}
+    textarea {{ min-height: 120px; resize: vertical; line-height: 1.55; }}
+    .full {{ grid-column: 1 / -1; }}
+    .small-note {{ color: #bbadbf; font-size: .88rem; line-height: 1.5; }}
+    .json-box {{
+      width: 100%;
+      min-height: 260px;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 20px;
+      background: rgba(9,11,20,.78);
+      color: #d8f0ff;
+      padding: 16px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .88rem;
+      line-height: 1.55;
+      white-space: pre;
+      overflow: auto;
+    }}
+    @media (max-width: 1020px) {{
+      .layout {{ grid-template-columns: 1fr; }}
+      .idea-list {{ max-height: none; }}
+    }}
+    @media (max-width: 700px) {{
+      .meta-row, .field-grid {{ grid-template-columns: 1fr; }}
+    }}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div>
+        <span class="eyebrow">Story Vault</span>
+        <h1>After Hours German Admin</h1>
+        <p>Lightweight idea CMS for adult German learner fiction. Edit ideas in the browser, keep drafts locally, and export clean JSON back into the project whenever the vault changes.</p>
+      </div>
+      <div class="top-actions">
+        <a href="../index.html">Back to Library</a>
+        <a class="primary" href="./ideas.seed.json" download>Download Seed JSON</a>
+      </div>
+    </div>
+
+    <div class="status-line" id="status-line">Loading vault…</div>
+
+    <div class="layout">
+      <aside class="panel">
+        <div class="panel-head">
+          <h2>Ideas</h2>
+          <p>Keep the heat high, the syntax simple, and the emotional stakes obvious.</p>
+        </div>
+        <div class="stack">
+          <div class="toolbar">
+            <button id="add-idea" class="warm" type="button">Add Idea</button>
+            <button id="reset-seed" type="button">Reset Draft</button>
+          </div>
+          <div class="idea-list" id="idea-list"></div>
+        </div>
+      </aside>
+
+      <main class="panel">
+        <div class="editor">
+          <section class="brief">
+            <h3 id="brief-title"></h3>
+            <p id="brief-positioning"></p>
+            <div class="meta-row" style="margin-top:14px;">
+              <div>
+                <div class="small-note">Editorial focus</div>
+                <p id="brief-focus"></p>
+              </div>
+              <div>
+                <div class="small-note">Audience</div>
+                <p id="brief-audience"></p>
+              </div>
+            </div>
+            <ul id="brief-guardrails"></ul>
+          </section>
+
+          <div class="toolbar">
+            <button id="save-draft" class="warm" type="button">Save Draft</button>
+            <button id="copy-json" type="button">Copy JSON</button>
+            <button id="download-json" type="button">Download Current JSON</button>
+            <button id="delete-idea" class="danger" type="button">Delete Idea</button>
+          </div>
+
+          <div class="field-grid">
+            <label>Title
+              <input id="title" type="text">
+            </label>
+            <label>Slug / ID
+              <input id="id" type="text">
+            </label>
+            <label>Status
+              <select id="status">
+                <option value="idea">idea</option>
+                <option value="outline">outline</option>
+                <option value="drafting">drafting</option>
+                <option value="ready">ready</option>
+              </select>
+            </label>
+            <label>Level
+              <input id="level" type="text" placeholder="A2 or B1">
+            </label>
+            <label>Heat
+              <select id="heat">
+                <option value="medium">medium</option>
+                <option value="medium-high">medium-high</option>
+                <option value="high">high</option>
+              </select>
+            </label>
+            <label>POV
+              <input id="pov" type="text" placeholder="first person">
+            </label>
+            <label class="full">Setting
+              <input id="setting" type="text">
+            </label>
+            <label class="full">Tone
+              <input id="tone" type="text">
+            </label>
+            <label class="full">Hook
+              <textarea id="hook"></textarea>
+            </label>
+            <label class="full">Premise
+              <textarea id="premise"></textarea>
+            </label>
+            <label class="full">Tags
+              <input id="tags" type="text" placeholder="comma, separated, tags">
+            </label>
+            <label class="full">Learner Focus
+              <textarea id="learner_focus" placeholder="One item per line"></textarea>
+            </label>
+            <label class="full">Story Beats
+              <textarea id="beats" placeholder="One beat per line"></textarea>
+            </label>
+            <label class="full">Notes
+              <textarea id="notes"></textarea>
+            </label>
+          </div>
+
+          <section>
+            <h3>Live JSON</h3>
+            <p class="small-note">This updates as you type. Drafts stay in this browser until you export or reset them.</p>
+            <pre class="json-box" id="json-preview"></pre>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script id="seed-data" type="application/json">{escape(seed)}</script>
+  <script>
+    const STORAGE_KEY = 'afterHoursGerman.ideaVault';
+    const seedData = JSON.parse(document.getElementById('seed-data').textContent);
+    const state = loadInitialState();
+    let selectedIdeaId = state.ideas[0] ? state.ideas[0].id : null;
+
+    const fields = {{
+      id: document.getElementById('id'),
+      title: document.getElementById('title'),
+      status: document.getElementById('status'),
+      level: document.getElementById('level'),
+      heat: document.getElementById('heat'),
+      pov: document.getElementById('pov'),
+      setting: document.getElementById('setting'),
+      tone: document.getElementById('tone'),
+      hook: document.getElementById('hook'),
+      premise: document.getElementById('premise'),
+      tags: document.getElementById('tags'),
+      learner_focus: document.getElementById('learner_focus'),
+      beats: document.getElementById('beats'),
+      notes: document.getElementById('notes')
+    }};
+
+    function clone(value) {{
+      return JSON.parse(JSON.stringify(value));
+    }}
+
+    function loadInitialState() {{
+      const saved = window.localStorage.getItem(STORAGE_KEY);
+      if (!saved) return clone(seedData);
+      try {{
+        return JSON.parse(saved);
+      }} catch (error) {{
+        return clone(seedData);
+      }}
+    }}
+
+    function saveDraft() {{
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      setStatus('Draft saved locally in this browser.');
+    }}
+
+    function setStatus(message) {{
+      document.getElementById('status-line').textContent = message;
+    }}
+
+    function selectedIdea() {{
+      return state.ideas.find((idea) => idea.id === selectedIdeaId) || state.ideas[0];
+    }}
+
+    function arrayFromComma(value) {{
+      return value.split(',').map((item) => item.trim()).filter(Boolean);
+    }}
+
+    function arrayFromLines(value) {{
+      return value.split('\\n').map((item) => item.trim()).filter(Boolean);
+    }}
+
+    function slugify(value) {{
+      return value.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    }}
+
+    function renderBrief() {{
+      document.getElementById('brief-title').textContent = state.project.title;
+      document.getElementById('brief-positioning').textContent = state.project.positioning;
+      document.getElementById('brief-focus').textContent = state.project.editorial_focus;
+      document.getElementById('brief-audience').textContent = state.project.audience;
+      document.getElementById('brief-guardrails').innerHTML = state.project.guardrails
+        .map((item) => `<li>${{escapeHtml(item)}}</li>`)
+        .join('');
+    }}
+
+    function renderIdeaList() {{
+      const root = document.getElementById('idea-list');
+      root.innerHTML = '';
+      state.ideas.forEach((idea) => {{
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'idea-card' + (idea.id === selectedIdeaId ? ' active' : '');
+        button.innerHTML = `
+          <strong>${{escapeHtml(idea.title || 'Untitled idea')}}</strong>
+          <div class="pill-row">
+            <span class="pill">${{escapeHtml(idea.level || 'level?')}}</span>
+            <span class="pill">${{escapeHtml(idea.heat || 'heat?')}}</span>
+            <span class="pill">${{escapeHtml(idea.status || 'idea')}}</span>
+          </div>
+          <p>${{escapeHtml(idea.hook || 'No hook yet.')}}</p>
+        `;
+        button.addEventListener('click', () => {{
+          selectedIdeaId = idea.id;
+          render();
+        }});
+        root.appendChild(button);
+      }});
+    }}
+
+    function renderEditor() {{
+      const idea = selectedIdea();
+      if (!idea) return;
+      fields.id.value = idea.id || '';
+      fields.title.value = idea.title || '';
+      fields.status.value = idea.status || 'idea';
+      fields.level.value = idea.level || '';
+      fields.heat.value = idea.heat || 'medium';
+      fields.pov.value = idea.pov || '';
+      fields.setting.value = idea.setting || '';
+      fields.tone.value = idea.tone || '';
+      fields.hook.value = idea.hook || '';
+      fields.premise.value = idea.premise || '';
+      fields.tags.value = (idea.tags || []).join(', ');
+      fields.learner_focus.value = (idea.learner_focus || []).join('\\n');
+      fields.beats.value = (idea.beats || []).join('\\n');
+      fields.notes.value = idea.notes || '';
+      updatePreview();
+    }}
+
+    function updatePreview() {{
+      document.getElementById('json-preview').textContent = JSON.stringify(state, null, 2);
+    }}
+
+    function render() {{
+      renderBrief();
+      renderIdeaList();
+      renderEditor();
+      setStatus(`Editing ${{state.ideas.length}} ideas. Drafts persist in this browser.`);
+    }}
+
+    function syncCurrentIdea() {{
+      const idea = selectedIdea();
+      if (!idea) return;
+      const previousId = idea.id;
+      idea.title = fields.title.value.trim();
+      idea.id = slugify(fields.id.value || fields.title.value || previousId || 'new-idea');
+      idea.status = fields.status.value;
+      idea.level = fields.level.value.trim();
+      idea.heat = fields.heat.value;
+      idea.pov = fields.pov.value.trim();
+      idea.setting = fields.setting.value.trim();
+      idea.tone = fields.tone.value.trim();
+      idea.hook = fields.hook.value.trim();
+      idea.premise = fields.premise.value.trim();
+      idea.tags = arrayFromComma(fields.tags.value);
+      idea.learner_focus = arrayFromLines(fields.learner_focus.value);
+      idea.beats = arrayFromLines(fields.beats.value);
+      idea.notes = fields.notes.value.trim();
+      if (previousId !== idea.id) {{
+        selectedIdeaId = idea.id;
+      }}
+      updatePreview();
+      renderIdeaList();
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }}
+
+    function escapeHtml(value) {{
+      return String(value)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;');
+    }}
+
+    Object.values(fields).forEach((field) => {{
+      field.addEventListener('input', syncCurrentIdea);
+    }});
+
+    document.getElementById('save-draft').addEventListener('click', () => {{
+      saveDraft();
+    }});
+
+    document.getElementById('reset-seed').addEventListener('click', () => {{
+      window.localStorage.removeItem(STORAGE_KEY);
+      location.reload();
+    }});
+
+    document.getElementById('add-idea').addEventListener('click', () => {{
+      const next = {{
+        id: 'new-idea-' + (state.ideas.length + 1),
+        title: 'New Idea',
+        status: 'idea',
+        level: 'A2',
+        heat: 'medium',
+        pov: 'first person',
+        setting: '',
+        tone: '',
+        tags: [],
+        hook: '',
+        premise: '',
+        learner_focus: [],
+        beats: [],
+        notes: ''
+      }};
+      state.ideas.unshift(next);
+      selectedIdeaId = next.id;
+      saveDraft();
+      render();
+    }});
+
+    document.getElementById('delete-idea').addEventListener('click', () => {{
+      if (state.ideas.length === 1) {{
+        setStatus('The vault needs at least one idea.');
+        return;
+      }}
+      const idea = selectedIdea();
+      state.ideas = state.ideas.filter((entry) => entry.id !== idea.id);
+      selectedIdeaId = state.ideas[0].id;
+      saveDraft();
+      render();
+    }});
+
+    document.getElementById('copy-json').addEventListener('click', async () => {{
+      try {{
+        await navigator.clipboard.writeText(JSON.stringify(state, null, 2));
+        setStatus('Current JSON copied to clipboard.');
+      }} catch (error) {{
+        setStatus('Clipboard copy failed. Use the JSON panel below.');
+      }}
+    }});
+
+    document.getElementById('download-json').addEventListener('click', () => {{
+      const blob = new Blob([JSON.stringify(state, null, 2)], {{ type: 'application/json' }});
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'ideas.json';
+      link.click();
+      URL.revokeObjectURL(url);
+      setStatus('Downloaded current JSON snapshot.');
+    }});
+
+    render();
+  </script>
+</body>
+</html>
+'''
+    (admin_dir / "index.html").write_text(html_doc)
+    print(f"Built {admin_dir / 'index.html'}")
 
 
 def build_homepage():
@@ -552,6 +1086,10 @@ def build_homepage():
     .eyebrow {{ display: inline-block; color: #ffcf94; letter-spacing: .18em; text-transform: uppercase; font-size: .8rem; margin-bottom: 14px; }}
     .hero h1 {{ margin: 0; font-family: Fraunces, serif; font-size: clamp(2.8rem, 6vw, 5rem); line-height: .98; max-width: 10ch; }}
     .hero p {{ max-width: 56ch; color: #d4cbde; font-size: 1.03rem; line-height: 1.7; margin: 12px 0 0; }}
+    .hero-head {{ display: flex; justify-content: space-between; gap: 18px; align-items: start; flex-wrap: wrap; }}
+    .hero-actions {{ display: flex; gap: 10px; flex-wrap: wrap; }}
+    .hero-actions a {{ display: inline-flex; align-items: center; gap: 8px; text-decoration: none; padding: 12px 16px; border-radius: 999px; background: rgba(255,255,255,.08); color: #f7efe2; font-weight: 800; }}
+    .hero-actions a.primary {{ background: linear-gradient(135deg, #ffd291, #f2a85f); color: #1a1320; }}
     .section-head {{ display: flex; justify-content: space-between; gap: 18px; align-items: end; margin: 0 0 18px; flex-wrap: wrap; }}
     .section-head h2 {{ margin: 0; font-family: Fraunces, serif; font-size: clamp(1.8rem, 3vw, 2.6rem); }}
     .section-head p {{ margin: 0; max-width: 52ch; color: #c3b8d2; }}
@@ -582,9 +1120,17 @@ def build_homepage():
 <body>
   <div class="wrap">
     <section class="hero">
-      <span class="eyebrow">Adult German Readers</span>
-      <h1>{escape(LIBRARY["title"])}</h1>
-      <p>{escape(LIBRARY["subtitle"])}</p>
+      <div class="hero-head">
+        <div>
+          <span class="eyebrow">Adult German Readers</span>
+          <h1>{escape(LIBRARY["title"])}</h1>
+          <p>{escape(LIBRARY["subtitle"])}</p>
+        </div>
+        <div class="hero-actions">
+          <a href="admin/index.html">Idea Vault</a>
+          <a class="primary" href="admin/ideas.seed.json">Seed JSON</a>
+        </div>
+      </div>
     </section>
 
     <div class="section-head">
@@ -613,6 +1159,7 @@ def main():
         if entry["status"] == "published":
             build_story_reader(entry)
     build_homepage()
+    build_admin_page()
 
 
 if __name__ == "__main__":

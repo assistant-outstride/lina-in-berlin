@@ -1,22 +1,42 @@
-# Lina in Berlin
+# After Hours German
 
-Interactive A1 German reader.
+Static site for short illustrated German readers for adults.
 
-- Build: Built /home/node/.openclaw/workspace/tmp/lina-in-berlin/site/index.html
-- Narration: [skip] page1
-[skip] page2
-[skip] page3
-[skip] page4
-[skip] page5
-[skip] page6
-[skip] page7
-[skip] end
-- Illustrations: [skip] cover
-[skip] page1
-[skip] page2
-[skip] page3
-[skip] page4
-[skip] page5
-[skip] page6
-[skip] page7
-[skip] end
+## Direction
+
+The product focus is adult, addictive, learner-friendly fiction:
+
+- risqué but readable
+- emotionally messy, not mechanically explicit
+- simple enough for A1-B1 learners to keep moving
+- built around tension, nightlife, desire, secrecy, and bad decisions
+
+## Content Model
+
+- `library.json`: published story cards for the public homepage
+- `story.json` and `*.json`: page-by-page source for individual readers
+- `ideas.json`: story vault and editorial brief for future concepts
+- `site/admin/index.html`: browser-only JSON CMS for reviewing and editing ideas
+
+## Build
+
+Run:
+
+```bash
+python3 build_site.py
+```
+
+This rebuilds:
+
+- `site/index.html`
+- `site/stories/<slug>/index.html`
+- `site/admin/index.html`
+
+## Admin Workflow
+
+The admin page is intentionally lightweight:
+
+- it loads seeded ideas from `ideas.json`
+- it lets you edit ideas in the browser
+- it autosaves drafts to `localStorage`
+- it can export the current state as JSON for copying back into the repo

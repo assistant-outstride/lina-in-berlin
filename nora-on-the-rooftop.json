@@ -1,0 +1,158 @@
+{
+  "title": "Nora on the Rooftop",
+  "subtitle": "An A2 German reader for adults — one warm night, one Berlin rooftop, and one dangerous invitation.",
+  "status": "draft_act_1",
+  "reading_level": "A2",
+  "language": "German",
+  "summary": "Nora is new in Berlin and tired of reading dull textbook German. On a rooftop bar terrace she meets a stylish couple who switch easily between flirtation and kindness. The first act follows the drinks, the chemistry, and Nora's growing sense that the night is moving somewhere bold, ending when the couple asks whether she wants to come home with them.",
+  "paywall": {
+    "kicker": "Ende von Akt I",
+    "title": "Will Nora mitgehen?",
+    "body": "If readers want Act II, this is where we ask for the sign-up. The taxi is waiting, the couple is smiling, and Nora still has to say yes or no.",
+    "button": "Join the waitlist for Act II",
+    "link_text": "Back to story library",
+    "note": "No signup flow yet. For now we are measuring interest with pure tension."
+  },
+  "visual_direction": {
+    "style": "Cinematic digital illustration with summer-night warmth, attractive faces, elegant nightlife fashion, and strong body language.",
+    "character_notes": [
+      "Nora is a woman in her late twenties or early thirties.",
+      "She should feel intelligent, curious, a little cautious, and newly alive in Berlin.",
+      "The couple should look stylish and self-possessed, warm rather than predatory, with obvious chemistry between them."
+    ],
+    "cover_rule": "Choose the image with the strongest triangle tension as the cover.",
+    "scene_notes": [
+      "Keep the rooftop setting sensual: skyline, warm lights, glasses, late summer air, and shoulders close together.",
+      "No explicit nudity. The tone should be erotic through gaze, touch, invitation, and emotional risk.",
+      "The couple should feel confident and connected; Nora should look tempted and slightly overwhelmed."
+    ]
+  },
+  "pages": [
+    {
+      "id": "nora-cover",
+      "type": "cover",
+      "text": null,
+      "audio_text": null,
+      "image_file": "nora-cover.png"
+    },
+    {
+      "id": "nora-page1",
+      "type": "page",
+      "image_file": "nora-page1.png",
+      "text": "Nora ist neu in Berlin.\nSie lernt Deutsch, aber die Bücher sind langweilig.\nHeute Abend will sie nicht zu Hause bleiben.\nSie geht allein in eine Rooftop-Bar.",
+      "audio_text": "Nora ist neu in Berlin. Sie lernt Deutsch, aber die Bücher sind langweilig. Heute Abend will sie nicht zu Hause bleiben. Sie geht allein in eine Rooftop-Bar.",
+      "glossary": [
+        ["neu", "new"],
+        {"term": "lernen", "translation": "to learn", "matches": ["lernt"]},
+        ["langweilig", "boring"],
+        ["allein", "alone"],
+        ["Rooftop-Bar", "rooftop bar"]
+      ]
+    },
+    {
+      "id": "nora-page2",
+      "type": "page",
+      "image_file": "nora-page2.png",
+      "text": "Die Luft ist warm.\nÜber der Stadt glitzern Lichter.\nNora bestellt einen Drink und schaut auf die Dächer.\nDann hört sie ein leises Lachen neben sich.",
+      "audio_text": "Die Luft ist warm. Über der Stadt glitzern Lichter. Nora bestellt einen Drink und schaut auf die Dächer. Dann hört sie ein leises Lachen neben sich.",
+      "glossary": [
+        ["Luft", "air"],
+        {"term": "glitzern", "translation": "to sparkle", "matches": ["glitzern"]},
+        {"term": "bestellen", "translation": "to order", "matches": ["bestellt"]},
+        {"term": "Dach", "translation": "roof", "matches": ["Dächer"]},
+        {"term": "leise", "translation": "quietly", "matches": ["leises"]}
+      ]
+    },
+    {
+      "id": "nora-page3",
+      "type": "page",
+      "image_file": "nora-page3.png",
+      "text": "Neben ihr steht ein Paar.\nDie Frau hat rote Lippen und ruhige Augen.\nDer Mann trägt Schwarz und lächelt langsam.\nBeide sehen Nora an, als kennen sie sie schon.",
+      "audio_text": "Neben ihr steht ein Paar. Die Frau hat rote Lippen und ruhige Augen. Der Mann trägt Schwarz und lächelt langsam. Beide sehen Nora an, als kennen sie sie schon.",
+      "glossary": [
+        ["Paar", "couple"],
+        {"term": "ruhig", "translation": "calm", "matches": ["ruhige"]},
+        {"term": "tragen", "translation": "to wear", "matches": ["trägt"]},
+        ["beide", "both"],
+        {"term": "kennen", "translation": "to know", "matches": ["kennen"]}
+      ]
+    },
+    {
+      "id": "nora-page4",
+      "type": "page",
+      "image_file": "nora-page4.png",
+      "text": "\"Bist du allein hier?\" fragt die Frau.\nNora nickt.\n\"Nur heute,\" sagt sie.\nDer Mann sagt: \"Dann trinken wir mit dir.\"",
+      "audio_text": "Bist du allein hier? fragt die Frau. Nora nickt. Nur heute, sagt sie. Der Mann sagt: Dann trinken wir mit dir.",
+      "glossary": [
+        {"term": "fragen", "translation": "to ask", "matches": ["fragt"]},
+        {"term": "nicken", "translation": "to nod", "matches": ["nickt"]},
+        {"term": "trinken", "translation": "to drink", "matches": ["trinken"]},
+        ["mit dir", "with you"],
+        ["allein", "alone"]
+      ]
+    },
+    {
+      "id": "nora-page5",
+      "type": "page",
+      "image_file": "nora-page5.png",
+      "text": "Sie heißen Mara und Felix.\nSie sprechen leicht und sicher.\nNora muss oft lachen.\nManchmal berührt Mara kurz ihren Arm.",
+      "audio_text": "Sie heißen Mara und Felix. Sie sprechen leicht und sicher. Nora muss oft lachen. Manchmal berührt Mara kurz ihren Arm.",
+      "glossary": [
+        {"term": "heißen", "translation": "to be called", "matches": ["heißen"]},
+        {"term": "sprechen", "translation": "to speak", "matches": ["sprechen"]},
+        ["sicher", "confident"],
+        {"term": "lachen", "translation": "to laugh", "matches": ["lachen"]},
+        {"term": "berühren", "translation": "to touch", "matches": ["berührt"]}
+      ]
+    },
+    {
+      "id": "nora-page6",
+      "type": "page",
+      "image_file": "nora-page6.png",
+      "text": "Nach dem zweiten Drink wird alles weicher.\nFelix fragt, warum Nora in Berlin ist.\nMara fragt, ob sie mutig ist.\nNora spürt Hitze in ihrem Bauch.",
+      "audio_text": "Nach dem zweiten Drink wird alles weicher. Felix fragt, warum Nora in Berlin ist. Mara fragt, ob sie mutig ist. Nora spürt Hitze in ihrem Bauch.",
+      "glossary": [
+        ["zweiten", "second"],
+        {"term": "weich", "translation": "soft", "matches": ["weicher"]},
+        ["mutig", "brave"],
+        {"term": "spüren", "translation": "to feel", "matches": ["spürt"]},
+        ["Bauch", "stomach"]
+      ]
+    },
+    {
+      "id": "nora-page7",
+      "type": "page",
+      "image_file": "nora-page7.png",
+      "text": "Die Musik spielt tiefer.\nDie Stadt unter ihnen wirkt weit weg.\nMara beugt sich näher.\n\"Wir mögen dich\", sagt sie leise.",
+      "audio_text": "Die Musik spielt tiefer. Die Stadt unter ihnen wirkt weit weg. Mara beugt sich näher. Wir mögen dich, sagt sie leise.",
+      "glossary": [
+        {"term": "tief", "translation": "deep", "matches": ["tiefer"]},
+        {"term": "wirken", "translation": "to seem", "matches": ["wirkt"]},
+        {"term": "sich beugen", "translation": "to lean", "matches": ["beugt sich"]},
+        {"term": "mögen", "translation": "to like", "matches": ["mögen"]},
+        ["weit weg", "far away"]
+      ]
+    },
+    {
+      "id": "nora-page8",
+      "type": "page",
+      "image_file": "nora-page8.png",
+      "text": "Felix bezahlt die Rechnung.\nUnten wartet schon ein Taxi.\nMara hält Nora an der Hand.\n\"Willst du mit zu uns kommen?\" fragt sie.",
+      "audio_text": "Felix bezahlt die Rechnung. Unten wartet schon ein Taxi. Mara hält Nora an der Hand. Willst du mit zu uns kommen? fragt sie.",
+      "glossary": [
+        {"term": "bezahlen", "translation": "to pay", "matches": ["bezahlt"]},
+        ["Rechnung", "bill"],
+        {"term": "warten", "translation": "to wait", "matches": ["wartet"]},
+        ["Taxi", "taxi"],
+        {"term": "mitkommen", "translation": "to come along", "matches": ["mit zu uns kommen"]}
+      ]
+    },
+    {
+      "id": "nora-end",
+      "type": "end",
+      "image_file": "nora-end.png",
+      "text": "✦ Ende von Akt I ✦\n\nNora steht am Rand der Nacht.\nEin Taxi wartet.\nUnd jetzt muss sie antworten.",
+      "audio_text": "Ende von Akt eins. Nora steht am Rand der Nacht. Ein Taxi wartet. Und jetzt muss sie antworten."
+    }
+  ]
+}

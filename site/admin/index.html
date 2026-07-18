@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>After Hours German Admin</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Manrope:wght@400;500;700;800&display=swap');
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Manrope, sans-serif; color: #f5ebde; background: #0a0d18; }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 14% 15%, rgba(255, 164, 90, .18), transparent 24%),
+        radial-gradient(circle at 84% 18%, rgba(255, 111, 146, .16), transparent 32%),
+        linear-gradient(180deg, #171221 0%, #0a0d18 100%);
+      z-index: -2;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.028) 1px, transparent 1px);
+      background-size: 38px 38px;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,.55), transparent 90%);
+      pointer-events: none;
+      z-index: -1;
+    }
+    button, input, select, textarea { font: inherit; }
+    a { color: inherit; }
+    .wrap { max-width: 1380px; margin: 0 auto; padding: 24px; }
+    .topbar { display: flex; justify-content: space-between; gap: 18px; align-items: start; flex-wrap: wrap; margin-bottom: 20px; }
+    .eyebrow { display: inline-block; margin-bottom: 12px; color: #ffc98d; font-size: .8rem; letter-spacing: .18em; text-transform: uppercase; }
+    h1, h2, h3 { font-family: Fraunces, serif; }
+    h1 { margin: 0; font-size: clamp(2.6rem, 5vw, 4.6rem); line-height: .96; }
+    .topbar p { margin: 10px 0 0; max-width: 60ch; color: #d8c9d6; line-height: 1.7; }
+    .top-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+    .top-actions a,
+    .top-actions button {
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 16px;
+      background: rgba(255,255,255,.08);
+      color: #f5ebde;
+      text-decoration: none;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .top-actions .primary { background: linear-gradient(135deg, #ffd291, #f2a85f); color: #1f1522; }
+    .status-line { margin-bottom: 18px; color: #cdbdd0; font-size: .95rem; }
+    .layout { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 20px; align-items: start; }
+    .panel {
+      border-radius: 28px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: 0 18px 60px rgba(0,0,0,.24);
+      overflow: hidden;
+    }
+    .panel-head { padding: 22px 22px 0; }
+    .panel-head h2 { margin: 0; font-size: 1.7rem; }
+    .panel-head p { margin: 10px 0 0; color: #cdbfd1; line-height: 1.6; }
+    .stack { padding: 18px 18px 22px; display: grid; gap: 12px; }
+    .idea-list { max-height: 72vh; overflow: auto; padding-right: 4px; }
+    .idea-card {
+      width: 100%;
+      text-align: left;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 22px;
+      background: rgba(255,255,255,.04);
+      color: #f5ebde;
+      padding: 16px;
+      cursor: pointer;
+    }
+    .idea-card.active {
+      background: linear-gradient(145deg, rgba(255,154,118,.18), rgba(255,255,255,.06));
+      border-color: rgba(255,206,148,.35);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+    }
+    .idea-card strong { display: block; font-size: 1rem; }
+    .idea-card p { margin: 8px 0 0; color: #d2c3d4; line-height: 1.45; font-size: .92rem; }
+    .meta-row, .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .pill-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      color: #ffcf99;
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .editor { padding: 22px; display: grid; gap: 18px; }
+    .brief {
+      border-radius: 24px;
+      padding: 18px;
+      background: linear-gradient(145deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,.08);
+    }
+    .brief h3 { margin: 0 0 10px; font-size: 1.25rem; }
+    .brief p { margin: 0; color: #d4c8d7; line-height: 1.65; }
+    .brief ul { margin: 14px 0 0; padding-left: 18px; color: #f1dfd1; line-height: 1.65; }
+    .toolbar { display: flex; gap: 10px; flex-wrap: wrap; }
+    .toolbar button {
+      border: 0;
+      border-radius: 999px;
+      padding: 11px 14px;
+      background: rgba(255,255,255,.08);
+      color: #f5ebde;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .toolbar .danger { background: rgba(255, 113, 146, .18); color: #ffd5df; }
+    .toolbar .warm { background: rgba(255, 204, 140, .18); color: #ffdcae; }
+    label { display: grid; gap: 8px; font-weight: 700; color: #f8efdf; }
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 16px;
+      background: rgba(9,11,20,.72);
+      color: #f5ebde;
+      padding: 13px 14px;
+    }
+    textarea { min-height: 120px; resize: vertical; line-height: 1.55; }
+    .full { grid-column: 1 / -1; }
+    .small-note { color: #bbadbf; font-size: .88rem; line-height: 1.5; }
+    .json-box {
+      width: 100%;
+      min-height: 260px;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 20px;
+      background: rgba(9,11,20,.78);
+      color: #d8f0ff;
+      padding: 16px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .88rem;
+      line-height: 1.55;
+      white-space: pre;
+      overflow: auto;
+    }
+    @media (max-width: 1020px) {
+      .layout { grid-template-columns: 1fr; }
+      .idea-list { max-height: none; }
+    }
+    @media (max-width: 700px) {
+      .meta-row, .field-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div>
+        <span class="eyebrow">Story Vault</span>
+        <h1>After Hours German Admin</h1>
+        <p>Lightweight idea CMS for adult German learner fiction. Edit ideas in the browser, keep drafts locally, and export clean JSON back into the project whenever the vault changes.</p>
+      </div>
+      <div class="top-actions">
+        <a href="../index.html">Back to Library</a>
+        <a class="primary" href="./ideas.seed.json" download>Download Seed JSON</a>
+      </div>
+    </div>
+
+    <div class="status-line" id="status-line">Loading vault…</div>
+
+    <div class="layout">
+      <aside class="panel">
+        <div class="panel-head">
+          <h2>Ideas</h2>
+          <p>Keep the heat high, the syntax simple, and the emotional stakes obvious.</p>
+        </div>
+        <div class="stack">
+          <div class="toolbar">
+            <button id="add-idea" class="warm" type="button">Add Idea</button>
+            <button id="reset-seed" type="button">Reset Draft</button>
+          </div>
+          <div class="idea-list" id="idea-list"></div>
+        </div>
+      </aside>
+
+      <main class="panel">
+        <div class="editor">
+          <section class="brief">
+            <h3 id="brief-title"></h3>
+            <p id="brief-positioning"></p>
+            <div class="meta-row" style="margin-top:14px;">
+              <div>
+                <div class="small-note">Editorial focus</div>
+                <p id="brief-focus"></p>
+              </div>
+              <div>
+                <div class="small-note">Audience</div>
+                <p id="brief-audience"></p>
+              </div>
+            </div>
+            <ul id="brief-guardrails"></ul>
+          </section>
+
+          <div class="toolbar">
+            <button id="save-draft" class="warm" type="button">Save Draft</button>
+            <button id="copy-json" type="button">Copy JSON</button>
+            <button id="download-json" type="button">Download Current JSON</button>
+            <button id="delete-idea" class="danger" type="button">Delete Idea</button>
+          </div>
+
+          <div class="field-grid">
+            <label>Title
+              <input id="title" type="text">
+            </label>
+            <label>Slug / ID
+              <input id="id" type="text">
+            </label>
+            <label>Status
+              <select id="status">
+                <option value="idea">idea</option>
+                <option value="outline">outline</option>
+                <option value="drafting">drafting</option>
+                <option value="ready">ready</option>
+              </select>
+            </label>
+            <label>Level
+              <input id="level" type="text" placeholder="A2 or B1">
+            </label>
+            <label>Heat
+              <select id="heat">
+                <option value="medium">medium</option>
+                <option value="medium-high">medium-high</option>
+                <option value="high">high</option>
+              </select>
+            </label>
+            <label>POV
+              <input id="pov" type="text" placeholder="first person">
+            </label>
+            <label class="full">Setting
+              <input id="setting" type="text">
+            </label>
+            <label class="full">Tone
+              <input id="tone" type="text">
+            </label>
+            <label class="full">Hook
+              <textarea id="hook"></textarea>
+            </label>
+            <label class="full">Premise
+              <textarea id="premise"></textarea>
+            </label>
+            <label class="full">Tags
+              <input id="tags" type="text" placeholder="comma, separated, tags">
+            </label>
+            <label class="full">Learner Focus
+              <textarea id="learner_focus" placeholder="One item per line"></textarea>
+            </label>
+            <label class="full">Story Beats
+              <textarea id="beats" placeholder="One beat per line"></textarea>
+            </label>
+            <label class="full">Notes
+              <textarea id="notes"></textarea>
+            </label>
+          </div>
+
+          <section>
+            <h3>Live JSON</h3>
+            <p class="small-note">This updates as you type. Drafts stay in this browser until you export or reset them.</p>
+            <pre class="json-box" id="json-preview"></pre>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script id="seed-data" type="application/json">{"project": {"title": "After Hours German Story Vault", "positioning": "Short adult German readers for learners who are bored by childish beginner content.", "editorial_focus": "Risqu\u00e9 but readable stories with high emotional momentum, simple syntax, and concrete vocabulary.", "audience": "Adults learning German at A1-B1 who want sexy, dramatic, nightlife-adjacent fiction that still feels teachable.", "guardrails": ["All characters must be clearly adult.", "Prefer sexual tension, curiosity, regret, jealousy, and experimentation over graphic explicitness.", "Keep consent visible and legible.", "Use repetitive, concrete language that helps learners stay oriented scene by scene."], "vocabulary_targets": ["dating and flirting", "texting and invitations", "bars clubs and apartments", "feelings and jealousy", "boundaries and consent", "morning-after conversations"]}, "ideas": [{"id": "rooftop-third", "title": "The Rooftop Third", "status": "drafting", "level": "A2", "heat": "high", "pov": "close third", "setting": "Berlin rooftop bar and Friedrichshain apartment", "tone": "nervous erotic drama", "tags": ["Berlin", "Threesome", "Nightlife", "First Time", "Adult"], "hook": "A woman new to Berlin lets a charismatic couple buy her one more drink and says yes to a first threesome she never expected.", "premise": "Nora thinks she is only practicing her German with strangers on a rooftop. By midnight, she is in a taxi with a couple who seem effortless together. She wants adventure, but once the bedroom door closes she has to figure out whether she wants them, wants to impress them, or just wants to feel like a different person for one night.", "learner_focus": ["inviting", "drinks", "body language", "permission phrases", "morning-after talk"], "beats": ["Flirty rooftop conversation with simple repeated questions", "Taxi ride full of nerves and half-finished jokes", "Bedroom tension with explicit consent checks", "Morning coffee and emotional confusion"], "notes": "Good flagship concept for 'adult but readable' positioning."}, {"id": "german-after-midnight", "title": "German After Midnight", "status": "idea", "level": "A1-A2", "heat": "medium", "pov": "first person", "setting": "Evening language class and Neukolln bar", "tone": "flirty classroom drama", "tags": ["Berlin", "Language Class", "Bartender", "Affair", "Adult"], "hook": "A bored student starts learning much more German once she begins flirting with the bartender who works next door to her class.", "premise": "Mila hates her beginner German course until she notices that the bartender next door keeps correcting her articles with a smile. She starts arriving early, staying late, and inventing reasons to order another drink. The language improves fast. So does the sexual tension.", "learner_focus": ["ordering drinks", "small talk", "compliments", "text messages", "time expressions"], "beats": ["Awkward classroom boredom", "Playful corrections at the bar", "Late-night text exchange in simple German", "First kiss that makes the lessons suddenly useful"], "notes": "Very accessible vocabulary and clear repetition."}, {"id": "one-weekend-open", "title": "One Weekend Open", "status": "idea", "level": "B1", "heat": "high", "pov": "alternating couple POV", "setting": "Prenzlauer Berg apartment and club weekend", "tone": "jealous open-relationship drama", "tags": ["Berlin", "Couple", "Open Relationship", "Jealousy", "Adult"], "hook": "A couple agrees to open their relationship for one Berlin weekend and immediately discovers that fantasy is easier than reality.", "premise": "Eva and Tom make a rule: only one weekend, only in Berlin, and no lying. The rule sounds sexy on Friday afternoon. By Sunday morning they are comparing texts, hiding feelings, and learning how quickly desire turns into jealousy when real people appear.", "learner_focus": ["rules", "feelings", "arguments", "apologies", "relationship vocabulary"], "beats": ["Rule-setting conversation at home", "Separate flirtations in the city", "A bad jealous text at 2 a.m.", "The hard talk after the experiment"], "notes": "Leans more emotional than explicit."}, {"id": "three-days-no-sun", "title": "Three Days, No Sun", "status": "idea", "level": "A2-B1", "heat": "medium-high", "pov": "close third", "setting": "Long Berlin club weekend", "tone": "dreamy club romance", "tags": ["Berlin", "Club", "Weekend", "Queer", "Adult"], "hook": "Two women meet in a club line, disappear inside for an endless weekend, and wake up not knowing whether they are still strangers.", "premise": "Lea and Sofie meet while sharing a cigarette in a club queue. Hours later they are dancing, kissing, and losing time together. The real question begins only when daylight returns and ordinary life tries to enter the room.", "learner_focus": ["queue talk", "directions", "touch and movement verbs", "time confusion", "goodbye scenes"], "beats": ["Queue flirting", "Inside-club near-miss and reunion", "Apartment comedown intimacy", "Will-we-text-each-other ending"], "notes": "Less explicit, more atmosphere."}, {"id": "flatmate-wall", "title": "The Flatmate Wall", "status": "idea", "level": "A2", "heat": "medium-high", "pov": "first person", "setting": "Shared apartment in Kreuzberg", "tone": "domestic slow-burn", "tags": ["Berlin", "Roommates", "Slow Burn", "Adult", "Tension"], "hook": "A woman develops a dangerous crush on the man she shares a thin apartment wall with and starts hearing too much at night.", "premise": "Jana tells herself that Leon is only her flatmate. Then she starts learning his schedule, his laugh, and the sounds that come through the wall after midnight. When he knocks on her door in the middle of a storm, the whole apartment suddenly feels much smaller.", "learner_focus": ["apartment objects", "daily routine", "sounds", "requests", "boundary language"], "beats": ["Shared kitchen tension", "Thin-wall embarrassment", "Late-night knock on the door", "Crossing the line they both noticed weeks ago"], "notes": "Great beginner vocabulary in a sexy frame."}, {"id": "breakup-weekend", "title": "The Breakup Weekend", "status": "idea", "level": "A1-A2", "heat": "medium", "pov": "first person", "setting": "Tourist Berlin, hotel room, museum island, late bar", "tone": "reckless rebound romance", "tags": ["Berlin", "Breakup", "Tourist", "Hookup", "Adult"], "hook": "On a solo breakup trip to Berlin, a woman sleeps with a stranger and then keeps running into him all weekend.", "premise": "Clara comes to Berlin to feel free, not to get attached. After a one-night stand with a local she assumes she will never see again, he keeps reappearing in the exact places she goes. The city becomes a game of avoidance, temptation, and terrible self-control.", "learner_focus": ["travel phrases", "chance meetings", "phone avoidance", "attraction", "decision language"], "beats": ["Lonely first night", "Rebound hookup", "Unexpected second meeting", "Choice between leaving and staying one more night"], "notes": "Very learner-friendly because the narrator notices everything directly."}, {"id": "tattoo-conversation", "title": "Touch the Tattoo", "status": "idea", "level": "A2", "heat": "medium-high", "pov": "close third", "setting": "Canal bar and tattoo studio", "tone": "playful erotic romance", "tags": ["Berlin", "Tattoo", "Flirting", "Adult", "Art Scene"], "hook": "A harmless conversation about a tattoo turns into a dare, an appointment, and a lot more skin than expected.", "premise": "When Emre asks Lucy if she wants to know what his tattoo means, she says yes too quickly. Their flirtation keeps circling back to touch, translation, and how close two people can stand before it becomes obvious. The tattoo appointment is supposed to be innocent. It is not.", "learner_focus": ["body parts", "describing images", "questions", "touch verbs", "appointments"], "beats": ["Canal-side flirting", "Private meaning of the tattoo", "Studio appointment full of nerves", "Post-appointment kiss and aftercare scene"], "notes": "Useful concrete vocabulary."}, {"id": "hotel-window", "title": "The Hotel Window", "status": "idea", "level": "B1", "heat": "high", "pov": "close third", "setting": "Business hotel near Potsdamer Platz", "tone": "voyeuristic adult suspense", "tags": ["Berlin", "Hotel", "Business Trip", "Voyeurism", "Adult"], "hook": "A woman on a work trip becomes obsessed with the couple in the room across from hers, until one of them knocks on her door.", "premise": "Nina cannot sleep, so she watches the glowing windows across the courtyard. One room keeps catching her eye: the same couple, the same late-night ritual, the same strange feeling that they know she is there. When the woman from across the way appears at Nina's door, fantasy becomes very specific very fast.", "learner_focus": ["hotel language", "watching and noticing verbs", "fear vs desire", "invitation phrases"], "beats": ["Insomniac watching", "Growing fixation", "Unexpected knock", "Invitation that could be danger or desire"], "notes": "Best for a darker tone."}, {"id": "ex-and-the-dj", "title": "My Ex, The DJ", "status": "idea", "level": "A2-B1", "heat": "medium-high", "pov": "first person", "setting": "Small club in Wedding", "tone": "messy ex drama", "tags": ["Berlin", "Exes", "DJ", "Nightlife", "Adult"], "hook": "A woman goes to a club just to prove she is over her ex and ends up in the DJ booth with him at 4 a.m.", "premise": "Alma promises her friends she will not talk to Ben. Then she sees him under red light, wearing headphones, looking exactly like a mistake she still wants to make. The night becomes a long negotiation between pride, memory, and the chemistry they clearly did not kill.", "learner_focus": ["past relationship language", "promises", "arguments", "memory verbs", "late-night reconciliation"], "beats": ["Friends make her swear not to talk to him", "Charged first eye contact", "Private booth conversation", "Doomed but irresistible reunion kiss"], "notes": "Good for repeated emotional vocabulary."}, {"id": "the-consent-list", "title": "The Consent List", "status": "idea", "level": "B1", "heat": "high", "pov": "dual first person", "setting": "Kitchen table, text thread, private party", "tone": "smart erotic negotiation", "tags": ["Berlin", "Consent", "Private Party", "Adult", "Experiment"], "hook": "Before going to a private party, two friends write a shared yes-no-maybe list and discover they are much more interested in each other than in anyone else.", "premise": "Paula and Ilyas tell themselves they are only being responsible before a wild night out. The yes-no-maybe list starts as a practical joke, becomes honest, and turns the whole evening into foreplay. By the time they reach the party, the real question is whether they even want to go inside.", "learner_focus": ["preferences", "modals", "consent phrases", "questions", "decision-making"], "beats": ["Funny list-making scene", "Unexpected honesty", "Tense ride to the party", "Choosing each other over the anonymous fantasy"], "notes": "Strong for modern adult tone and healthy framing."}]}</script>
+  <script>
+    const STORAGE_KEY = 'afterHoursGerman.ideaVault';
+    const seedData = JSON.parse(document.getElementById('seed-data').textContent);
+    const state = loadInitialState();
+    let selectedIdeaId = state.ideas[0] ? state.ideas[0].id : null;
+
+    const fields = {
+      id: document.getElementById('id'),
+      title: document.getElementById('title'),
+      status: document.getElementById('status'),
+      level: document.getElementById('level'),
+      heat: document.getElementById('heat'),
+      pov: document.getElementById('pov'),
+      setting: document.getElementById('setting'),
+      tone: document.getElementById('tone'),
+      hook: document.getElementById('hook'),
+      premise: document.getElementById('premise'),
+      tags: document.getElementById('tags'),
+      learner_focus: document.getElementById('learner_focus'),
+      beats: document.getElementById('beats'),
+      notes: document.getElementById('notes')
+    };
+
+    function clone(value) {
+      return JSON.parse(JSON.stringify(value));
+    }
+
+    function loadInitialState() {
+      const saved = window.localStorage.getItem(STORAGE_KEY);
+      if (!saved) return clone(seedData);
+      try {
+        return JSON.parse(saved);
+      } catch (error) {
+        return clone(seedData);
+      }
+    }
+
+    function saveDraft() {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      setStatus('Draft saved locally in this browser.');
+    }
+
+    function setStatus(message) {
+      document.getElementById('status-line').textContent = message;
+    }
+
+    function selectedIdea() {
+      return state.ideas.find((idea) => idea.id === selectedIdeaId) || state.ideas[0];
+    }
+
+    function arrayFromComma(value) {
+      return value.split(',').map((item) => item.trim()).filter(Boolean);
+    }
+
+    function arrayFromLines(value) {
+      return value.split('\n').map((item) => item.trim()).filter(Boolean);
+    }
+
+    function slugify(value) {
+      return value.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    }
+
+    function renderBrief() {
+      document.getElementById('brief-title').textContent = state.project.title;
+      document.getElementById('brief-positioning').textContent = state.project.positioning;
+      document.getElementById('brief-focus').textContent = state.project.editorial_focus;
+      document.getElementById('brief-audience').textContent = state.project.audience;
+      document.getElementById('brief-guardrails').innerHTML = state.project.guardrails
+        .map((item) => `<li>${escapeHtml(item)}</li>`)
+        .join('');
+    }
+
+    function renderIdeaList() {
+      const root = document.getElementById('idea-list');
+      root.innerHTML = '';
+      state.ideas.forEach((idea) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'idea-card' + (idea.id === selectedIdeaId ? ' active' : '');
+        button.innerHTML = `
+          <strong>${escapeHtml(idea.title || 'Untitled idea')}</strong>
+          <div class="pill-row">
+            <span class="pill">${escapeHtml(idea.level || 'level?')}</span>
+            <span class="pill">${escapeHtml(idea.heat || 'heat?')}</span>
+            <span class="pill">${escapeHtml(idea.status || 'idea')}</span>
+          </div>
+          <p>${escapeHtml(idea.hook || 'No hook yet.')}</p>
+        `;
+        button.addEventListener('click', () => {
+          selectedIdeaId = idea.id;
+          render();
+        });
+        root.appendChild(button);
+      });
+    }
+
+    function renderEditor() {
+      const idea = selectedIdea();
+      if (!idea) return;
+      fields.id.value = idea.id || '';
+      fields.title.value = idea.title || '';
+      fields.status.value = idea.status || 'idea';
+      fields.level.value = idea.level || '';
+      fields.heat.value = idea.heat || 'medium';
+      fields.pov.value = idea.pov || '';
+      fields.setting.value = idea.setting || '';
+      fields.tone.value = idea.tone || '';
+      fields.hook.value = idea.hook || '';
+      fields.premise.value = idea.premise || '';
+      fields.tags.value = (idea.tags || []).join(', ');
+      fields.learner_focus.value = (idea.learner_focus || []).join('\n');
+      fields.beats.value = (idea.beats || []).join('\n');
+      fields.notes.value = idea.notes || '';
+      updatePreview();
+    }
+
+    function updatePreview() {
+      document.getElementById('json-preview').textContent = JSON.stringify(state, null, 2);
+    }
+
+    function render() {
+      renderBrief();
+      renderIdeaList();
+      renderEditor();
+      setStatus(`Editing ${state.ideas.length} ideas. Drafts persist in this browser.`);
+    }
+
+    function syncCurrentIdea() {
+      const idea = selectedIdea();
+      if (!idea) return;
+      const previousId = idea.id;
+      idea.title = fields.title.value.trim();
+      idea.id = slugify(fields.id.value || fields.title.value || previousId || 'new-idea');
+      idea.status = fields.status.value;
+      idea.level = fields.level.value.trim();
+      idea.heat = fields.heat.value;
+      idea.pov = fields.pov.value.trim();
+      idea.setting = fields.setting.value.trim();
+      idea.tone = fields.tone.value.trim();
+      idea.hook = fields.hook.value.trim();
+      idea.premise = fields.premise.value.trim();
+      idea.tags = arrayFromComma(fields.tags.value);
+      idea.learner_focus = arrayFromLines(fields.learner_focus.value);
+      idea.beats = arrayFromLines(fields.beats.value);
+      idea.notes = fields.notes.value.trim();
+      if (previousId !== idea.id) {
+        selectedIdeaId = idea.id;
+      }
+      updatePreview();
+      renderIdeaList();
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;');
+    }
+
+    Object.values(fields).forEach((field) => {
+      field.addEventListener('input', syncCurrentIdea);
+    });
+
+    document.getElementById('save-draft').addEventListener('click', () => {
+      saveDraft();
+    });
+
+    document.getElementById('reset-seed').addEventListener('click', () => {
+      window.localStorage.removeItem(STORAGE_KEY);
+      location.reload();
+    });
+
+    document.getElementById('add-idea').addEventListener('click', () => {
+      const next = {
+        id: 'new-idea-' + (state.ideas.length + 1),
+        title: 'New Idea',
+        status: 'idea',
+        level: 'A2',
+        heat: 'medium',
+        pov: 'first person',
+        setting: '',
+        tone: '',
+        tags: [],
+        hook: '',
+        premise: '',
+        learner_focus: [],
+        beats: [],
+        notes: ''
+      };
+      state.ideas.unshift(next);
+      selectedIdeaId = next.id;
+      saveDraft();
+      render();
+    });
+
+    document.getElementById('delete-idea').addEventListener('click', () => {
+      if (state.ideas.length === 1) {
+        setStatus('The vault needs at least one idea.');
+        return;
+      }
+      const idea = selectedIdea();
+      state.ideas = state.ideas.filter((entry) => entry.id !== idea.id);
+      selectedIdeaId = state.ideas[0].id;
+      saveDraft();
+      render();
+    });
+
+    document.getElementById('copy-json').addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(JSON.stringify(state, null, 2));
+        setStatus('Current JSON copied to clipboard.');
+      } catch (error) {
+        setStatus('Clipboard copy failed. Use the JSON panel below.');
+      }
+    });
+
+    document.getElementById('download-json').addEventListener('click', () => {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'ideas.json';
+      link.click();
+      URL.revokeObjectURL(url);
+      setStatus('Downloaded current JSON snapshot.');
+    });
+
+    render();
+  </script>
+</body>
+</html>

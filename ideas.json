@@ -1,0 +1,234 @@
+{
+  "project": {
+    "title": "After Hours German Story Vault",
+    "positioning": "Short adult German readers for learners who are bored by childish beginner content.",
+    "editorial_focus": "Risqué but readable stories with high emotional momentum, simple syntax, and concrete vocabulary.",
+    "audience": "Adults learning German at A1-B1 who want sexy, dramatic, nightlife-adjacent fiction that still feels teachable.",
+    "guardrails": [
+      "All characters must be clearly adult.",
+      "Prefer sexual tension, curiosity, regret, jealousy, and experimentation over graphic explicitness.",
+      "Keep consent visible and legible.",
+      "Use repetitive, concrete language that helps learners stay oriented scene by scene."
+    ],
+    "vocabulary_targets": [
+      "dating and flirting",
+      "texting and invitations",
+      "bars clubs and apartments",
+      "feelings and jealousy",
+      "boundaries and consent",
+      "morning-after conversations"
+    ]
+  },
+  "ideas": [
+    {
+      "id": "rooftop-third",
+      "title": "The Rooftop Third",
+      "status": "drafting",
+      "level": "A2",
+      "heat": "high",
+      "pov": "close third",
+      "setting": "Berlin rooftop bar and Friedrichshain apartment",
+      "tone": "nervous erotic drama",
+      "tags": ["Berlin", "Threesome", "Nightlife", "First Time", "Adult"],
+      "hook": "A woman new to Berlin lets a charismatic couple buy her one more drink and says yes to a first threesome she never expected.",
+      "premise": "Nora thinks she is only practicing her German with strangers on a rooftop. By midnight, she is in a taxi with a couple who seem effortless together. She wants adventure, but once the bedroom door closes she has to figure out whether she wants them, wants to impress them, or just wants to feel like a different person for one night.",
+      "learner_focus": ["inviting", "drinks", "body language", "permission phrases", "morning-after talk"],
+      "beats": [
+        "Flirty rooftop conversation with simple repeated questions",
+        "Taxi ride full of nerves and half-finished jokes",
+        "Bedroom tension with explicit consent checks",
+        "Morning coffee and emotional confusion"
+      ],
+      "notes": "Good flagship concept for 'adult but readable' positioning."
+    },
+    {
+      "id": "german-after-midnight",
+      "title": "German After Midnight",
+      "status": "idea",
+      "level": "A1-A2",
+      "heat": "medium",
+      "pov": "first person",
+      "setting": "Evening language class and Neukolln bar",
+      "tone": "flirty classroom drama",
+      "tags": ["Berlin", "Language Class", "Bartender", "Affair", "Adult"],
+      "hook": "A bored student starts learning much more German once she begins flirting with the bartender who works next door to her class.",
+      "premise": "Mila hates her beginner German course until she notices that the bartender next door keeps correcting her articles with a smile. She starts arriving early, staying late, and inventing reasons to order another drink. The language improves fast. So does the sexual tension.",
+      "learner_focus": ["ordering drinks", "small talk", "compliments", "text messages", "time expressions"],
+      "beats": [
+        "Awkward classroom boredom",
+        "Playful corrections at the bar",
+        "Late-night text exchange in simple German",
+        "First kiss that makes the lessons suddenly useful"
+      ],
+      "notes": "Very accessible vocabulary and clear repetition."
+    },
+    {
+      "id": "one-weekend-open",
+      "title": "One Weekend Open",
+      "status": "idea",
+      "level": "B1",
+      "heat": "high",
+      "pov": "alternating couple POV",
+      "setting": "Prenzlauer Berg apartment and club weekend",
+      "tone": "jealous open-relationship drama",
+      "tags": ["Berlin", "Couple", "Open Relationship", "Jealousy", "Adult"],
+      "hook": "A couple agrees to open their relationship for one Berlin weekend and immediately discovers that fantasy is easier than reality.",
+      "premise": "Eva and Tom make a rule: only one weekend, only in Berlin, and no lying. The rule sounds sexy on Friday afternoon. By Sunday morning they are comparing texts, hiding feelings, and learning how quickly desire turns into jealousy when real people appear.",
+      "learner_focus": ["rules", "feelings", "arguments", "apologies", "relationship vocabulary"],
+      "beats": [
+        "Rule-setting conversation at home",
+        "Separate flirtations in the city",
+        "A bad jealous text at 2 a.m.",
+        "The hard talk after the experiment"
+      ],
+      "notes": "Leans more emotional than explicit."
+    },
+    {
+      "id": "three-days-no-sun",
+      "title": "Three Days, No Sun",
+      "status": "idea",
+      "level": "A2-B1",
+      "heat": "medium-high",
+      "pov": "close third",
+      "setting": "Long Berlin club weekend",
+      "tone": "dreamy club romance",
+      "tags": ["Berlin", "Club", "Weekend", "Queer", "Adult"],
+      "hook": "Two women meet in a club line, disappear inside for an endless weekend, and wake up not knowing whether they are still strangers.",
+      "premise": "Lea and Sofie meet while sharing a cigarette in a club queue. Hours later they are dancing, kissing, and losing time together. The real question begins only when daylight returns and ordinary life tries to enter the room.",
+      "learner_focus": ["queue talk", "directions", "touch and movement verbs", "time confusion", "goodbye scenes"],
+      "beats": [
+        "Queue flirting",
+        "Inside-club near-miss and reunion",
+        "Apartment comedown intimacy",
+        "Will-we-text-each-other ending"
+      ],
+      "notes": "Less explicit, more atmosphere."
+    },
+    {
+      "id": "flatmate-wall",
+      "title": "The Flatmate Wall",
+      "status": "idea",
+      "level": "A2",
+      "heat": "medium-high",
+      "pov": "first person",
+      "setting": "Shared apartment in Kreuzberg",
+      "tone": "domestic slow-burn",
+      "tags": ["Berlin", "Roommates", "Slow Burn", "Adult", "Tension"],
+      "hook": "A woman develops a dangerous crush on the man she shares a thin apartment wall with and starts hearing too much at night.",
+      "premise": "Jana tells herself that Leon is only her flatmate. Then she starts learning his schedule, his laugh, and the sounds that come through the wall after midnight. When he knocks on her door in the middle of a storm, the whole apartment suddenly feels much smaller.",
+      "learner_focus": ["apartment objects", "daily routine", "sounds", "requests", "boundary language"],
+      "beats": [
+        "Shared kitchen tension",
+        "Thin-wall embarrassment",
+        "Late-night knock on the door",
+        "Crossing the line they both noticed weeks ago"
+      ],
+      "notes": "Great beginner vocabulary in a sexy frame."
+    },
+    {
+      "id": "breakup-weekend",
+      "title": "The Breakup Weekend",
+      "status": "idea",
+      "level": "A1-A2",
+      "heat": "medium",
+      "pov": "first person",
+      "setting": "Tourist Berlin, hotel room, museum island, late bar",
+      "tone": "reckless rebound romance",
+      "tags": ["Berlin", "Breakup", "Tourist", "Hookup", "Adult"],
+      "hook": "On a solo breakup trip to Berlin, a woman sleeps with a stranger and then keeps running into him all weekend.",
+      "premise": "Clara comes to Berlin to feel free, not to get attached. After a one-night stand with a local she assumes she will never see again, he keeps reappearing in the exact places she goes. The city becomes a game of avoidance, temptation, and terrible self-control.",
+      "learner_focus": ["travel phrases", "chance meetings", "phone avoidance", "attraction", "decision language"],
+      "beats": [
+        "Lonely first night",
+        "Rebound hookup",
+        "Unexpected second meeting",
+        "Choice between leaving and staying one more night"
+      ],
+      "notes": "Very learner-friendly because the narrator notices everything directly."
+    },
+    {
+      "id": "tattoo-conversation",
+      "title": "Touch the Tattoo",
+      "status": "idea",
+      "level": "A2",
+      "heat": "medium-high",
+      "pov": "close third",
+      "setting": "Canal bar and tattoo studio",
+      "tone": "playful erotic romance",
+      "tags": ["Berlin", "Tattoo", "Flirting", "Adult", "Art Scene"],
+      "hook": "A harmless conversation about a tattoo turns into a dare, an appointment, and a lot more skin than expected.",
+      "premise": "When Emre asks Lucy if she wants to know what his tattoo means, she says yes too quickly. Their flirtation keeps circling back to touch, translation, and how close two people can stand before it becomes obvious. The tattoo appointment is supposed to be innocent. It is not.",
+      "learner_focus": ["body parts", "describing images", "questions", "touch verbs", "appointments"],
+      "beats": [
+        "Canal-side flirting",
+        "Private meaning of the tattoo",
+        "Studio appointment full of nerves",
+        "Post-appointment kiss and aftercare scene"
+      ],
+      "notes": "Useful concrete vocabulary."
+    },
+    {
+      "id": "hotel-window",
+      "title": "The Hotel Window",
+      "status": "idea",
+      "level": "B1",
+      "heat": "high",
+      "pov": "close third",
+      "setting": "Business hotel near Potsdamer Platz",
+      "tone": "voyeuristic adult suspense",
+      "tags": ["Berlin", "Hotel", "Business Trip", "Voyeurism", "Adult"],
+      "hook": "A woman on a work trip becomes obsessed with the couple in the room across from hers, until one of them knocks on her door.",
+      "premise": "Nina cannot sleep, so she watches the glowing windows across the courtyard. One room keeps catching her eye: the same couple, the same late-night ritual, the same strange feeling that they know she is there. When the woman from across the way appears at Nina's door, fantasy becomes very specific very fast.",
+      "learner_focus": ["hotel language", "watching and noticing verbs", "fear vs desire", "invitation phrases"],
+      "beats": [
+        "Insomniac watching",
+        "Growing fixation",
+        "Unexpected knock",
+        "Invitation that could be danger or desire"
+      ],
+      "notes": "Best for a darker tone."
+    },
+    {
+      "id": "ex-and-the-dj",
+      "title": "My Ex, The DJ",
+      "status": "idea",
+      "level": "A2-B1",
+      "heat": "medium-high",
+      "pov": "first person",
+      "setting": "Small club in Wedding",
+      "tone": "messy ex drama",
+      "tags": ["Berlin", "Exes", "DJ", "Nightlife", "Adult"],
+      "hook": "A woman goes to a club just to prove she is over her ex and ends up in the DJ booth with him at 4 a.m.",
+      "premise": "Alma promises her friends she will not talk to Ben. Then she sees him under red light, wearing headphones, looking exactly like a mistake she still wants to make. The night becomes a long negotiation between pride, memory, and the chemistry they clearly did not kill.",
+      "learner_focus": ["past relationship language", "promises", "arguments", "memory verbs", "late-night reconciliation"],
+      "beats": [
+        "Friends make her swear not to talk to him",
+        "Charged first eye contact",
+        "Private booth conversation",
+        "Doomed but irresistible reunion kiss"
+      ],
+      "notes": "Good for repeated emotional vocabulary."
+    },
+    {
+      "id": "the-consent-list",
+      "title": "The Consent List",
+      "status": "idea",
+      "level": "B1",
+      "heat": "high",
+      "pov": "dual first person",
+      "setting": "Kitchen table, text thread, private party",
+      "tone": "smart erotic negotiation",
+      "tags": ["Berlin", "Consent", "Private Party", "Adult", "Experiment"],
+      "hook": "Before going to a private party, two friends write a shared yes-no-maybe list and discover they are much more interested in each other than in anyone else.",
+      "premise": "Paula and Ilyas tell themselves they are only being responsible before a wild night out. The yes-no-maybe list starts as a practical joke, becomes honest, and turns the whole evening into foreplay. By the time they reach the party, the real question is whether they even want to go inside.",
+      "learner_focus": ["preferences", "modals", "consent phrases", "questions", "decision-making"],
+      "beats": [
+        "Funny list-making scene",
+        "Unexpected honesty",
+        "Tense ride to the party",
+        "Choosing each other over the anonymous fantasy"
+      ],
+      "notes": "Strong for modern adult tone and healthy framing."
+    }
+  ]
+}

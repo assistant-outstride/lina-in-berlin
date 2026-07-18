@@ -1,112 +1,152 @@
 #!/usr/bin/env python3
-"""Generate illustrations for Lina in Berlin."""
+"""Generate story illustrations from structured story metadata."""
 
 import argparse
 import base64
 import json
+import mimetypes
 import os
+import urllib.request
 from pathlib import Path
-from openai import OpenAI
 
 BASE = Path(__file__).parent
 OUT_DIR = BASE / "images"
 OUT_DIR.mkdir(exist_ok=True)
 
-client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
-story = json.loads((BASE / "story.json").read_text())
-
-STYLE = (
-    "Tasteful romantic illustrated novel art, soft cinematic lighting, warm Berlin evening palette, "
-    "clean composition, expressive faces, contemporary adult readers aesthetic, painterly but crisp, "
-    "not photorealistic, not explicit, elegant and sensual, single full-frame illustration of one story beat, "
-    "no collage, no comic panels, no diptych, no triptych, no text, no page labels, no captions"
+DEFAULT_STYLE = (
+    "Tasteful illustrated visual novella art, cinematic lighting, clean composition, expressive faces, "
+    "painterly but crisp, not photorealistic, not explicit, elegant and sensual, single full-frame illustration "
+    "of one story beat, no collage, no comic panels, no diptych, no triptych, no text, no page labels, no captions"
 )
-
-CHARACTERS = (
-    "Lina is an American woman in her twenties, medium-length chestnut hair, bright curious eyes, "
-    "casual travel clothes, a little nervous but confident. "
-    "Max is a tall German man in his twenties or early thirties, dark hair, gentle smile, clean-lined coat, "
-    "calm and handsome."
-)
-
-PAGES = {
-    "cover": (
-        f"{STYLE}. {CHARACTERS} Book cover for 'Lina in Berlin': Lina and Max on a rainy Berlin street at night, "
-        "neon reflections on wet pavement, flowers in Max's hand, warm intimacy, city lights, title space at top, "
-        "romantic and atmospheric."
-    ),
-    "page1": (
-        f"{STYLE}. {CHARACTERS} Single-scene composition: Lina beside an open laptop, smiling at Max on the call screen. "
-        "Apartment interior, soft lamp light, close intimate framing, gentle anticipation."
-    ),
-    "page2": (
-        f"{STYLE}. {CHARACTERS} Lina packing a suitcase on her bed with a red dress folded beside it. "
-        "Her friend stands in the doorway looking worried and dramatic. Bright apartment, travel energy."
-    ),
-    "page3": (
-        f"{STYLE}. {CHARACTERS} Lina sitting by airplane window above the clouds, hands on her lap, "
-        "quiet nervous expression, sunrise light, travel mood, reflections in the glass."
-    ),
-    "page4": (
-        f"{STYLE}. {CHARACTERS} Berlin airport arrival: Max waiting with flowers, Lina stepping toward him smiling. "
-        "Elegant airport hall, warm reunion, emotional eye contact, cinematic composition."
-    ),
-    "page5": (
-        f"{STYLE}. {CHARACTERS} Inside a quiet apartment at night, Lina and Max kissing softly by a window with city lights outside. "
-        "Hands close, romantic tension, tasteful fade-to-black energy, no explicit detail."
-    ),
-    "page6": (
-        f"{STYLE}. {CHARACTERS} Morning in the apartment bedroom, sunlight on white sheets, Lina sitting up and looking at a small bite mark on her collarbone, "
-        "Max nearby looking innocent and a little mysterious. Soft but unsettling mood."
-    ),
-    "page7": (
-        f"{STYLE}. {CHARACTERS} Lina holding her phone, suspicious and alert, standing in the doorway as Max watches from the hallway, "
-        "subtle mystery tension, Berlin apartment, strong story-book framing."
-    ),
-    "end": (
-        f"{STYLE}. {CHARACTERS} Closing image: Lina walking through a glowing Berlin street at dawn, city mystery ahead, "
-        "small silhouette of Max in the distance, dreamy and unresolved ending, title-card feeling."
-    ),
-}
 
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Generate story illustrations.")
-    parser.add_argument("page_ids", nargs="*", help="Specific page ids to generate, like page4 or cover.")
-    parser.add_argument("--force", action="store_true", help="Regenerate images even when the file already exists.")
+    parser.add_argument(
+        "--story-file",
+        default="story.json",
+        help="Story JSON file to read, relative to the project root.",
+    )
+    parser.add_argument("page_ids", nargs="*", help="Specific page ids to generate.")
+    parser.add_argument("--force", action="store_true", help="Regenerate images even when files already exist.")
     return parser.parse_args()
+
+
+def load_story(story_file: str):
+    path = BASE / story_file
+    return path, json.loads(path.read_text())
+
+
+def flatten_lines(lines):
+    if not lines:
+        return ""
+    if isinstance(lines, str):
+        return lines.strip()
+    return " ".join(str(line).strip() for line in lines if str(line).strip())
+
+
+def build_character_block(story):
+    characters = story.get("characters", {})
+    if not characters:
+        return ""
+
+    chunks = []
+    for key, character in characters.items():
+        name = character.get("name", key.title())
+        parts = [f"{name}: {character.get('identity_lock', '').strip()}"]
+        appearance = flatten_lines(character.get("appearance", []))
+        vibe = flatten_lines(character.get("vibe", ""))
+        if appearance:
+            parts.append(f"Appearance: {appearance}")
+        if vibe:
+            parts.append(f"Vibe: {vibe}")
+        chunks.append(" ".join(part for part in parts if part))
+    return " ".join(chunks)
+
+
+def build_visual_block(story):
+    visual = story.get("visual_direction", {})
+    sections = [DEFAULT_STYLE]
+    style = flatten_lines(visual.get("style", ""))
+    scene_notes = flatten_lines(visual.get("scene_notes", []))
+    character_notes = flatten_lines(visual.get("character_notes", []))
+    cover_rule = flatten_lines(visual.get("cover_rule", ""))
+    if style:
+        sections.append(style)
+    if scene_notes:
+        sections.append(scene_notes)
+    if character_notes:
+        sections.append(character_notes)
+    if cover_rule:
+        sections.append(f"Cover rule: {cover_rule}")
+    return " ".join(section for section in sections if section)
+
+
+def build_prompt(story, page):
+    blocks = [
+        build_visual_block(story),
+        build_character_block(story),
+        flatten_lines(page.get("image_prompt", "")),
+        "Keep recurring characters visually consistent with the locked character definitions in this story.",
+    ]
+    return " ".join(block for block in blocks if block).strip()
 
 
 def output_path(page):
     return OUT_DIR / page.get("image_file", f'{page["id"]}.png')
 
 
-def generate_image(page, prompt: str, force: bool = False):
+def generate_image(story, page, force=False):
     page_id = page["id"]
     out = output_path(page)
     if out.exists() and not force:
         print(f"[skip] {page_id}")
         return out
+
+    prompt = build_prompt(story, page)
     print(f"[gen] {page_id}")
-    resp = client.images.generate(
-        model="gpt-image-1",
-        prompt=prompt,
-        size="1024x1024",
-        quality="high",
-        n=1,
+    payload = json.dumps({
+        "model": "gpt-image-1",
+        "prompt": prompt,
+        "size": "1024x1024",
+        "quality": "high",
+    }).encode("utf-8")
+    request = urllib.request.Request(
+        "https://api.openai.com/v1/images/generations",
+        data=payload,
+        headers={
+            "Authorization": f"Bearer {os.environ['OPENAI_API_KEY']}",
+            "Content-Type": "application/json",
+        },
+        method="POST",
     )
-    b64 = resp.data[0].b64_json
-    out.write_bytes(base64.b64decode(b64))
+    with urllib.request.urlopen(request) as response:
+        mime_type = response.headers.get_content_type()
+        body = response.read()
+
+    if mime_type == "application/json":
+        data = json.loads(body.decode("utf-8"))
+        image_bytes = base64.b64decode(data["data"][0]["b64_json"])
+    else:
+        image_bytes = body
+    out.write_bytes(image_bytes)
     return out
 
 
-if __name__ == "__main__":
+def main():
     args = parse_args()
+    story_path, story = load_story(args.story_file)
+    print(f"[story] {story_path.name}")
     selected = set(args.page_ids)
+
     for page in story["pages"]:
-        pid = page["id"]
-        if selected and pid not in selected:
+        page_id = page["id"]
+        if selected and page_id not in selected:
             continue
-        prompt = PAGES.get(pid)
-        if prompt:
-            generate_image(page, prompt, force=args.force)
+        if page["type"] not in {"cover", "page", "end"}:
+            continue
+        generate_image(story, page, force=args.force)
+
+
+if __name__ == "__main__":
+    main()
