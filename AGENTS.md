@@ -1,6 +1,7 @@
 # Agent Notes
 
 - Always push immediately after committing.
+- In this repo, treat `commit` + `push` as the default finish step whenever work is complete and the branch is in a good state.
 - After Hours German is an adult language-learning project, not a generic beginner-reader app.
 - Editorial target: risqué, high-interest, emotionally messy stories that are readable at beginner/intermediate level.
 - Prefer "adult drama with erotic stakes" over explicit erotica. Keep the pull coming from tension, curiosity, awkwardness, bad decisions, secrecy, nightlife, jealousy, and consent-aware experimentation.
