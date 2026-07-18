@@ -15,6 +15,14 @@
 - Use the repo image script only when that external API route is explicitly available and appropriate. Otherwise, use the built-in image tool and keep visual consistency by referencing the strongest approved prior image.
 - For narration, prefer local/offline generation when available on the machine. The default local fallback should be treated as the safest baseline.
 - When a story needs to ship quickly, it is acceptable to reuse a small number of strong generated scene images across adjacent pages rather than leave placeholder art live.
+- Treat the build output as a product surface, not disposable scaffolding. Story pages, library cards, links, images, and audio should validate before commit.
+- Before committing story or reader-shell changes, run `python3 build_site.py` and `python3 validate_repo.py`.
+- The repo pre-commit hook lives at `.githooks/pre-commit`. Prefer `git config core.hooksPath .githooks` so the check runs automatically.
+- Source images can stay high quality, but the published site should ship optimized delivery assets. If image payloads climb, fix the build/output path instead of normalizing slow pages as acceptable.
+- Current asset targets:
+  - source image warning threshold: about `1.5 MB` each
+  - source audio warning threshold: about `250 KB` each
+- Published stories should have all linked assets present: story JSON, built page, cover image, scene images, and narration files for pages with `audio_text`.
 - For `Camille at Karaoke`, treat character identity as locked: Camille and Lea must keep the same race presentation, skin tone, facial features, and hair across all pages.
 - When regenerating Camille story art, generate the full image set in one run from the same character definitions rather than page-by-page prompt edits.
 - Use `camille-at-karaoke` naming for the slug, story file, ids, and image assets; do not introduce new `tristan-*` references.

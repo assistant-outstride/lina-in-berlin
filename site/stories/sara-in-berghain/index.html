@@ -11,7 +11,7 @@
     body::before { content: ''; position: fixed; inset: 0; background: radial-gradient(circle at 18% 16%, rgba(255,164,82,.18), transparent 26%), radial-gradient(circle at 84% 22%, rgba(111,166,255,.14), transparent 34%), linear-gradient(180deg, #171b33 0%, #0d1020 100%); z-index: -1; }
     a { color: inherit; }
     .wrap { max-width: 1120px; margin: 0 auto; padding: 24px; }
-    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+    .topbar { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
     .titleblock h1 { margin: 0; font-family: Fraunces, serif; font-size: clamp(2.1rem, 5vw, 3.5rem); }
     .titleblock p { margin: 8px 0 0; color: #c7bfd6; max-width: 64ch; }
     .eyebrow { display: inline-block; margin-bottom: 12px; color: #ffcf93; font-size: .83rem; letter-spacing: .16em; text-transform: uppercase; }
@@ -19,12 +19,25 @@
     .library-link a { text-decoration: none; }
     button, .home-chip { border: 0; border-radius: 999px; padding: 11px 16px; background: #f1b15e; color: #1c1424; font-weight: 800; cursor: pointer; text-decoration: none; }
     button:disabled { opacity: .4; cursor: default; }
+    button:focus-visible, .home-chip:focus-visible, .dot:focus-visible { outline: 2px solid #ffd8a2; outline-offset: 3px; }
     .toggle-chip { display: inline-flex; align-items: center; gap: 10px; border-radius: 999px; padding: 10px 14px; background: rgba(255,255,255,.08); color: #f6efe2; font-size: .92rem; font-weight: 700; }
     .toggle-chip button { padding: 6px 11px; min-width: 56px; background: rgba(255,255,255,.12); color: #f6efe2; }
     .toggle-chip button[data-state="on"] { background: #f1b15e; color: #1c1424; }
-    .dots { display: flex; gap: 8px; flex-wrap: wrap; margin: 18px 0 22px; }
+    .reader-controls { display: grid; gap: 16px; margin: 0 0 22px; }
+    .desktop-nav { display: flex; align-items: center; gap: 12px; }
+    .progress-chip { min-width: 150px; padding: 12px 16px; border-radius: 999px; background: rgba(255,255,255,.08); color: #f6efe2; text-align: center; font-size: .95rem; font-weight: 700; }
+    .nav-button { min-height: 52px; padding: 14px 20px; font-size: 1rem; }
+    .nav-button.nav-primary { padding-inline: 28px; }
+    .nav-button[data-nav="1"] { min-width: 152px; }
+    .nav-button[data-nav="-1"] { min-width: 120px; background: rgba(255,255,255,.12); color: #f6efe2; }
+    .dots { display: flex; gap: 10px; flex-wrap: wrap; }
     .dot { width: 11px; height: 11px; border-radius: 50%; background: rgba(255,255,255,.2); cursor: pointer; }
     .dot.active { background: #f1b15e; transform: scale(1.2); }
+    .mobile-dock { display: none; }
+    .mobile-progress { flex: 1; min-width: 0; }
+    .mobile-progress-label { display: block; margin-bottom: 6px; color: #f6efe2; font-size: .92rem; font-weight: 700; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .mobile-progress-track { height: 6px; border-radius: 999px; background: rgba(255,255,255,.14); overflow: hidden; }
+    .mobile-progress-fill { height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, #ffd28e, #f1b15e); }
     .page { display: none; }
     .page.active { display: block; }
     .cover-card, .page-card { overflow: hidden; border-radius: 32px; background: rgba(255,255,255,.08); backdrop-filter: blur(10px); box-shadow: 0 18px 60px rgba(0,0,0,.3); }
@@ -66,12 +79,22 @@
     .paywall-note { margin-top: 12px !important; font-size: .92rem; color: #bfb4cb !important; }
     .sparkle-zone { pointer-events: none; position: absolute; inset: 0; overflow: hidden; }
     .sparkle { position: absolute; width: 10px; height: 10px; border-radius: 50%; background: radial-gradient(circle, rgba(255,244,210,1) 0%, rgba(255,211,147,.95) 45%, rgba(255,211,147,0) 72%); opacity: 0; transform: translate(-50%, -50%) scale(.2); animation: sparkle-burst .9s ease-out forwards; }
+    .story-art, .cover-img, .page-img { contain: paint; }
     @keyframes sparkle-burst {
       0% { opacity: 0; transform: translate(-50%, -50%) scale(.2); }
       20% { opacity: 1; }
       100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.35); }
     }
     @media (max-width: 860px) {
+      .wrap { padding: 20px 20px 108px; }
+      .topbar { align-items: start; gap: 14px; }
+      .nav { width: 100%; justify-content: space-between; }
+      .desktop-nav { display: none; }
+      .dots { display: none; }
+      .mobile-dock { position: fixed; left: 16px; right: 16px; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); z-index: 20; display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 24px; background: rgba(10, 13, 24, .9); backdrop-filter: blur(16px); box-shadow: 0 18px 40px rgba(0,0,0,.35); border: 1px solid rgba(255,255,255,.08); }
+      .mobile-dock .nav-button { min-width: 0; flex: 0 0 auto; }
+      .mobile-dock .nav-button[data-nav="1"] { min-width: 132px; }
+      .mobile-dock .nav-button[data-nav="-1"] { min-width: 104px; }
       .page-card { grid-template-columns: 1fr; }
       .page-card { min-height: auto; }
       .page-card .page-img { order: 0 !important; height: auto; min-height: 0; object-fit: contain; background: rgba(8, 10, 20, .72); }
@@ -92,17 +115,22 @@
       <div class="nav">
         <div class="library-link"><a class="home-chip" href="../../index.html">Story Library</a></div>
         <div class="toggle-chip">Autoplay <button id="autoplay-toggle" type="button" aria-pressed="true" data-state="on">On</button></div>
-        <button id="prev" onclick="go(-1)">← Back</button>
-        <button id="next" onclick="go(1)">Next →</button>
       </div>
     </div>
 
-    <div class="dots"><div class="dot active" onclick="show(1)"></div><div class="dot" onclick="show(2)"></div><div class="dot" onclick="show(3)"></div><div class="dot" onclick="show(4)"></div><div class="dot" onclick="show(5)"></div><div class="dot" onclick="show(6)"></div><div class="dot" onclick="show(7)"></div><div class="dot" onclick="show(8)"></div><div class="dot" onclick="show(9)"></div><div class="dot" onclick="show(10)"></div></div>
+    <div class="reader-controls">
+      <div class="desktop-nav">
+        <button class="nav-button" type="button" data-nav="-1">← Back</button>
+        <div class="progress-chip"><span data-progress-label>Cover</span></div>
+        <button class="nav-button nav-primary" type="button" data-nav="1">Next →</button>
+      </div>
+      <div class="dots"><button class="dot active" type="button" aria-label="Go to scene 1" data-scene="1"></button><button class="dot" type="button" aria-label="Go to scene 2" data-scene="2"></button><button class="dot" type="button" aria-label="Go to scene 3" data-scene="3"></button><button class="dot" type="button" aria-label="Go to scene 4" data-scene="4"></button><button class="dot" type="button" aria-label="Go to scene 5" data-scene="5"></button><button class="dot" type="button" aria-label="Go to scene 6" data-scene="6"></button><button class="dot" type="button" aria-label="Go to scene 7" data-scene="7"></button><button class="dot" type="button" aria-label="Go to scene 8" data-scene="8"></button><button class="dot" type="button" aria-label="Go to scene 9" data-scene="9"></button><button class="dot" type="button" aria-label="Go to scene 10" data-scene="10"></button></div>
+    </div>
 
     
             <section class="page cover active" id="page-1">
               <div class="cover-card">
-                <img src="images/sara-cover.png" alt="Cover" class="cover-img">
+                <img src="images/sara-cover.jpg" alt="Cover" class="cover-img" loading="eager" decoding="async" fetchpriority="high">
                 <div class="cover-overlay">
                   <span class="eyebrow">A2 reader</span>
                   <h1>Sara in Berghain</h1>
@@ -113,12 +141,12 @@
             
         <section class="page" id="page-2">
           <div class="page-card text-first">
-            <img src="images/sara-page1.png" alt="Illustration" class="page-img">
+            <img src="images/sara-page1.jpg" alt="Illustration" class="page-img" loading="lazy" decoding="async">
             <div class="content">
               <div class="page-copy">Sara sitzt <button class="tap-word" data-term="allein" data-translation="alone">allein</button> im Hotel.<br>Ihr <button class="tap-word" data-term="Laptop" data-translation="laptop">Laptop</button> ist zu.<br>Ihre Füße <button class="tap-word" data-term="tun weh" data-lemma="weh tun" data-translation="to hurt">tun weh</button> von der <button class="tap-word" data-term="Arbeit" data-translation="work">Arbeit</button>.<br>Sie will heute Nacht etwas <button class="tap-word" data-term="Verrücktes" data-lemma="verrückt" data-translation="crazy">Verrücktes</button> machen.</div>
               <div class='glossary'><button class="vocab" type="button" data-term="allein" data-translation="alone"><strong>allein</strong> — alone</button><button class="vocab" type="button" data-term="Laptop" data-translation="laptop"><strong>Laptop</strong> — laptop</button><button class="vocab" type="button" data-term="weh tun" data-translation="to hurt"><strong>weh tun</strong> — to hurt</button><button class="vocab" type="button" data-term="Arbeit" data-translation="work"><strong>Arbeit</strong> — work</button><button class="vocab" type="button" data-term="verrückt" data-translation="crazy"><strong>verrückt</strong> — crazy</button></div>
               <div class="glossary-hint">Tap any highlighted German word or vocab pill for an instant translation.</div><div class="translator" id="translator-2">Tap a highlighted word or vocab pill.</div>
-              <audio controls src="audio/page1.ogg"></audio>
+              <audio controls preload="none" src="audio/page1.wav"></audio>
             </div>
           </div>
           <div class="page-number">1/8</div>
@@ -126,12 +154,12 @@
         
         <section class="page" id="page-3">
           <div class="page-card image-first">
-            <img src="images/sara-page2.png" alt="Illustration" class="page-img">
+            <img src="images/sara-page2.jpg" alt="Illustration" class="page-img" loading="lazy" decoding="async">
             <div class="content">
               <div class="page-copy"><button class="tap-word" data-term="Morgen" data-translation="tomorrow">Morgen</button> <button class="tap-word" data-term="fliegt" data-lemma="fliegen" data-translation="to fly">fliegt</button> sie <button class="tap-word" data-term="nach Hause" data-lemma="zu Hause" data-translation="at home">nach Hause</button>.<br>Aber heute ist ihr <button class="tap-word" data-term="letzter" data-translation="last">letzter</button> Samstag in Europa.<br>Sie zieht <button class="tap-word" data-term="schwarze" data-lemma="schwarz" data-translation="black">schwarze</button> Kleidung an.<br>Dann fährt sie nach Berghain.</div>
               <div class='glossary'><button class="vocab" type="button" data-term="morgen" data-translation="tomorrow"><strong>morgen</strong> — tomorrow</button><button class="vocab" type="button" data-term="fliegen" data-translation="to fly"><strong>fliegen</strong> — to fly</button><button class="vocab" type="button" data-term="zu Hause" data-translation="at home"><strong>zu Hause</strong> — at home</button><button class="vocab" type="button" data-term="letzter" data-translation="last"><strong>letzter</strong> — last</button><button class="vocab" type="button" data-term="schwarz" data-translation="black"><strong>schwarz</strong> — black</button></div>
               <div class="glossary-hint">Tap any highlighted German word or vocab pill for an instant translation.</div><div class="translator" id="translator-3">Tap a highlighted word or vocab pill.</div>
-              <audio controls src="audio/page2.ogg"></audio>
+              <audio controls preload="none" src="audio/page2.wav"></audio>
             </div>
           </div>
           <div class="page-number">2/8</div>
@@ -139,12 +167,12 @@
         
         <section class="page" id="page-4">
           <div class="page-card text-first">
-            <img src="images/sara-page3.png" alt="Illustration" class="page-img">
+            <img src="images/sara-page3.jpg" alt="Illustration" class="page-img" loading="lazy" decoding="async">
             <div class="content">
               <div class="page-copy">Vor dem Club ist die <button class="tap-word" data-term="Schlange" data-translation="queue">Schlange</button> lang.<br>Niemand spricht <button class="tap-word" data-term="laut" data-translation="loudly">laut</button>.<br>Sara sieht <button class="tap-word" data-term="Leder" data-translation="leather">Leder</button>, dunkle Augen und kalte <button class="tap-word" data-term="Gesichter" data-lemma="Gesicht" data-translation="face">Gesichter</button>.<br>Sie fragt sich: "Passe ich hier <button class="tap-word" data-term="rein" data-lemma="reinpassen" data-translation="to fit in">rein</button>?"</div>
               <div class='glossary'><button class="vocab" type="button" data-term="Schlange" data-translation="queue"><strong>Schlange</strong> — queue</button><button class="vocab" type="button" data-term="laut" data-translation="loudly"><strong>laut</strong> — loudly</button><button class="vocab" type="button" data-term="Leder" data-translation="leather"><strong>Leder</strong> — leather</button><button class="vocab" type="button" data-term="Gesicht" data-translation="face"><strong>Gesicht</strong> — face</button><button class="vocab" type="button" data-term="reinpassen" data-translation="to fit in"><strong>reinpassen</strong> — to fit in</button></div>
               <div class="glossary-hint">Tap any highlighted German word or vocab pill for an instant translation.</div><div class="translator" id="translator-4">Tap a highlighted word or vocab pill.</div>
-              <audio controls src="audio/page3.ogg"></audio>
+              
             </div>
           </div>
           <div class="page-number">3/8</div>
@@ -152,12 +180,12 @@
         
         <section class="page" id="page-5">
           <div class="page-card image-first">
-            <img src="images/sara-page4.png" alt="Illustration" class="page-img">
+            <img src="images/sara-page4.jpg" alt="Illustration" class="page-img" loading="lazy" decoding="async">
             <div class="content">
               <div class="page-copy">Die <button class="tap-word" data-term="Minuten" data-lemma="Minute" data-translation="minute">Minuten</button> gehen langsam vorbei.<br>Ein <button class="tap-word" data-term="Paar" data-translation="couple">Paar</button> vor ihr küsst sich <button class="tap-word" data-term="ohne Scham" data-translation="without shame">ohne Scham</button>.<br>Ein großer Mann hinter ihr <button class="tap-word" data-term="raucht" data-lemma="rauchen" data-translation="to smoke">raucht</button> still.<br>Sara wird nervös, aber sie <button class="tap-word" data-term="bleibt" data-lemma="bleiben" data-translation="to stay">bleibt</button>.</div>
               <div class='glossary'><button class="vocab" type="button" data-term="Minute" data-translation="minute"><strong>Minute</strong> — minute</button><button class="vocab" type="button" data-term="Paar" data-translation="couple"><strong>Paar</strong> — couple</button><button class="vocab" type="button" data-term="ohne Scham" data-translation="without shame"><strong>ohne Scham</strong> — without shame</button><button class="vocab" type="button" data-term="rauchen" data-translation="to smoke"><strong>rauchen</strong> — to smoke</button><button class="vocab" type="button" data-term="bleiben" data-translation="to stay"><strong>bleiben</strong> — to stay</button></div>
               <div class="glossary-hint">Tap any highlighted German word or vocab pill for an instant translation.</div><div class="translator" id="translator-5">Tap a highlighted word or vocab pill.</div>
-              <audio controls src="audio/page4.ogg"></audio>
+              <audio controls preload="none" src="audio/page4.ogg"></audio>
             </div>
           </div>
           <div class="page-number">4/8</div>
@@ -165,12 +193,12 @@
         
         <section class="page" id="page-6">
           <div class="page-card text-first">
-            <img src="images/sara-page5.png" alt="Illustration" class="page-img">
+            <img src="images/sara-page5.jpg" alt="Illustration" class="page-img" loading="lazy" decoding="async">
             <div class="content">
               <div class="page-copy">Jetzt ist sie fast an der <button class="tap-word" data-term="Tür" data-translation="door">Tür</button>.<br>Ihr <button class="tap-word" data-term="Herz" data-translation="heart">Herz</button> schlägt schnell.<br>Sie denkt an ihr <button class="tap-word" data-term="langweiliges" data-lemma="langweilig" data-translation="boring">langweiliges</button> <button class="tap-word" data-term="Büro" data-translation="office">Büro</button> und an ihren frühen Flug.<br>Vielleicht ist das alles eine schlechte <button class="tap-word" data-term="Idee" data-translation="idea">Idee</button>.</div>
               <div class='glossary'><button class="vocab" type="button" data-term="Tür" data-translation="door"><strong>Tür</strong> — door</button><button class="vocab" type="button" data-term="Herz" data-translation="heart"><strong>Herz</strong> — heart</button><button class="vocab" type="button" data-term="langweilig" data-translation="boring"><strong>langweilig</strong> — boring</button><button class="vocab" type="button" data-term="Büro" data-translation="office"><strong>Büro</strong> — office</button><button class="vocab" type="button" data-term="Idee" data-translation="idea"><strong>Idee</strong> — idea</button></div>
               <div class="glossary-hint">Tap any highlighted German word or vocab pill for an instant translation.</div><div class="translator" id="translator-6">Tap a highlighted word or vocab pill.</div>
-              <audio controls src="audio/page5.ogg"></audio>
+              <audio controls preload="none" src="audio/page5.ogg"></audio>
             </div>
           </div>
           <div class="page-number">5/8</div>
@@ -178,12 +206,12 @@
         
         <section class="page" id="page-7">
           <div class="page-card image-first">
-            <img src="images/sara-page6.png" alt="Illustration" class="page-img">
+            <img src="images/sara-page6.jpg" alt="Illustration" class="page-img" loading="lazy" decoding="async">
             <div class="content">
               <div class="page-copy">Der <button class="tap-word" data-term="Türsteher" data-translation="bouncer">Türsteher</button> sieht sie <button class="tap-word" data-term="kurz" data-translation="briefly">kurz</button> an.<br>Dann <button class="tap-word" data-term="nickt" data-lemma="nicken" data-translation="to nod">nickt</button> er.<br>Sara <button class="tap-word" data-term="atmet" data-lemma="ausatmen" data-translation="to breathe out">atmet</button> endlich <button class="tap-word" data-term="aus" data-lemma="ausatmen" data-translation="to breathe out">aus</button>.<br>Sie geht <button class="tap-word" data-term="hinein" data-lemma="hineingehen" data-translation="to go inside">hinein</button>.</div>
               <div class='glossary'><button class="vocab" type="button" data-term="Türsteher" data-translation="bouncer"><strong>Türsteher</strong> — bouncer</button><button class="vocab" type="button" data-term="kurz" data-translation="briefly"><strong>kurz</strong> — briefly</button><button class="vocab" type="button" data-term="nicken" data-translation="to nod"><strong>nicken</strong> — to nod</button><button class="vocab" type="button" data-term="ausatmen" data-translation="to breathe out"><strong>ausatmen</strong> — to breathe out</button><button class="vocab" type="button" data-term="hineingehen" data-translation="to go inside"><strong>hineingehen</strong> — to go inside</button></div>
               <div class="glossary-hint">Tap any highlighted German word or vocab pill for an instant translation.</div><div class="translator" id="translator-7">Tap a highlighted word or vocab pill.</div>
-              <audio controls src="audio/page6.ogg"></audio>
+              <audio controls preload="none" src="audio/page6.ogg"></audio>
             </div>
           </div>
           <div class="page-number">6/8</div>
@@ -191,12 +219,12 @@
         
         <section class="page" id="page-8">
           <div class="page-card text-first">
-            <img src="images/sara-page7.png" alt="Illustration" class="page-img">
+            <img src="images/sara-page7.jpg" alt="Illustration" class="page-img" loading="lazy" decoding="async">
             <div class="content">
               <div class="page-copy">Drinnen ist alles <button class="tap-word" data-term="dunkel" data-translation="dark">dunkel</button> und schwer.<br><button class="tap-word" data-term="Licht" data-translation="light">Licht</button> blitzt über nackte <button class="tap-word" data-term="Schultern" data-lemma="Schulter" data-translation="shoulder">Schultern</button>, Lippen und Hände.<br>Menschen tanzen nah <button class="tap-word" data-term="zusammen" data-translation="together">zusammen</button>.<br>Sara fühlt Angst und Hunger <button class="tap-word" data-term="zugleich" data-translation="at the same time">zugleich</button>.</div>
               <div class='glossary'><button class="vocab" type="button" data-term="dunkel" data-translation="dark"><strong>dunkel</strong> — dark</button><button class="vocab" type="button" data-term="Licht" data-translation="light"><strong>Licht</strong> — light</button><button class="vocab" type="button" data-term="Schulter" data-translation="shoulder"><strong>Schulter</strong> — shoulder</button><button class="vocab" type="button" data-term="zusammen" data-translation="together"><strong>zusammen</strong> — together</button><button class="vocab" type="button" data-term="zugleich" data-translation="at the same time"><strong>zugleich</strong> — at the same time</button></div>
               <div class="glossary-hint">Tap any highlighted German word or vocab pill for an instant translation.</div><div class="translator" id="translator-8">Tap a highlighted word or vocab pill.</div>
-              <audio controls src="audio/page7.ogg"></audio>
+              <audio controls preload="none" src="audio/page7.ogg"></audio>
             </div>
           </div>
           <div class="page-number">7/8</div>
@@ -204,7 +232,7 @@
         
         <section class="page" id="page-9">
           <div class="page-card image-first">
-            <img src="images/sara-page8.png" alt="Illustration" class="page-img">
+            <img src="images/sara-page8.jpg" alt="Illustration" class="page-img" loading="lazy" decoding="async">
             <div class="content">
               <div class="page-copy">Sie geht <button class="tap-word" data-term="tiefer" data-translation="deeper">tiefer</button> in den Raum.<br>Der <button class="tap-word" data-term="Bass" data-translation="bass">Bass</button> drückt gegen ihre <button class="tap-word" data-term="Brust" data-translation="chest">Brust</button>.<br>Dann nimmt <button class="tap-word" data-term="plötzlich" data-translation="suddenly">plötzlich</button> jemand ihre Hand.<br>Sara <button class="tap-word" data-term="dreht sich um" data-lemma="sich umdrehen" data-translation="to turn around">dreht sich um</button>.</div>
               <div class='glossary'><button class="vocab" type="button" data-term="tiefer" data-translation="deeper"><strong>tiefer</strong> — deeper</button><button class="vocab" type="button" data-term="Bass" data-translation="bass"><strong>Bass</strong> — bass</button><button class="vocab" type="button" data-term="Brust" data-translation="chest"><strong>Brust</strong> — chest</button><button class="vocab" type="button" data-term="plötzlich" data-translation="suddenly"><strong>plötzlich</strong> — suddenly</button><button class="vocab" type="button" data-term="sich umdrehen" data-translation="to turn around"><strong>sich umdrehen</strong> — to turn around</button></div>
@@ -217,7 +245,7 @@
         
             <section class="page end" id="page-10">
               <div class="page-card end-card">
-                <img src="images/sara-page8.png" alt="Ending illustration" class="page-img full">
+                <img src="images/sara-page8.jpg" alt="Ending illustration" class="page-img full" loading="lazy" decoding="async">
                 <div class="content end-content">
                   <div class="fake-paywall">
                     <span class="paywall-kicker">Continue The Night</span>
@@ -233,18 +261,31 @@
                   <div class="page-copy">✦ Ende von Akt I ✦<br><br>Sara ist endlich drin.<br>Und jetzt hält jemand ihre Hand.</div>
                   
                   
-                  <audio controls src="audio/end.ogg"></audio>
+                  <audio controls preload="none" src="audio/end.ogg"></audio>
                 </div>
               </div>
             </section>
             
   </div>
 
+  <div class="mobile-dock">
+    <button class="nav-button" type="button" data-nav="-1">← Back</button>
+    <div class="mobile-progress">
+      <span class="mobile-progress-label" data-progress-label>Cover</span>
+      <div class="mobile-progress-track"><div class="mobile-progress-fill" data-progress-fill></div></div>
+    </div>
+    <button class="nav-button nav-primary" type="button" data-nav="1">Next →</button>
+  </div>
+
   <script>
     let current = 1;
     const total = 10;
+    const progressLabels = ["Cover", "Page 1 of 8", "Page 2 of 8", "Page 3 of 8", "Page 4 of 8", "Page 5 of 8", "Page 6 of 8", "Page 7 of 8", "Page 8 of 8", "End"];
     const autoplayKey = 'afterHoursGerman.autoplay';
     let autoplay = true;
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchActive = false;
 
     function loadAutoplayPreference() {
       const saved = window.localStorage.getItem(autoplayKey);
@@ -337,12 +378,28 @@
       document.querySelectorAll('[data-term]').forEach(bind);
     }
 
+    function updateReaderUI() {
+      const label = progressLabels[current - 1] || `Scene ${current}`;
+      const ratio = total > 1 ? ((current - 1) / (total - 1)) * 100 : 100;
+      document.querySelectorAll('[data-progress-label]').forEach((el) => {
+        el.textContent = label;
+      });
+      document.querySelectorAll('[data-progress-fill]').forEach((el) => {
+        el.style.width = ratio + '%';
+      });
+      document.querySelectorAll('[data-nav="-1"]').forEach((button) => {
+        button.disabled = current === 1;
+      });
+      document.querySelectorAll('[data-nav="1"]').forEach((button) => {
+        button.disabled = current === total;
+      });
+    }
+
     function show(n) {
       current = Math.max(1, Math.min(total, n));
       document.querySelectorAll('.page').forEach((el, i) => el.classList.toggle('active', i === current - 1));
       document.querySelectorAll('.dot').forEach((el, i) => el.classList.toggle('active', i === current - 1));
-      document.getElementById('prev').disabled = current === 1;
-      document.getElementById('next').disabled = current === total;
+      updateReaderUI();
       syncAutoplay();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -355,6 +412,36 @@
       if (e.key === 'ArrowRight') go(1);
       if (e.key === 'ArrowLeft') go(-1);
     });
+
+    document.querySelectorAll('[data-nav]').forEach((button) => {
+      button.addEventListener('click', () => {
+        go(Number(button.dataset.nav));
+      });
+    });
+
+    document.querySelectorAll('[data-scene]').forEach((button) => {
+      button.addEventListener('click', () => {
+        show(Number(button.dataset.scene));
+      });
+    });
+
+    document.addEventListener('touchstart', (e) => {
+      const touch = e.changedTouches[0];
+      touchStartX = touch.clientX;
+      touchStartY = touch.clientY;
+      touchActive = true;
+    }, { passive: true });
+
+    document.addEventListener('touchend', (e) => {
+      if (!touchActive) return;
+      touchActive = false;
+      const touch = e.changedTouches[0];
+      const dx = touch.clientX - touchStartX;
+      const dy = touch.clientY - touchStartY;
+      if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy) * 1.2) return;
+      if (dx < 0) go(1);
+      if (dx > 0) go(-1);
+    }, { passive: true });
 
     document.getElementById('autoplay-toggle').addEventListener('click', () => {
       autoplay = !autoplay;

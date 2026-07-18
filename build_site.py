@@ -5,6 +5,7 @@ import html
 import json
 import re
 import shutil
+import subprocess
 from pathlib import Path
 
 BASE = Path(__file__).parent
@@ -13,6 +14,10 @@ AUDIO_DIR = BASE / "audio"
 SITE_DIR = BASE / "site"
 LIBRARY = json.loads((BASE / "library.json").read_text())
 IDEAS = json.loads((BASE / "ideas.json").read_text())
+IMAGE_WARN_BYTES = 1_500_000
+AUDIO_WARN_BYTES = 250_000
+IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp", ".avif"}
+DELIVERY_IMAGE_QUALITY = "80"
 
 
 def ensure_dir(path):
@@ -33,15 +38,70 @@ def escape(text):
     return html.escape(text, quote=False)
 
 
+def warn_large_asset(path, budget_bytes, label):
+    if path.exists() and path.stat().st_size > budget_bytes:
+        size_kb = round(path.stat().st_size / 1024)
+        budget_kb = round(budget_bytes / 1024)
+        print(f"[warn] {label} is {size_kb} KB; target <= {budget_kb} KB")
+
+
+def delivery_image_name(filename):
+    src = Path(filename)
+    if src.suffix.lower() in IMAGE_EXTENSIONS:
+        return f"{src.stem}.jpg"
+    return src.name
+
+
+def build_delivery_image(src, dest):
+    try:
+        subprocess.run([
+            "/usr/bin/sips",
+            "-s",
+            "format",
+            "jpeg",
+            "-s",
+            "formatOptions",
+            DELIVERY_IMAGE_QUALITY,
+            str(src),
+            "--out",
+            str(dest),
+        ], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        return True
+    except Exception:
+        return False
+
+
 def copy_asset(src_dir, filename, dest_dir):
     src = src_dir / filename
     if src.exists():
-        folder = "images" if src.suffix == ".png" else "audio"
-        dest = dest_dir / folder / src.name
+        folder = "images" if src.suffix.lower() in IMAGE_EXTENSIONS else "audio"
+        dest_name = delivery_image_name(src.name) if folder == "images" else src.name
+        dest = dest_dir / folder / dest_name
         dest.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(src, dest)
-        return f"{folder}/{src.name}"
+        if folder == "images":
+            if not build_delivery_image(src, dest):
+                shutil.copy2(src, dest)
+        else:
+            shutil.copy2(src, dest)
+        if folder == "images":
+            warn_large_asset(src, IMAGE_WARN_BYTES, src.name)
+        else:
+            warn_large_asset(src, AUDIO_WARN_BYTES, src.name)
+        return f"{folder}/{dest_name}"
     return None
+
+
+def image_tag(src, alt, class_name, *, eager=False):
+    loading = "eager" if eager else "lazy"
+    fetchpriority = ' fetchpriority="high"' if eager else ""
+    return (
+        f'<img src="{src}" alt="{escape(alt)}" class="{class_name}" '
+        f'loading="{loading}" decoding="async"{fetchpriority}>'
+    )
+
+
+def audio_tag(src):
+    return f'<audio controls preload="none" src="{src}"></audio>'
 
 
 def resolve_audio_filename(page_id, page):
@@ -174,6 +234,7 @@ def build_story_reader(story_meta):
     story_page_total = sum(1 for page in story["pages"] if page["type"] == "page")
     story_page_number = 0
     pages_html = []
+    progress_labels = []
 
     for idx, page in enumerate(story["pages"]):
         pid = page["id"]
@@ -187,10 +248,11 @@ def build_story_reader(story_meta):
         warn_unmatched_terms(pid, glossary, matched_terms)
 
         if page["type"] == "cover":
+            progress_labels.append("Cover")
             pages_html.append(f'''
             <section class="page cover active" id="page-{idx+1}">
               <div class="cover-card">
-                {f'<img src="{img}" alt="Cover" class="cover-img">' if img else '<div class="placeholder">✦</div>'}
+                {image_tag(img, "Cover", "cover-img", eager=True) if img else '<div class="placeholder">✦</div>'}
                 <div class="cover-overlay">
                   <span class="eyebrow">{escape(story_meta["level"])} reader</span>
                   <h1>{escape(story["title"])}</h1>
@@ -202,10 +264,11 @@ def build_story_reader(story_meta):
             continue
 
         if page["type"] == "end":
+            progress_labels.append("End")
             pages_html.append(f'''
             <section class="page end" id="page-{idx+1}">
               <div class="page-card end-card">
-                {f'<img src="{img}" alt="Ending illustration" class="page-img full">' if img else '<div class="placeholder full">✦</div>'}
+                {image_tag(img, "Ending illustration", "page-img full") if img else '<div class="placeholder full">✦</div>'}
                 <div class="content end-content">
                   <div class="fake-paywall">
                     <span class="paywall-kicker">{escape(paywall_kicker)}</span>
@@ -221,7 +284,7 @@ def build_story_reader(story_meta):
                   <div class="page-copy">{text_html}</div>
                   {gloss}
                   {interaction}
-                  {f'<audio controls src="{audio}"></audio>' if audio else ''}
+                  {audio_tag(audio) if audio else ''}
                 </div>
               </div>
             </section>
@@ -229,16 +292,17 @@ def build_story_reader(story_meta):
             continue
 
         story_page_number += 1
+        progress_labels.append(f"Page {story_page_number} of {story_page_total}")
         image_first = story_page_number % 2 == 0
         pages_html.append(f'''
         <section class="page" id="page-{idx+1}">
           <div class="page-card {'image-first' if image_first else 'text-first'}">
-            {f'<img src="{img}" alt="Illustration" class="page-img">' if img else '<div class="placeholder">✦</div>'}
+            {image_tag(img, "Illustration", "page-img") if img else '<div class="placeholder">✦</div>'}
             <div class="content">
               <div class="page-copy">{text_html}</div>
               {gloss}
               {interaction}
-              {f'<audio controls src="{audio}"></audio>' if audio else ''}
+              {audio_tag(audio) if audio else ''}
             </div>
           </div>
           <div class="page-number">{story_page_number}/{story_page_total}</div>
@@ -258,7 +322,7 @@ def build_story_reader(story_meta):
     body::before {{ content: ''; position: fixed; inset: 0; background: radial-gradient(circle at 18% 16%, rgba(255,164,82,.18), transparent 26%), radial-gradient(circle at 84% 22%, rgba(111,166,255,.14), transparent 34%), linear-gradient(180deg, #171b33 0%, #0d1020 100%); z-index: -1; }}
     a {{ color: inherit; }}
     .wrap {{ max-width: 1120px; margin: 0 auto; padding: 24px; }}
-    .topbar {{ display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }}
+    .topbar {{ display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }}
     .titleblock h1 {{ margin: 0; font-family: Fraunces, serif; font-size: clamp(2.1rem, 5vw, 3.5rem); }}
     .titleblock p {{ margin: 8px 0 0; color: #c7bfd6; max-width: 64ch; }}
     .eyebrow {{ display: inline-block; margin-bottom: 12px; color: #ffcf93; font-size: .83rem; letter-spacing: .16em; text-transform: uppercase; }}
@@ -266,12 +330,25 @@ def build_story_reader(story_meta):
     .library-link a {{ text-decoration: none; }}
     button, .home-chip {{ border: 0; border-radius: 999px; padding: 11px 16px; background: #f1b15e; color: #1c1424; font-weight: 800; cursor: pointer; text-decoration: none; }}
     button:disabled {{ opacity: .4; cursor: default; }}
+    button:focus-visible, .home-chip:focus-visible, .dot:focus-visible {{ outline: 2px solid #ffd8a2; outline-offset: 3px; }}
     .toggle-chip {{ display: inline-flex; align-items: center; gap: 10px; border-radius: 999px; padding: 10px 14px; background: rgba(255,255,255,.08); color: #f6efe2; font-size: .92rem; font-weight: 700; }}
     .toggle-chip button {{ padding: 6px 11px; min-width: 56px; background: rgba(255,255,255,.12); color: #f6efe2; }}
     .toggle-chip button[data-state="on"] {{ background: #f1b15e; color: #1c1424; }}
-    .dots {{ display: flex; gap: 8px; flex-wrap: wrap; margin: 18px 0 22px; }}
+    .reader-controls {{ display: grid; gap: 16px; margin: 0 0 22px; }}
+    .desktop-nav {{ display: flex; align-items: center; gap: 12px; }}
+    .progress-chip {{ min-width: 150px; padding: 12px 16px; border-radius: 999px; background: rgba(255,255,255,.08); color: #f6efe2; text-align: center; font-size: .95rem; font-weight: 700; }}
+    .nav-button {{ min-height: 52px; padding: 14px 20px; font-size: 1rem; }}
+    .nav-button.nav-primary {{ padding-inline: 28px; }}
+    .nav-button[data-nav="1"] {{ min-width: 152px; }}
+    .nav-button[data-nav="-1"] {{ min-width: 120px; background: rgba(255,255,255,.12); color: #f6efe2; }}
+    .dots {{ display: flex; gap: 10px; flex-wrap: wrap; }}
     .dot {{ width: 11px; height: 11px; border-radius: 50%; background: rgba(255,255,255,.2); cursor: pointer; }}
     .dot.active {{ background: #f1b15e; transform: scale(1.2); }}
+    .mobile-dock {{ display: none; }}
+    .mobile-progress {{ flex: 1; min-width: 0; }}
+    .mobile-progress-label {{ display: block; margin-bottom: 6px; color: #f6efe2; font-size: .92rem; font-weight: 700; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }}
+    .mobile-progress-track {{ height: 6px; border-radius: 999px; background: rgba(255,255,255,.14); overflow: hidden; }}
+    .mobile-progress-fill {{ height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, #ffd28e, #f1b15e); }}
     .page {{ display: none; }}
     .page.active {{ display: block; }}
     .cover-card, .page-card {{ overflow: hidden; border-radius: 32px; background: rgba(255,255,255,.08); backdrop-filter: blur(10px); box-shadow: 0 18px 60px rgba(0,0,0,.3); }}
@@ -313,12 +390,22 @@ def build_story_reader(story_meta):
     .paywall-note {{ margin-top: 12px !important; font-size: .92rem; color: #bfb4cb !important; }}
     .sparkle-zone {{ pointer-events: none; position: absolute; inset: 0; overflow: hidden; }}
     .sparkle {{ position: absolute; width: 10px; height: 10px; border-radius: 50%; background: radial-gradient(circle, rgba(255,244,210,1) 0%, rgba(255,211,147,.95) 45%, rgba(255,211,147,0) 72%); opacity: 0; transform: translate(-50%, -50%) scale(.2); animation: sparkle-burst .9s ease-out forwards; }}
+    .story-art, .cover-img, .page-img {{ contain: paint; }}
     @keyframes sparkle-burst {{
       0% {{ opacity: 0; transform: translate(-50%, -50%) scale(.2); }}
       20% {{ opacity: 1; }}
       100% {{ opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.35); }}
     }}
     @media (max-width: 860px) {{
+      .wrap {{ padding: 20px 20px 108px; }}
+      .topbar {{ align-items: start; gap: 14px; }}
+      .nav {{ width: 100%; justify-content: space-between; }}
+      .desktop-nav {{ display: none; }}
+      .dots {{ display: none; }}
+      .mobile-dock {{ position: fixed; left: 16px; right: 16px; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); z-index: 20; display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 24px; background: rgba(10, 13, 24, .9); backdrop-filter: blur(16px); box-shadow: 0 18px 40px rgba(0,0,0,.35); border: 1px solid rgba(255,255,255,.08); }}
+      .mobile-dock .nav-button {{ min-width: 0; flex: 0 0 auto; }}
+      .mobile-dock .nav-button[data-nav="1"] {{ min-width: 132px; }}
+      .mobile-dock .nav-button[data-nav="-1"] {{ min-width: 104px; }}
       .page-card {{ grid-template-columns: 1fr; }}
       .page-card {{ min-height: auto; }}
       .page-card .page-img {{ order: 0 !important; height: auto; min-height: 0; object-fit: contain; background: rgba(8, 10, 20, .72); }}
@@ -339,21 +426,39 @@ def build_story_reader(story_meta):
       <div class="nav">
         <div class="library-link"><a class="home-chip" href="../../index.html">Story Library</a></div>
         <div class="toggle-chip">Autoplay <button id="autoplay-toggle" type="button" aria-pressed="true" data-state="on">On</button></div>
-        <button id="prev" onclick="go(-1)">← Back</button>
-        <button id="next" onclick="go(1)">Next →</button>
       </div>
     </div>
 
-    <div class="dots">{''.join(f'<div class="dot{" active" if i == 0 else ""}" onclick="show({i+1})"></div>' for i in range(len(story["pages"])))}</div>
+    <div class="reader-controls">
+      <div class="desktop-nav">
+        <button class="nav-button" type="button" data-nav="-1">← Back</button>
+        <div class="progress-chip"><span data-progress-label>Cover</span></div>
+        <button class="nav-button nav-primary" type="button" data-nav="1">Next →</button>
+      </div>
+      <div class="dots">{''.join(f'<button class="dot{" active" if i == 0 else ""}" type="button" aria-label="Go to scene {i+1}" data-scene="{i+1}"></button>' for i in range(len(story["pages"])))}</div>
+    </div>
 
     {''.join(pages_html)}
+  </div>
+
+  <div class="mobile-dock">
+    <button class="nav-button" type="button" data-nav="-1">← Back</button>
+    <div class="mobile-progress">
+      <span class="mobile-progress-label" data-progress-label>Cover</span>
+      <div class="mobile-progress-track"><div class="mobile-progress-fill" data-progress-fill></div></div>
+    </div>
+    <button class="nav-button nav-primary" type="button" data-nav="1">Next →</button>
   </div>
 
   <script>
     let current = 1;
     const total = {len(story["pages"])};
+    const progressLabels = {json.dumps(progress_labels)};
     const autoplayKey = 'afterHoursGerman.autoplay';
     let autoplay = true;
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchActive = false;
 
     function loadAutoplayPreference() {{
       const saved = window.localStorage.getItem(autoplayKey);
@@ -446,12 +551,28 @@ def build_story_reader(story_meta):
       document.querySelectorAll('[data-term]').forEach(bind);
     }}
 
+    function updateReaderUI() {{
+      const label = progressLabels[current - 1] || `Scene ${{current}}`;
+      const ratio = total > 1 ? ((current - 1) / (total - 1)) * 100 : 100;
+      document.querySelectorAll('[data-progress-label]').forEach((el) => {{
+        el.textContent = label;
+      }});
+      document.querySelectorAll('[data-progress-fill]').forEach((el) => {{
+        el.style.width = ratio + '%';
+      }});
+      document.querySelectorAll('[data-nav="-1"]').forEach((button) => {{
+        button.disabled = current === 1;
+      }});
+      document.querySelectorAll('[data-nav="1"]').forEach((button) => {{
+        button.disabled = current === total;
+      }});
+    }}
+
     function show(n) {{
       current = Math.max(1, Math.min(total, n));
       document.querySelectorAll('.page').forEach((el, i) => el.classList.toggle('active', i === current - 1));
       document.querySelectorAll('.dot').forEach((el, i) => el.classList.toggle('active', i === current - 1));
-      document.getElementById('prev').disabled = current === 1;
-      document.getElementById('next').disabled = current === total;
+      updateReaderUI();
       syncAutoplay();
       window.scrollTo({{ top: 0, behavior: 'smooth' }});
     }}
@@ -464,6 +585,36 @@ def build_story_reader(story_meta):
       if (e.key === 'ArrowRight') go(1);
       if (e.key === 'ArrowLeft') go(-1);
     }});
+
+    document.querySelectorAll('[data-nav]').forEach((button) => {{
+      button.addEventListener('click', () => {{
+        go(Number(button.dataset.nav));
+      }});
+    }});
+
+    document.querySelectorAll('[data-scene]').forEach((button) => {{
+      button.addEventListener('click', () => {{
+        show(Number(button.dataset.scene));
+      }});
+    }});
+
+    document.addEventListener('touchstart', (e) => {{
+      const touch = e.changedTouches[0];
+      touchStartX = touch.clientX;
+      touchStartY = touch.clientY;
+      touchActive = true;
+    }}, {{ passive: true }});
+
+    document.addEventListener('touchend', (e) => {{
+      if (!touchActive) return;
+      touchActive = false;
+      const touch = e.changedTouches[0];
+      const dx = touch.clientX - touchStartX;
+      const dy = touch.clientY - touchStartY;
+      if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy) * 1.2) return;
+      if (dx < 0) go(1);
+      if (dx > 0) go(-1);
+    }}, {{ passive: true }});
 
     document.getElementById('autoplay-toggle').addEventListener('click', () => {{
       autoplay = !autoplay;
@@ -513,7 +664,11 @@ def story_card_html(entry):
         href = f'stories/{entry["slug"]}/index.html'
         cover_image = entry.get("cover_image")
         if cover_image:
-            art = f'<img src="{href.rsplit("/", 1)[0]}/images/{escape(cover_image)}" alt="{escape(entry["title"])} cover" class="story-art">'
+            art = image_tag(
+                f'{href.rsplit("/", 1)[0]}/images/{escape(delivery_image_name(cover_image))}',
+                f'{entry["title"]} cover',
+                "story-art",
+            )
         else:
             art = '<div class="story-art placeholder-art"><span>Act I Live</span></div>'
         action = f'<a class="story-link" href="{href}">Read Story</a>'

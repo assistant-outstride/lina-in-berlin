@@ -11,7 +11,7 @@
     body::before { content: ''; position: fixed; inset: 0; background: radial-gradient(circle at 18% 16%, rgba(255,164,82,.18), transparent 26%), radial-gradient(circle at 84% 22%, rgba(111,166,255,.14), transparent 34%), linear-gradient(180deg, #171b33 0%, #0d1020 100%); z-index: -1; }
     a { color: inherit; }
     .wrap { max-width: 1120px; margin: 0 auto; padding: 24px; }
-    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+    .topbar { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
     .titleblock h1 { margin: 0; font-family: Fraunces, serif; font-size: clamp(2.1rem, 5vw, 3.5rem); }
     .titleblock p { margin: 8px 0 0; color: #c7bfd6; max-width: 64ch; }
     .eyebrow { display: inline-block; margin-bottom: 12px; color: #ffcf93; font-size: .83rem; letter-spacing: .16em; text-transform: uppercase; }
@@ -19,12 +19,25 @@
     .library-link a { text-decoration: none; }
     button, .home-chip { border: 0; border-radius: 999px; padding: 11px 16px; background: #f1b15e; color: #1c1424; font-weight: 800; cursor: pointer; text-decoration: none; }
     button:disabled { opacity: .4; cursor: default; }
+    button:focus-visible, .home-chip:focus-visible, .dot:focus-visible { outline: 2px solid #ffd8a2; outline-offset: 3px; }
     .toggle-chip { display: inline-flex; align-items: center; gap: 10px; border-radius: 999px; padding: 10px 14px; background: rgba(255,255,255,.08); color: #f6efe2; font-size: .92rem; font-weight: 700; }
     .toggle-chip button { padding: 6px 11px; min-width: 56px; background: rgba(255,255,255,.12); color: #f6efe2; }
     .toggle-chip button[data-state="on"] { background: #f1b15e; color: #1c1424; }
-    .dots { display: flex; gap: 8px; flex-wrap: wrap; margin: 18px 0 22px; }
+    .reader-controls { display: grid; gap: 16px; margin: 0 0 22px; }
+    .desktop-nav { display: flex; align-items: center; gap: 12px; }
+    .progress-chip { min-width: 150px; padding: 12px 16px; border-radius: 999px; background: rgba(255,255,255,.08); color: #f6efe2; text-align: center; font-size: .95rem; font-weight: 700; }
+    .nav-button { min-height: 52px; padding: 14px 20px; font-size: 1rem; }
+    .nav-button.nav-primary { padding-inline: 28px; }
+    .nav-button[data-nav="1"] { min-width: 152px; }
+    .nav-button[data-nav="-1"] { min-width: 120px; background: rgba(255,255,255,.12); color: #f6efe2; }
+    .dots { display: flex; gap: 10px; flex-wrap: wrap; }
     .dot { width: 11px; height: 11px; border-radius: 50%; background: rgba(255,255,255,.2); cursor: pointer; }
     .dot.active { background: #f1b15e; transform: scale(1.2); }
+    .mobile-dock { display: none; }
+    .mobile-progress { flex: 1; min-width: 0; }
+    .mobile-progress-label { display: block; margin-bottom: 6px; color: #f6efe2; font-size: .92rem; font-weight: 700; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .mobile-progress-track { height: 6px; border-radius: 999px; background: rgba(255,255,255,.14); overflow: hidden; }
+    .mobile-progress-fill { height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, #ffd28e, #f1b15e); }
     .page { display: none; }
     .page.active { display: block; }
     .cover-card, .page-card { overflow: hidden; border-radius: 32px; background: rgba(255,255,255,.08); backdrop-filter: blur(10px); box-shadow: 0 18px 60px rgba(0,0,0,.3); }
@@ -66,12 +79,22 @@
     .paywall-note { margin-top: 12px !important; font-size: .92rem; color: #bfb4cb !important; }
     .sparkle-zone { pointer-events: none; position: absolute; inset: 0; overflow: hidden; }
     .sparkle { position: absolute; width: 10px; height: 10px; border-radius: 50%; background: radial-gradient(circle, rgba(255,244,210,1) 0%, rgba(255,211,147,.95) 45%, rgba(255,211,147,0) 72%); opacity: 0; transform: translate(-50%, -50%) scale(.2); animation: sparkle-burst .9s ease-out forwards; }
+    .story-art, .cover-img, .page-img { contain: paint; }
     @keyframes sparkle-burst {
       0% { opacity: 0; transform: translate(-50%, -50%) scale(.2); }
       20% { opacity: 1; }
       100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.35); }
     }
     @media (max-width: 860px) {
+      .wrap { padding: 20px 20px 108px; }
+      .topbar { align-items: start; gap: 14px; }
+      .nav { width: 100%; justify-content: space-between; }
+      .desktop-nav { display: none; }
+      .dots { display: none; }
+      .mobile-dock { position: fixed; left: 16px; right: 16px; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); z-index: 20; display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 24px; background: rgba(10, 13, 24, .9); backdrop-filter: blur(16px); box-shadow: 0 18px 40px rgba(0,0,0,.35); border: 1px solid rgba(255,255,255,.08); }
+      .mobile-dock .nav-button { min-width: 0; flex: 0 0 auto; }
+      .mobile-dock .nav-button[data-nav="1"] { min-width: 132px; }
+      .mobile-dock .nav-button[data-nav="-1"] { min-width: 104px; }
       .page-card { grid-template-columns: 1fr; }
       .page-card { min-height: auto; }
       .page-card .page-img { order: 0 !important; height: auto; min-height: 0; object-fit: contain; background: rgba(8, 10, 20, .72); }
@@ -92,17 +115,22 @@
       <div class="nav">
         <div class="library-link"><a class="home-chip" href="../../index.html">Story Library</a></div>
         <div class="toggle-chip">Autoplay <button id="autoplay-toggle" type="button" aria-pressed="true" data-state="on">On</button></div>
-        <button id="prev" onclick="go(-1)">← Back</button>
-        <button id="next" onclick="go(1)">Next →</button>
       </div>
     </div>
 
-    <div class="dots"><div class="dot active" onclick="show(1)"></div><div class="dot" onclick="show(2)"></div><div class="dot" onclick="show(3)"></div><div class="dot" onclick="show(4)"></div><div class="dot" onclick="show(5)"></div><div class="dot" onclick="show(6)"></div><div class="dot" onclick="show(7)"></div><div class="dot" onclick="show(8)"></div><div class="dot" onclick="show(9)"></div></div>
+    <div class="reader-controls">
+      <div class="desktop-nav">
+        <button class="nav-button" type="button" data-nav="-1">← Back</button>
+        <div class="progress-chip"><span data-progress-label>Cover</span></div>
+        <button class="nav-button nav-primary" type="button" data-nav="1">Next →</button>
+      </div>
+      <div class="dots"><button class="dot active" type="button" aria-label="Go to scene 1" data-scene="1"></button><button class="dot" type="button" aria-label="Go to scene 2" data-scene="2"></button><button class="dot" type="button" aria-label="Go to scene 3" data-scene="3"></button><button class="dot" type="button" aria-label="Go to scene 4" data-scene="4"></button><button class="dot" type="button" aria-label="Go to scene 5" data-scene="5"></button><button class="dot" type="button" aria-label="Go to scene 6" data-scene="6"></button><button class="dot" type="button" aria-label="Go to scene 7" data-scene="7"></button><button class="dot" type="button" aria-label="Go to scene 8" data-scene="8"></button><button class="dot" type="button" aria-label="Go to scene 9" data-scene="9"></button></div>
+    </div>
 
     
             <section class="page cover active" id="page-1">
               <div class="cover-card">
-                <img src="images/cover.png" alt="Cover" class="cover-img">
+                <img src="images/cover.jpg" alt="Cover" class="cover-img" loading="eager" decoding="async" fetchpriority="high">
                 <div class="cover-overlay">
                   <span class="eyebrow">A1 reader</span>
                   <h1>Lina in Berlin</h1>
@@ -113,12 +141,12 @@
             
         <section class="page" id="page-2">
           <div class="page-card text-first">
-            <img src="images/page1.png" alt="Illustration" class="page-img">
+            <img src="images/page1.jpg" alt="Illustration" class="page-img" loading="lazy" decoding="async">
             <div class="content">
               <div class="page-copy">Lina <button class="tap-word" data-term="spricht" data-lemma="sprechen" data-translation="to speak">spricht</button> mit Max.<br>Max <button class="tap-word" data-term="lebt" data-lemma="leben" data-translation="to live">lebt</button> in Berlin.<br>Lina ist <button class="tap-word" data-term="nervös" data-translation="nervous">nervös</button> und sehr <button class="tap-word" data-term="glücklich" data-translation="happy">glücklich</button>.<br>Sie lächelt am <button class="tap-word" data-term="Bildschirm" data-translation="screen">Bildschirm</button>.</div>
               <div class='glossary'><button class="vocab" type="button" data-term="sprechen" data-translation="to speak"><strong>sprechen</strong> — to speak</button><button class="vocab" type="button" data-term="leben" data-translation="to live"><strong>leben</strong> — to live</button><button class="vocab" type="button" data-term="nervös" data-translation="nervous"><strong>nervös</strong> — nervous</button><button class="vocab" type="button" data-term="glücklich" data-translation="happy"><strong>glücklich</strong> — happy</button><button class="vocab" type="button" data-term="Bildschirm" data-translation="screen"><strong>Bildschirm</strong> — screen</button></div>
               <div class="glossary-hint">Tap any highlighted German word or vocab pill for an instant translation.</div><div class="translator" id="translator-2">Tap a highlighted word or vocab pill.</div>
-              <audio controls src="audio/page1.ogg"></audio>
+              
             </div>
           </div>
           <div class="page-number">1/7</div>
@@ -126,12 +154,12 @@
         
         <section class="page" id="page-3">
           <div class="page-card image-first">
-            <img src="images/page2-single.png" alt="Illustration" class="page-img">
+            <img src="images/page2-single.jpg" alt="Illustration" class="page-img" loading="lazy" decoding="async">
             <div class="content">
               <div class="page-copy">Lina <button class="tap-word" data-term="packt" data-lemma="packen" data-translation="to pack">packt</button> ihren <button class="tap-word" data-term="Koffer" data-translation="suitcase">Koffer</button>.<br>Ihre Freundin sagt: "Das ist <button class="tap-word" data-term="verrückt" data-translation="crazy">verrückt</button>."<br>Lina sagt: "Nein. Es ist mein <button class="tap-word" data-term="Abenteuer" data-translation="adventure">Abenteuer</button>."<br>Sie nimmt ihr rotes <button class="tap-word" data-term="Kleid" data-translation="dress">Kleid</button> mit.</div>
               <div class='glossary'><button class="vocab" type="button" data-term="packen" data-translation="to pack"><strong>packen</strong> — to pack</button><button class="vocab" type="button" data-term="Koffer" data-translation="suitcase"><strong>Koffer</strong> — suitcase</button><button class="vocab" type="button" data-term="verrückt" data-translation="crazy"><strong>verrückt</strong> — crazy</button><button class="vocab" type="button" data-term="Abenteuer" data-translation="adventure"><strong>Abenteuer</strong> — adventure</button><button class="vocab" type="button" data-term="Kleid" data-translation="dress"><strong>Kleid</strong> — dress</button></div>
               <div class="glossary-hint">Tap any highlighted German word or vocab pill for an instant translation.</div><div class="translator" id="translator-3">Tap a highlighted word or vocab pill.</div>
-              <audio controls src="audio/page2.ogg"></audio>
+              <audio controls preload="none" src="audio/page2.ogg"></audio>
             </div>
           </div>
           <div class="page-number">2/7</div>
@@ -139,12 +167,12 @@
         
         <section class="page" id="page-4">
           <div class="page-card text-first">
-            <img src="images/page3-single.png" alt="Illustration" class="page-img">
+            <img src="images/page3-single.jpg" alt="Illustration" class="page-img" loading="lazy" decoding="async">
             <div class="content">
               <div class="page-copy">Im <button class="tap-word" data-term="Flugzeug" data-translation="plane">Flugzeug</button> sitzt Lina am <button class="tap-word" data-term="Fenster" data-translation="window">Fenster</button>.<br>Ihr <button class="tap-word" data-term="Herz" data-translation="heart">Herz</button> klopft schnell.<br>Sie schaut auf die <button class="tap-word" data-term="Wolken" data-translation="clouds">Wolken</button>.<br><button class="tap-word" data-term="Bald" data-translation="soon">Bald</button> ist sie in Berlin.</div>
               <div class='glossary'><button class="vocab" type="button" data-term="Flugzeug" data-translation="plane"><strong>Flugzeug</strong> — plane</button><button class="vocab" type="button" data-term="Fenster" data-translation="window"><strong>Fenster</strong> — window</button><button class="vocab" type="button" data-term="Herz" data-translation="heart"><strong>Herz</strong> — heart</button><button class="vocab" type="button" data-term="Wolken" data-translation="clouds"><strong>Wolken</strong> — clouds</button><button class="vocab" type="button" data-term="bald" data-translation="soon"><strong>bald</strong> — soon</button></div>
               <div class="glossary-hint">Tap any highlighted German word or vocab pill for an instant translation.</div><div class="translator" id="translator-4">Tap a highlighted word or vocab pill.</div>
-              <audio controls src="audio/page3.ogg"></audio>
+              <audio controls preload="none" src="audio/page3.ogg"></audio>
             </div>
           </div>
           <div class="page-number">3/7</div>
@@ -152,12 +180,12 @@
         
         <section class="page" id="page-5">
           <div class="page-card image-first">
-            <img src="images/page4-single.png" alt="Illustration" class="page-img">
+            <img src="images/page4-single.jpg" alt="Illustration" class="page-img" loading="lazy" decoding="async">
             <div class="content">
               <div class="page-copy">Max <button class="tap-word" data-term="wartet" data-lemma="warten" data-translation="to wait">wartet</button> am <button class="tap-word" data-term="Flughafen" data-translation="airport">Flughafen</button> mit <button class="tap-word" data-term="Blumen" data-translation="flowers">Blumen</button>.<br>Er ist <button class="tap-word" data-term="groß" data-translation="tall">groß</button> und schön.<br>Lina lächelt.<br>Sie <button class="tap-word" data-term="umarmt" data-lemma="umarmen" data-translation="to hug">umarmt</button> ihn.</div>
               <div class='glossary'><button class="vocab" type="button" data-term="warten" data-translation="to wait"><strong>warten</strong> — to wait</button><button class="vocab" type="button" data-term="Flughafen" data-translation="airport"><strong>Flughafen</strong> — airport</button><button class="vocab" type="button" data-term="Blumen" data-translation="flowers"><strong>Blumen</strong> — flowers</button><button class="vocab" type="button" data-term="groß" data-translation="tall"><strong>groß</strong> — tall</button><button class="vocab" type="button" data-term="umarmen" data-translation="to hug"><strong>umarmen</strong> — to hug</button></div>
               <div class="glossary-hint">Tap any highlighted German word or vocab pill for an instant translation.</div><div class="translator" id="translator-5">Tap a highlighted word or vocab pill.</div>
-              <audio controls src="audio/page4.ogg"></audio>
+              <audio controls preload="none" src="audio/page4.ogg"></audio>
             </div>
           </div>
           <div class="page-number">4/7</div>
@@ -165,12 +193,12 @@
         
         <section class="page" id="page-6">
           <div class="page-card text-first">
-            <img src="images/page5-single.png" alt="Illustration" class="page-img">
+            <img src="images/page5-single.jpg" alt="Illustration" class="page-img" loading="lazy" decoding="async">
             <div class="content">
               <div class="page-copy"><button class="tap-word" data-term="Zu Hause" data-translation="at home">Zu Hause</button> ist es <button class="tap-word" data-term="still" data-translation="quiet">still</button>.<br>Lina und Max <button class="tap-word" data-term="küssen" data-translation="to kiss">küssen</button> sich.<br>Ihre Hände <button class="tap-word" data-term="zittern" data-translation="to tremble">zittern</button>.<br>Die <button class="tap-word" data-term="Nacht" data-translation="night">Nacht</button> wird lang.</div>
               <div class='glossary'><button class="vocab" type="button" data-term="zu Hause" data-translation="at home"><strong>zu Hause</strong> — at home</button><button class="vocab" type="button" data-term="still" data-translation="quiet"><strong>still</strong> — quiet</button><button class="vocab" type="button" data-term="küssen" data-translation="to kiss"><strong>küssen</strong> — to kiss</button><button class="vocab" type="button" data-term="zittern" data-translation="to tremble"><strong>zittern</strong> — to tremble</button><button class="vocab" type="button" data-term="Nacht" data-translation="night"><strong>Nacht</strong> — night</button></div>
               <div class="glossary-hint">Tap any highlighted German word or vocab pill for an instant translation.</div><div class="translator" id="translator-6">Tap a highlighted word or vocab pill.</div>
-              <audio controls src="audio/page5.ogg"></audio>
+              <audio controls preload="none" src="audio/page5.ogg"></audio>
             </div>
           </div>
           <div class="page-number">5/7</div>
@@ -178,12 +206,12 @@
         
         <section class="page" id="page-7">
           <div class="page-card image-first">
-            <img src="images/page6-single.png" alt="Illustration" class="page-img">
+            <img src="images/page6-single.jpg" alt="Illustration" class="page-img" loading="lazy" decoding="async">
             <div class="content">
               <div class="page-copy">Am <button class="tap-word" data-term="Morgen" data-translation="morning">Morgen</button> <button class="tap-word" data-term="wacht" data-lemma="wachen auf" data-translation="to wake up">wacht</button> Lina auf.<br>Sie lächelt zuerst. Dann sieht sie etwas.<br>Ein kleiner <button class="tap-word" data-term="Biss" data-translation="bite">Biss</button> ist an ihrem <button class="tap-word" data-term="Schlüsselbein" data-translation="collarbone">Schlüsselbein</button>.<br>Max sagt: "Im Sommer gibt es komische <button class="tap-word" data-term="Käfer" data-translation="bugs">Käfer</button> hier."</div>
               <div class='glossary'><button class="vocab" type="button" data-term="Morgen" data-translation="morning"><strong>Morgen</strong> — morning</button><button class="vocab" type="button" data-term="wachen auf" data-translation="to wake up"><strong>wachen auf</strong> — to wake up</button><button class="vocab" type="button" data-term="Biss" data-translation="bite"><strong>Biss</strong> — bite</button><button class="vocab" type="button" data-term="Schlüsselbein" data-translation="collarbone"><strong>Schlüsselbein</strong> — collarbone</button><button class="vocab" type="button" data-term="Käfer" data-translation="bugs"><strong>Käfer</strong> — bugs</button></div>
               <div class="glossary-hint">Tap any highlighted German word or vocab pill for an instant translation.</div><div class="translator" id="translator-7">Tap a highlighted word or vocab pill.</div>
-              <audio controls src="audio/page6.ogg"></audio>
+              <audio controls preload="none" src="audio/page6.ogg"></audio>
             </div>
           </div>
           <div class="page-number">6/7</div>
@@ -191,12 +219,12 @@
         
         <section class="page" id="page-8">
           <div class="page-card text-first">
-            <img src="images/page7-single.png" alt="Illustration" class="page-img">
+            <img src="images/page7-single.jpg" alt="Illustration" class="page-img" loading="lazy" decoding="async">
             <div class="content">
               <div class="page-copy">Lina schaut ihn an.<br>Das <button class="tap-word" data-term="klingt" data-lemma="klingen" data-translation="to sound">klingt</button> nicht <button class="tap-word" data-term="normal" data-translation="normal">normal</button>.<br>Sie nimmt ihr <button class="tap-word" data-term="Handy" data-translation="phone">Handy</button>.<br>Das Abenteuer <button class="tap-word" data-term="beginnt" data-lemma="beginnen" data-translation="to begin">beginnt</button> <button class="tap-word" data-term="jetzt" data-translation="now">jetzt</button>.</div>
               <div class='glossary'><button class="vocab" type="button" data-term="klingen" data-translation="to sound"><strong>klingen</strong> — to sound</button><button class="vocab" type="button" data-term="normal" data-translation="normal"><strong>normal</strong> — normal</button><button class="vocab" type="button" data-term="Handy" data-translation="phone"><strong>Handy</strong> — phone</button><button class="vocab" type="button" data-term="beginnen" data-translation="to begin"><strong>beginnen</strong> — to begin</button><button class="vocab" type="button" data-term="jetzt" data-translation="now"><strong>jetzt</strong> — now</button></div>
               <div class="glossary-hint">Tap any highlighted German word or vocab pill for an instant translation.</div><div class="translator" id="translator-8">Tap a highlighted word or vocab pill.</div>
-              <audio controls src="audio/page7.ogg"></audio>
+              <audio controls preload="none" src="audio/page7.ogg"></audio>
             </div>
           </div>
           <div class="page-number">7/7</div>
@@ -204,7 +232,7 @@
         
             <section class="page end" id="page-9">
               <div class="page-card end-card">
-                <img src="images/end.png" alt="Ending illustration" class="page-img full">
+                <img src="images/end.jpg" alt="Ending illustration" class="page-img full" loading="lazy" decoding="async">
                 <div class="content end-content">
                   <div class="fake-paywall">
                     <span class="paywall-kicker">Continue The Night</span>
@@ -220,18 +248,31 @@
                   <div class="page-copy">✦ The End ✦<br><br>Willkommen in Berlin.<br>Und ja — something strange is definitely going on.</div>
                   
                   
-                  <audio controls src="audio/end.ogg"></audio>
+                  <audio controls preload="none" src="audio/end.ogg"></audio>
                 </div>
               </div>
             </section>
             
   </div>
 
+  <div class="mobile-dock">
+    <button class="nav-button" type="button" data-nav="-1">← Back</button>
+    <div class="mobile-progress">
+      <span class="mobile-progress-label" data-progress-label>Cover</span>
+      <div class="mobile-progress-track"><div class="mobile-progress-fill" data-progress-fill></div></div>
+    </div>
+    <button class="nav-button nav-primary" type="button" data-nav="1">Next →</button>
+  </div>
+
   <script>
     let current = 1;
     const total = 9;
+    const progressLabels = ["Cover", "Page 1 of 7", "Page 2 of 7", "Page 3 of 7", "Page 4 of 7", "Page 5 of 7", "Page 6 of 7", "Page 7 of 7", "End"];
     const autoplayKey = 'afterHoursGerman.autoplay';
     let autoplay = true;
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchActive = false;
 
     function loadAutoplayPreference() {
       const saved = window.localStorage.getItem(autoplayKey);
@@ -324,12 +365,28 @@
       document.querySelectorAll('[data-term]').forEach(bind);
     }
 
+    function updateReaderUI() {
+      const label = progressLabels[current - 1] || `Scene ${current}`;
+      const ratio = total > 1 ? ((current - 1) / (total - 1)) * 100 : 100;
+      document.querySelectorAll('[data-progress-label]').forEach((el) => {
+        el.textContent = label;
+      });
+      document.querySelectorAll('[data-progress-fill]').forEach((el) => {
+        el.style.width = ratio + '%';
+      });
+      document.querySelectorAll('[data-nav="-1"]').forEach((button) => {
+        button.disabled = current === 1;
+      });
+      document.querySelectorAll('[data-nav="1"]').forEach((button) => {
+        button.disabled = current === total;
+      });
+    }
+
     function show(n) {
       current = Math.max(1, Math.min(total, n));
       document.querySelectorAll('.page').forEach((el, i) => el.classList.toggle('active', i === current - 1));
       document.querySelectorAll('.dot').forEach((el, i) => el.classList.toggle('active', i === current - 1));
-      document.getElementById('prev').disabled = current === 1;
-      document.getElementById('next').disabled = current === total;
+      updateReaderUI();
       syncAutoplay();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -342,6 +399,36 @@
       if (e.key === 'ArrowRight') go(1);
       if (e.key === 'ArrowLeft') go(-1);
     });
+
+    document.querySelectorAll('[data-nav]').forEach((button) => {
+      button.addEventListener('click', () => {
+        go(Number(button.dataset.nav));
+      });
+    });
+
+    document.querySelectorAll('[data-scene]').forEach((button) => {
+      button.addEventListener('click', () => {
+        show(Number(button.dataset.scene));
+      });
+    });
+
+    document.addEventListener('touchstart', (e) => {
+      const touch = e.changedTouches[0];
+      touchStartX = touch.clientX;
+      touchStartY = touch.clientY;
+      touchActive = true;
+    }, { passive: true });
+
+    document.addEventListener('touchend', (e) => {
+      if (!touchActive) return;
+      touchActive = false;
+      const touch = e.changedTouches[0];
+      const dx = touch.clientX - touchStartX;
+      const dy = touch.clientY - touchStartY;
+      if (Math.abs(dx) < 48 || Math.abs(dx) < Math.abs(dy) * 1.2) return;
+      if (dx < 0) go(1);
+      if (dx > 0) go(-1);
+    }, { passive: true });
 
     document.getElementById('autoplay-toggle').addEventListener('click', () => {
       autoplay = !autoplay;

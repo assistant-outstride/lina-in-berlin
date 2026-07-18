@@ -17,6 +17,7 @@ The product focus is adult, addictive, learner-friendly fiction:
 - `story.json` and `*.json`: page-by-page source for individual readers
 - `ideas.json`: story vault and editorial brief for future concepts
 - `site/admin/index.html`: browser-only JSON CMS for reviewing and editing ideas
+- `PRODUCT_STANDARDS.md`: UX, asset, and metadata rules for all published stories
 
 ## Build
 
@@ -56,3 +57,13 @@ That workflow should produce:
 - illustration assets
 - narration audio
 - rebuilt static pages
+
+## Standards
+
+Before publishing a story or changing the reader shell, check `PRODUCT_STANDARDS.md`.
+It defines the current expectations for:
+
+- mobile reader navigation
+- image identity consistency and size budgets
+- audio format and preload behavior
+- naming and story metadata consistency
